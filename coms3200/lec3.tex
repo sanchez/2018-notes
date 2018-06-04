@@ -1,0 +1,52 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{File Distribution Time}
+\subsubsection{Client-server}
+\begin{description}
+	\item[Server Tranmission:] must sequentially send (upload) $N$ file copies. Time to send one copy: $\frac{F}{u_s}$. Time to send $N$ copies: $\frac{NF}{u_s}$
+	\item[Client:] each client must download file copy. $d_\text{min}=$ min client download rate. min client download time $\frac{F}{d_\text{min}}$
+\end{description}
+\begin{note}{Client-server File Distribution}
+	time to distribute $F$ to $N$ clients using client-server approach
+	\[ D_{c-s}\geq\max\{ \frac{NF}{u_s},\frac{F}{d_\text{min}} \} \]
+\end{note}
+\subsubsection{P2P}
+\begin{description}
+	\item[Server Tranmission:] must upload at least one copy. Time to send one copy: $\frac{F}{u_s}$
+	\item[Client:] each client must download file copy. Min client download time: $\frac{F}{d_\text{min}}$
+	\item[Clients:] as aggregate must download $NF$ bits. Max upload rate (limiting max download rate) is $u_s+\sum u_i$
+\end{description}
+\begin{note}{P2P File Distribution}
+	time to distribute $F$ to $N$ clients using P2P approach
+	\[ D_\text{P2P}\geq\max\{\frac{F}{u_s},\frac{F}{d_\text{min}},\frac{NF}{u_s+\sum u_i} \} \]
+\end{note}
+\subsubsection{BitTorrent}
+File divided into 256Kb chunks
+\begin{description}
+	\item[Tracker:] tracks peers participating in torrent
+	\item[Torrent:] group of peers exchanging chunks of a file
+\end{description}
+
+\subsection{Multimedia}
+\subsubsection{Video}
+Coding: used redundancy \textbf{within} and \textbf{between} images to decrease \# bits used to encode image
+\begin{description}
+	\item[Spatial:] within image
+	\item[Temporal:] from one image to next
+	\item[CBR] (constant bit rate): video encoding rate fixed
+	\item[VBR] (variable bit rate): video encoding rate changes as amount of spatial, temporal coding changes
+\end{description}
+\subsubsection{DASH}
+DASH: Dynamic, Adaptive Streaming over HTTP
+\begin{description}
+	\item[Server:] Divides video file into multiple chunks. Each chunk stored, encoded at different rates. \textbf{Manifest file:} provides URLs for different chunks
+	\item[Client:] Periodically measures server-to-client bandwidth. Consulting manifest, requests one chunk at a time. Chooses maximum coding rate sustainable given current bandwidth. Can choose different coding rates at different points in time (depending on available bandwidth at time)
+\end{description}
+``intelligence'' at client: client determines
+\begin{itemize}
+	\item \textbf{when} to request chunk (so that buffer starvation, or overflow does not occur)
+	\item \textbf{what encoding rate} to request (higher quality when more bandwidth available)
+	\item \textbf{where} to request chunk (can request from URL server that is ``close'' to client or has high available bandwidth)
+\end{itemize}
+\subsubsection{Content Distribution Networks (CDNs)}
+CDN stores copies of content at CDN nodes. Subscriber requests content from CDN, directed to nearby copy, retrieves content, may choose different copy if network path congested.
