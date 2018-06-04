@@ -1,0 +1,80 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{Application Architectures}
+\subsubsection{Client-Server}
+\begin{description}
+	\item[Server:] Always-on host, Permanent IP address
+	\item[Clients:] Do not communicate directly with each other, May have dynamic IP addresses
+\end{description}
+
+\subsubsection{Peer-to-Peer (P2P)}
+\begin{itemize}
+	\item No always-on server
+	\item Peers request service from other peers, provide service in return to other peers
+	\item \textbf{Self Scalability} -- new peers bring new service capacity, as well as new service demands
+	\item Pers are intermittently connected and change IP addresses
+\end{itemize}
+
+\begin{note}{App-layer protocol defines}
+	\begin{itemize}
+		\item \textbf{type of messages exchanged} -- e.g. request, response
+		\item \textbf{message syntax} -- what fields in messages and how fields are delineated
+		\item \textbf{message semantics} -- meaning of information in fields
+		\item \textbf{rules} for when and how processes send and respond to messages
+		\item \textbf{open protocols} -- defined in RFCs, allows for interoperability (e.g. HTTP, SMTP)
+		\item \textbf{proprietary protocols} -- e.g. Skype
+	\end{itemize}
+\end{note}
+
+\subsection{Transport Service is needed}
+\begin{description}
+	\item[Data Integrity:] Some programs need 100\% reliable data transfer (e.g. file transfer, web transactions), others can tolerate loss (e.g. audio)
+	\item[Timing:] Some programs require low delay to be ``effective'' (e.g. online games)
+	\item[Throughput:] Some programs require minimum amount of throughput to be ``effective'' (e.g. multimedia), some use whatever they have available (``elastic apps'')
+	\item[Security:] Encryption, Data Integrity
+\end{description}
+
+\subsection{Transport Protocol Services}
+\subsubsection{TCP}
+\begin{description}
+	\item[Reliable Transport] between sending and receiving process
+	\item[Flow Control:] sender won't overwhelm receiver
+	\item[Congestion Control:] throttle sender when network overloaded
+	\item[Connection-Oriented:] setup required between client and server processes
+	\item[Does Not Provide:] timing, minimum throughput guarantee, security
+\end{description}
+
+\subsubsection{UDP}
+\begin{description}
+	\item[Unreliable Data Transfer] between sending and receiving process
+	\item[Does Not Provide:] reliability, flow control, congestion control, timing, throughput guarantee, security, or connection setup
+\end{description}
+
+\subsubsection{Securing TCP}
+\textbf{TCP and UDP}
+\begin{itemize}
+	\item no encryption
+	\item cleartext passwords sent into socket traverse Internet in cleartext
+\end{itemize}
+\textbf{SSL}
+\begin{itemize}
+	\item provides encrypted TCP connection
+	\item data integrity
+	\item end-point authentication
+\end{itemize}
+\textbf{SSL is at app layer}
+\begin{itemize}
+	\item app use SSL libraries, that ``talk'' to TCP
+\end{itemize}
+\textbf{SSL socket API}
+\begin{itemize}
+	\item cleartext passwords sent into socket traverse Internet encrypted
+\end{itemize}
+
+\subsection{HTTP: Hypertext Transfer Protocol}
+\begin{itemize}
+	\item Web's application layer protocol
+	\item client/server model. Client request website and server serves HTTP object in response
+	\item Uses TCP
+	\item HTTP is stateless. Server maintains no information about past client requests
+\end{itemize}
