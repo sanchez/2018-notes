@@ -77,4 +77,182 @@
 	\item client/server model. Client request website and server serves HTTP object in response
 	\item Uses TCP
 	\item HTTP is stateless. Server maintains no information about past client requests
+	\item \textbf{non-persistent HTTP:} one object sent over one TCP connection, downloading multiple object required multiple connections
+	\item \textbf{persistent HTTP:} multiple object sent over single TCP connection
+\end{itemize}
+Non-persistent HTTP issues:
+\begin{itemize}
+	\item requires 2 RTTs per object
+	\item OS overhead for each TCP connection
+	\item browsers often open parallel TCP connections to fetch referenced objects
+\end{itemize}
+Persistent HTTP:
+\begin{itemize}
+	\item server leaves connection open after sending response
+	\item subsequent HTTP messages between same client/server sent over open connection
+	\item client sends requests as soon as it encounters a referenced object
+	\item as little as one RTT for all the referenced objects
+\end{itemize}
+\subsubsection{Method Types}
+\textbf{HTTP/1.0:} GET, POST, HEAD (asks server to leave requested object out of response)\\
+\textbf{HTTP/1.1:} GET, POST, HEAD, PUT (uploads file in entity body to path specified in URL field), DELETE (deletes file specified in the URL field)
+\subsubsection{Response Codes}
+\begin{description}
+	\item[200 OK:] request succeeded, requested object later in this msg
+	\item[301 Moved Permanently:] requested object moved, new location specified later in this msg
+	\item[400 Bad Request:] request msg not understood by server
+	\item[404 Not Found:] requested document not found on this server
+	\item[505 HTTP Version Not Supported]
+\end{description}
+
+\subsection{Cookies}
+Uses: authorization, shopping carts, recommendations, user session state (Web, email)
+
+\subsection{Web Caches (proxy server)}
+\begin{leftbar}
+	\textbf{Goal:} satify client request without involving origin server
+\end{leftbar}
+\begin{itemize}
+	\item Browsers requests object from cache, if in cache the object is sent back otherwise cache requests object from origin
+	\item Cache acts as both client and server
+	\item Reduce response time for client request
+	\item Reduce traffic
+\end{itemize}
+
+\subsubsection{Conditional GET}
+\begin{leftbar}
+	\textbf{Goal:} don't send object if cache has up-to-date cached version (lower link usage)
+\end{leftbar}
+\begin{itemize}
+	\item \textbf{Cache:} specify date of cached copy in HTTP request \texttt{If-modified-since: <date>}
+	\item \textbf{Server:} response contains no object if cached copy is up-to-date: \texttt{HTTP/1.0 Not Modified}
+\end{itemize}
+
+\subsection{Electronic Mail: SMTP}
+\textit{RFC 2821}
+\begin{itemize}
+	\item uses TCP to reliably transfer email message from client to server, port 25
+	\item direct transfer: sending server to receiving server
+	\item three phases of transfer: handshaking, transfer of messages, closure
+	\item command/response interaction
+	\item messages must be in 7-bit ASCII
+	\item uses persistent connections
+	\item requires message to be in 7-bit ASCII
+	\item uses \texttt{CRLF.CRLF} to determine end of message
+\end{itemize}
+Difference to HTTP being, HTTP is server sending data, SMTP is client connection sending data\\
+\begin{description}
+	\item[SMTP:] protocol for exchanging email messages
+	\item[RFC 822:] standard for text message format (To, From, Subject, Body)
+\end{description}
+\subsubsection{Mail Access Protocols}
+\begin{leftbar}
+	\textbf{SMTP:} delivery/storage to receiver's server
+\end{leftbar}
+\begin{description}
+	\item[POP:] Post Office Protocol \textit{(RFC 1939)}: authorization, download
+	\begin{itemize}
+		\item POP3 is stateless across sessions
+		\item Two main modes; download and delete, download and keep (allows multiple clients to read the same email)
+	\end{itemize}
+	\item[IMAP:] Internet Mail Access Protocol \textit{(RFC 1730)}: more features, including manipulation of stored message on server
+	\begin{itemize}
+		\item All messages stored on server
+		\item Supports folders
+		\item Keeps user state across sessions: names of folders and mappings between message IDs and folder name
+	\end{itemize}
+	\item[HTTP:] gmail, Hotmail, Yahoo, etc
+\end{description}
+
+\subsection{DNS: Domain Name System}
+\begin{itemize}
+	\item Lookup between names (e.g. google.com) and IP addresses
+	\item \textbf{Distributed Database} implemented in hierarchy of many \textbf{name servers}
+	\item \textbf{Application-layer protocol:} hosts, name servers communicate to \textbf{resolve} names (address/name translation)
+\end{itemize}
+Why not centralize DNS? Single point of failure, traffic volume, doesn't scale
+\subsubsection{DNS Services}
+\begin{itemize}
+	\item hostname to IP address translation
+	\item host aliasing (canonical, alias names)
+	\item mail server aliasing
+	\item load distribution (many IP addresses correspond to one name)
+\end{itemize}
+\subsubsection{TLD, authoritative servers}
+\textbf{top-level domain (TLD) servers:}
+\begin{itemize}
+	\item responsible for com, org, net, edu, aero, jos, io
+	\item and top-level country domains au, uk, ca
+	\item Network Solutions maintains servers for .com TLD
+	\item Educause for .edu TLD
+\end{itemize}
+\textbf{Authoritative DNS servers:}
+\begin{itemize}
+	\item organization's own DNS server(s), providing authorative hostname to IP mappings for organization's named hosts
+	\item can be maintained by organization or service provider
+\end{itemize}
+\subsubsection{Local DNS name server}
+\begin{itemize}
+	\item does not strictly belong to hierarchy
+	\item each ISP (residential ISP, company, university) has one (also called ``default name server'')
+	\item when host makes DNS query, query is sent to its local DNS server
+	\begin{itemize}
+		\item has local cache of recent name-to-address translation pairs (but may be out of date!)
+		\item acts as proxy, forwards query into hierarchy
+	\end{itemize}
+\end{itemize}
+\subsubsection{DNS Name Resolution}
+\begin{description}
+	\item[Iterated query:] contacted server replies with name of server to contact. So root dns sends the ip of the next dns server to contact
+	\item[Recursive query:] puts burden of name resolution on contacted name server. So root dns server contacts the next levels down which contacts next level down.
+\end{description}
+\subsubsection{Caching}
+Once (any) name server learns mapping, it \textbf{caches} mapping. Cache entries timeout (disappear) after some time (TTL). If name host changes IP address, the name servers might not update until TTLs expire.
+\begin{leftbar}
+	update/notify mechanisms proposed IETF standard RFC 2136
+\end{leftbar}
+\subsubsection{DNS Records}
+\begin{note}{RR Format}
+	\texttt{(name, value, type, ttl)}
+\end{note}
+\begin{description}
+	\item[type=A] \texttt{name} is hostname, \texttt{value} is IP address
+	\item[type=NS] \texttt{name} is domain (e.g. google.com), \texttt{value} is hostname of authoritative name server for this domain
+	\item[type=CNAME] \texttt{name} is alias name for some ``canonical'' (the real) name (\texttt{www.ibm.com} is really \texttt{servereast.backup2.ibm.com}), \texttt{value} is canonical name
+	\item[type=MX] \texttt{value} is name of mailserver associated with \texttt{name}
+\end{description}
+\subsubsection{Protocol}
+Query and reply messages both follow same format
+\begin{table}[H]
+\centering
+\caption{Protocol Layout}
+\begin{tabular}{cc}
+	\toprule
+	2 bytes & 2 bytes \\
+	\midrule
+	identification & flags\\
+	\# questions & \# answer RRs\\
+	\# authority RRs & \# additional RRs\\
+	\multicolumn{2}{c}{questions (variable \# of questions)}\\
+	\multicolumn{2}{c}{answers (variable \# of RRs)}\\
+	\multicolumn{2}{c}{authority (variable \# of RRs)}\\
+	\multicolumn{2}{c}{additional info (variable \# of RRs)}\\
+	\bottomrule
+\end{tabular}
+\end{table}
+\subsubsection{Attacking DNS}
+\textbf{DDoS attacks}
+\begin{itemize}
+	\item bombard root servers with traffic. Not successful to date, traffic filtering, local DNS servers cache protecting root DNS
+	\item bombard TLD server. Potentially more dangerous
+\end{itemize}
+\textbf{Redirect Attacks}
+\begin{itemize}
+	\item man-in-middle (Intercept queries)
+	\item DNS Poisoning (Send bogus relies to DNS server, which caches)
+\end{itemize}
+\textbf{Exploit DNS for DDoS}
+\begin{itemize}
+	\item send queries with spoofed source address: target IP
+	\item requires amplification
 \end{itemize}
