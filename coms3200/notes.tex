@@ -13,6 +13,7 @@
 \usepackage{enumitem}
 \setlist{nosep}
 \usepackage{booktabs}
+\usepackage{tikzsymbols}
 
 \newcounter{note}\setcounter{note}{0}
 \renewcommand{\thenote}{\arabic{note}}
@@ -74,13 +75,91 @@
 \newpage
 \begin{multicols*}{2}
 	
-	\section{Lecture 1}
+	\section{Exam Notes}
+	The exam will consist of:
+	\begin{itemize}
+		\item A number of analytical questions, similar to the tutorial questions. You won't be asked any complex analytic problems which are completely different to those in tutorials
+		\item A number of short answer questions of the type: compare XXX to YYY and explain the differences, or advantages/disadvantages of these protocols/algorithms/applications/techniques
+		\item Questions about different protocols, their functions and where they fit in the network protocol stack. You won't be asked about protocols you have not seen in lectures
+		\item Questions about packet exchanges in some common protocols (e.g. DHCP, DNS, ARP, TCP, HTTP)
+	\end{itemize}
+	\textit{No multiple choice questions this year \Sadey[][yellow!70] }
+	\subsection{Chapter 1}
+	\begin{itemize}
+		\item What is the Internet
+		\item Network Edge
+		\item Network Core
+		\item Delay, Loss Throughput
+		\item Protocol Layers and their service models
+	\end{itemize}
+	\textit{Not Examinable:} Networks under attack, history of networking
+	\subsection{Chapter 2: Application Layer}
+	\begin{itemize}
+		\item Principles of Networked Applications
+		\item Web and HTTP (including options covered in lectures/labs)
+		\item Electronic Mail
+		\item DNS (but no detailed message/packet format)
+		\item Peer-to-peer
+		\item Internet Video
+	\end{itemize}
+	\textit{Not Examinable:} Detailed message formats for DNS and for email, case studies, socket programming
+	\subsection{Chapter 3: Transport Layer}
+	All Material
+	\subsection{Chapter 4: Network Layer -- Data Plane}
+	All Material
+	\subsection{Chapter 5: Network Layer -- Control Plane}
+	Most of the material covered, except as below, including a general overview of what SNMP does. You should understand link-state and distance vector routing. You won't be asked any numerical questions with distance-vector. For routing protocols, you should know about BGP, OSPF, IS-IS, RIP (which isn't in lectures, but is an example of an intra-AS distance-vector algorithm). All you really need to know about these algorithms are whether they are inter-AS or intra-AS, link-state or distance-vector.\\
+	\textit{Not Examinable:} Details of SNMP architecture and packet formats. Details of BGP (5.4.2, 5.4.3, 5.4.5 are not examinable)
+	\subsection{Chapter 6: Link Layer}
+	\begin{itemize}
+		\item General Principles
+		\item Error Detection and Correction -- services provided, differences between correction and detection
+		\item Multiple Access Links and Protocols, but NOT DOCSIS
+		\item Switched Local Area Networks
+		\item ``Day in the Life of a Web Page Request'' -- details of each stage are covered in the earlier sections
+	\end{itemize}
+	\textit{Not Examinable:} Exactly how to calculate parity, checksum, CRC, DOCSIS, MPLS, Data Center Networking
+	\subsection{Chapter 7: Wireless}
+	\begin{itemize}
+		\item General Principles
+		\item Wireless characteristics
+		\item WiFi (IEEE 802.11) except as below
+	\end{itemize}
+	\textit{Not Examinable:} Mobility in WiFi, advanced features in WiFi (Ch 7.3.5). Personal area Networks. Cellular Internet Access. Mobility Management, Mobile IP, Mobility effects on higher layers
+	\subsection{Chapter 8: Security}
+	\begin{itemize}
+		\item What is network security -- confidentiality, integrity, authentication
+		\item Cryptographic principles -- symmetric and public key algorithms (you won't be asked to calculate any ciphers)
+		\item Names, types and uses of common cyphers, at least: Diffie-Hellman, RSA, DES, 3DES, AES, MD5, SHA-1
+		\item Message integrity and signatures
+		\item SSL and TLS
+		\item IP Sec and VPN
+		\item Firewalls and Intrusion Detection Systems -- general principles
+	\end{itemize}
+	\textit{Not Examinable:} Details of cipher algorithms, key lengths. Securing Email. Wireless security
+	\subsection{Chapter 9: Multimedia}
+	\begin{itemize}
+		\item Properties of multimedia
+		\item UDP and HTTP streaming
+		\item Voice over IP
+		\item Protocols -- RTP, SIP
+	\end{itemize}
+	\textit{Not Examinable:} Case Studies (e.g. Skype). Network Support for multimedia, such as token-bucket, diffserv, QoS
+	\subsection{Packet Formats}
+	Must understand and decode the packet contents if given a byte stream for:
+	\begin{description}
+		\item[Link Layer:] Ethernet (but not VLAN packets)
+		\item[Network Layer:] IPv4 (not IPv6), you won't be asked to decode option fields, but they may be present. These IPv4 packets may contain protocols like DNS or ICMP, but you won't be asked to decode the contents of those packets
+		\item[Transport Layer:] TCP, UDP.. You won't be asked to decode option fields, by they may be present
+		\item[Application Layer:] Simple HTTP request and reply. If you are required to decode text messages you will be given a table of ASCII codes
+	\end{description}
+	\newpage
+	
+	\section{Chapter 1}
 	\input{lec1}
 	
-	\section{Lecture 2}
+	\section{Chapter 2}
 	\input{lec2}
-	
-	\section{Lecture 3}
 	\input{lec3}
 	
 	\newpage
