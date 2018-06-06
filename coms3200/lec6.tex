@@ -1,0 +1,84 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{TCP Segment Structure}
+\begin{leftbar}
+	TCP contains a handshake to make sure both ends are willing to open a connection
+\end{leftbar}
+\begin{table}[H]
+	\centering
+	\caption{TCP Segment Structure}
+	\begin{tabular}{cc}
+		\toprule
+		\multicolumn{2}{c}{32 bits}\\
+		\midrule
+		source port \# & dest port \#\\
+		\multicolumn{2}{c}{sequence number}\\
+		\multicolumn{2}{c}{acknowledgment number}\\
+		(head len, not used, UAPRSF) & receive window\\
+		checksum & urg data pointer\\
+		\multicolumn{2}{c}{options (variable length)}\\
+		\multicolumn{2}{c}{application data (variable length)}\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\begin{leftbar}
+	\textbf{sequence number, acknowledgment number:} counting by bytes of data (not segments)\\
+	\textbf{U:} urgent data (generally not used)\\
+	\textbf{A:} ACK \# valid\\
+	\textbf{P:} push data now (generally not used)\\
+	\textbf{RSF:} RST, SYN, FIN; connection established (setup, teardown commands)\\
+	\textbf{checksum:} Internet checksum (as in UDP)\\
+	\textbf{receive window:} \# bytes receiver willing to accept
+\end{leftbar}
+\begin{description}
+	\item[Sequence Numbers:] byte stream ``number'' of first byte in segment's data
+	\item[Acknowledgements:] sequence \# of next byte expected from other side, cumulative ACK
+\end{description}
+\subsubsection{TCP Round Trip Time, Timeout}
+$$ E = (1-\alpha)\times E+\alpha\times\textit{SampleRTT} $$
+Where $E$ is EstimatedRTT. Influence of past sample decreases exponentially fast. Typical value: $\alpha = 0.125$
+$$ \textit{TimeoutInterval} = E + 4\times\textit{DevRTT} $$
+Where \textit{DevRTT} is the safety margin ($ \textit{DevRTT} = (1-\beta)\times\textit{DevRTT}+\beta\times\mid\textit{SampleRTT}-E\mid $(typically, $\beta=0.25$))
+\subsubsection{TCP Flow Control}
+\begin{itemize}
+	\item receiver ``advertises'' free buffer space by including \texttt{rwnd} value in TCP header of receiver-to-sender segments
+	\begin{itemize}
+		\item \texttt{RcvBuffer} size set via socket options (typical default is 4096 bytes)
+		\item many operating systems autoadjust \texttt{RcvBuffer}
+	\end{itemize}
+	\item sender limits amount of unacked (``in-flight'') data to receiver's \texttt{rwnd} value
+	\item guarantees receive buffer will not overflow
+\end{itemize}
+\subsubsection{Closing}
+\begin{itemize}
+	\item client, server each close their side of connection (send TCP segment with FIN bit 1)
+	\item respond to received FIN with ACK (on receiving FIN, ACK can be combined with own FIN)
+	\item simultaneous FIN exchanges can be handled
+\end{itemize}
+
+\subsection{TCP Congestion Control}
+\textbf{Approach:} sender increases transmission rate (window size), probing for usable bandwidth, until loss occurs
+\begin{description}
+	\item[Additive Increase:] increase \texttt{cwnd} by 1 MSS every RTT until loss detected
+	\item[Multiplicative Decrease:] cut \texttt{cwnd} in half after loss
+\end{description}
+
+\subsection{Fairness}
+TCP is fair because:
+\begin{itemize}
+	\item additive increase gives slope of 1, as throughput increases
+	\item multiplicative decrease decreases throughput proportionally
+\end{itemize}
+UDP is not fair:
+\begin{itemize}
+	\item do not want rate throttled by congestion control
+	\item send audio/video at constant rate, tolerate packet loss
+\end{itemize}
+
+\subsection{Explicit Congestion Notification}
+Network-assisted Congestion Control:
+\begin{itemize}
+	\item two bits in IP header (ToS field) marked by \textbf{network router} to indicated congestion
+	\item congestion indication carried to receiving host
+	\item receiver (seeing congestion indication in IP datagram) sets ECE bit on receiver-to-sender ACK segment to notify sender of congestion
+\end{itemize}
