@@ -1,0 +1,71 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{Transport vs. Network Layer}
+\begin{description}
+	\item[Network Layer:] logical communication between hosts
+	\item[Transport Layer:] logical communication between processes; relies on, enhances, network layer services
+\end{description}
+
+\subsection{Multiplexing/demultiplexing}
+\subsubsection{How demultiplexing works}
+\begin{itemize}
+	\item host receives IP datagrams
+	\begin{itemize}
+		\item each datagram as source IP address, destination IP address
+		\item each datagram carries one transport-layer segment
+		\item each segment has source, destination port number
+	\end{itemize}
+	\item host uses \textbf{IP addresses and port numbers} to direct segment to appropriate socket
+\end{itemize}
+\textbf{Connectionless Demultiplexing}
+\begin{leftbar}
+	A UDP socket needs to have a local port number assigned to it (both client and server)
+\end{leftbar}
+\textbf{Connection-oriented demux}
+\begin{leftbar}
+	TCP socket identified by 4-tuple: \textbf{(source IP address, source port number, dest IP address, dest port number)}
+\end{leftbar}
+
+\subsection{UDP}
+\begin{table}[H]
+	\centering
+	\caption{UDP Segment Header}
+	\begin{tabular}{cc}
+		\toprule
+		\multicolumn{2}{c}{32 bits}\\
+		\midrule
+		source port \# & dest port \#\\
+		length & checksum\\
+		\multicolumn{2}{c}{application data (payload)}\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\subsubsection{UDP Checksum}
+\textbf{Sender:}
+\begin{itemize}
+	\item treat segment contents, including header fields, as sequence of 16-bit integers
+	\item checksum: addition (one's complement sum) of segment contents
+	\item sender puts checksum value into UDP checksum field
+\end{itemize}
+\textbf{Receiver:}
+\begin{itemize}
+	\item compute checksum of received segment
+	\item check if computed checksum equals checksum field value
+\end{itemize}
+
+\subsection{Pipelined Protocols}
+\begin{leftbar}
+	\textbf{Pipelining:} sender allows multiple, "in-flight", yet-to-be-acknowledged packets. Range of sequence numbers must be increased, buffering at sender and/or receiver.
+\end{leftbar}
+\subsubsection{Go-Back-N}
+\begin{itemize}
+	\item sender can have up to$N$ unacked packets in pipeline
+	\item receiver only sends \textbf{cumulative ack}. Doesn't ack packet if there's a gap
+	\item sender has timer for oldest unacked packet. When timer expires, retransmit all unacked packets
+\end{itemize}
+\subsubsection{Selective Repeat}
+\begin{itemize}
+	\item sender can have up to $N$ unacked packets in pipeline
+	\item receiver sends \textbf{individual ack} for each packet
+	\item sender maintains timer for each unacked packet. When timer expires, retransmit only that unacked packet
+\end{itemize}
