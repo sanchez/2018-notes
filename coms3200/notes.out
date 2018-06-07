@@ -112,4 +112,29 @@
 \BOOKMARK [2][-]{subsection.6.4}{Generalized Forwarding and SDN}{section.6}% 112
 \BOOKMARK [3][-]{subsubsection.6.4.1}{OpenFlow data plane abstraction}{subsection.6.4}% 113
 \BOOKMARK [3][-]{subsubsection.6.4.2}{OpenFlow Abstraction}{subsection.6.4}% 114
-\BOOKMARK [1][-]{section.7}{Acronyms}{}% 115
+\BOOKMARK [1][-]{section.7}{Chapter 5}{}% 115
+\BOOKMARK [2][-]{subsection.7.1}{Control Plane}{section.7}% 116
+\BOOKMARK [3][-]{subsubsection.7.1.1}{Per-router control plane}{subsection.7.1}% 117
+\BOOKMARK [3][-]{subsubsection.7.1.2}{Logically centralized control plane}{subsection.7.1}% 118
+\BOOKMARK [2][-]{subsection.7.2}{Routing Protocols}{section.7}% 119
+\BOOKMARK [3][-]{subsubsection.7.2.1}{Global or Decentralized information}{subsection.7.2}% 120
+\BOOKMARK [3][-]{subsubsection.7.2.2}{Static or Dynamic}{subsection.7.2}% 121
+\BOOKMARK [3][-]{subsubsection.7.2.3}{Link-State Routing Algorithm}{subsection.7.2}% 122
+\BOOKMARK [3][-]{subsubsection.7.2.4}{Distance Vector Algorithm}{subsection.7.2}% 123
+\BOOKMARK [3][-]{subsubsection.7.2.5}{Comparison of LS and DV algorithms}{subsection.7.2}% 124
+\BOOKMARK [2][-]{subsection.7.3}{Making Routing Scalable}{section.7}% 125
+\BOOKMARK [3][-]{subsubsection.7.3.1}{Interconnected ASes}{subsection.7.3}% 126
+\BOOKMARK [3][-]{subsubsection.7.3.2}{Intra-AS Routing}{subsection.7.3}% 127
+\BOOKMARK [3][-]{subsubsection.7.3.3}{Hierarchical OSPF}{subsection.7.3}% 128
+\BOOKMARK [3][-]{subsubsection.7.3.4}{Internet inter-AS routing}{subsection.7.3}% 129
+\BOOKMARK [2][-]{subsection.7.4}{Software Defined Networking \(SDN\)}{section.7}% 130
+\BOOKMARK [3][-]{subsubsection.7.4.1}{SDN perspective: Data Plane Switches}{subsection.7.4}% 131
+\BOOKMARK [3][-]{subsubsection.7.4.2}{SDN perspective: SDN controller}{subsection.7.4}% 132
+\BOOKMARK [3][-]{subsubsection.7.4.3}{SDN perspective: Control Applications}{subsection.7.4}% 133
+\BOOKMARK [3][-]{subsubsection.7.4.4}{OpenFlow: controller-to-switch messages}{subsection.7.4}% 134
+\BOOKMARK [2][-]{subsection.7.5}{OpenDaylight \(ODL\) controller}{section.7}% 135
+\BOOKMARK [2][-]{subsection.7.6}{ONOS controller}{section.7}% 136
+\BOOKMARK [2][-]{subsection.7.7}{ICMP: Internet Control Message Protocol}{section.7}% 137
+\BOOKMARK [2][-]{subsection.7.8}{Network Management and SNMP}{section.7}% 138
+\BOOKMARK [3][-]{subsubsection.7.8.1}{SNMP Protocol: Message Types}{subsection.7.8}% 139
+\BOOKMARK [1][-]{section.8}{Acronyms}{}% 140

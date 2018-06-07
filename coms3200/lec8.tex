@@ -1,0 +1,337 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{Control Plane}
+Two approaches to structuring network control plane:
+\subsubsection{Per-router control plane}
+\begin{leftbar}
+	Individual routing algorithm components \textbf{in each and every router} interact with each other in control plane to compute forwarding tables
+\end{leftbar}
+\subsubsection{Logically centralized control plane}
+\begin{leftbar}
+	A distinct (typically remote) controller interacts with local control agents (CAs) in routers to compute forwarding tables
+\end{leftbar}
+
+\subsection{Routing Protocols}
+\begin{leftbar}
+	\textbf{Routing protocol goal:} determine ``good'' paths (equivalently, routes), from sending hosts to receiving host, through network of routers
+	\begin{description}
+		\item[path:] sequence of routers packets will traverse in going from given initial source host to given final destination host
+		\item[``good'':] least ``cost'', ``fastest'', ``least congested''
+	\end{description}
+\end{leftbar}
+\subsubsection{Global or Decentralized information}
+\textbf{Global:}
+\begin{itemize}
+	\item all routers have complete topology, link cost info
+	\item \textbf{``link state'' algorithms}
+\end{itemize}
+\textbf{Decentralized:}
+\begin{itemize}
+	\item router knows physically-connected neighbors, link costs to neighbors
+	\item iterative process of computation, exchange of info with neighbors
+	\item \textbf{``distance vector'' algorithms}
+\end{itemize}
+\subsubsection{Static or Dynamic}
+\textbf{Static:}
+\begin{itemize}
+	\item routes change slowly over time
+\end{itemize}
+\textbf{Dynamic:}
+\begin{itemize}
+	\item routes change more quickly (periodic update, in response to link cost changes)
+\end{itemize}
+\subsubsection{Link-State Routing Algorithm}
+\begin{note}{Dijkstra's algorithm}
+	\begin{itemize}
+		\item net topology, link costs known to all nodes
+		\begin{itemize}
+			\item accomplished via ``link state broadcast''
+			\item all nodes have same info
+		\end{itemize}
+		\item computes least cost paths from one node (`source') to all other nodes (gives \textbf{forwarding table} for that node)
+		\item iterative: after $k$ iterations, know least cost path to $k$ destinations
+	\end{itemize}
+\end{note}
+\textbf{Notation:}
+\begin{description}
+	\item[$c(x,y)$:] link cost from node $x$ to $y$; $=\infty$ if not direct neighbors
+	\item[$D(v)$:] current value of cost path from source to destination $v$
+	\item[$p(v)$:] predecessor node along path from source to $v$
+	\item[$N'$:] set of nodes whose least cost path definitively known
+\end{description}
+\textbf{Algorithm Complexity:} $n$ nodes
+\begin{itemize}
+	\item each iteration: need to check all nodes, $W$, not in$N$
+	\item $\frac{n(n+1)}{2}$ comparisons: $O(n^2)$
+	\item more efficient implementations possible: $O(n\log n)$
+\end{itemize}
+\subsubsection{Distance Vector Algorithm}
+\begin{note}{Bellman-Ford equation}
+	\begin{flushright}\textit{(dynamic programming)}\end{flushright}
+	let $d_x(y):=$ cost of least-cost path from $x$ to $y$ then
+	\[
+		d_x(y)=\min\{ c(x,v),d_v(y) \}
+	\]
+	\begin{description}
+		\item[$c(x,v)$:] cost to neighbor $v$
+		\item[$d_v(y)$:] cost from neighbor $v$ to destination $y$
+	\end{description}
+\end{note}
+\begin{itemize}
+	\item $D_x(y)=$ estimate of least cost from $x$ to $y$ ($x$ maintains distance vector $\mathbf{D}_x=[D_x(y):y\in N]$)
+	\item node $x$:
+	\begin{itemize}
+		\item knows cost to each neighbor $v:c(x,v)$
+		\item maintains its neighbor's distance vectors. For each neighbor $v,x$ maintains $\mathbf{D}_v=[D_v(y):y\in N]$
+	\end{itemize}
+\end{itemize}
+\textbf{key idea:}
+\begin{itemize}
+	\item from time-to-time, each node sends its own distance vector estimate to neighbors
+	\item when $x$ receives new DV estimate from neighbor, it updates its own DV using B-F equation:
+\end{itemize}
+\[
+	D_x(y)\rightarrow\min\{ c(x,v)+D_v(y) \} \text{ for each node } y\in N
+\]
+\subsubsection{Comparison of LS and DV algorithms}
+\textbf{Message Complexity:}\\
+\textbf{LS:} with $n$ nodes, $E$ links, $O(nE)$ msgs sent\\
+\textbf{DV:} exchange between neighbors only (convergence time varies)\\\\
+\textbf{Speed of Convergence:}\\
+\textbf{LS:} $O(n^2)$ algorithm requires $O(nE)$ msgs (may have oscillations)\\
+\textbf{DV:} convergence time varies (may be routing loops, count-to-infinity problem)\\\\
+\textbf{Robustness:} What happens if router malfunctions?\\
+\textbf{LS:} Node can advertise incorrect \textit{link} cost. Each node computes only its \textit{own} table\\
+\textbf{DV:} DV node can advertise incorrect \textit{path} cost. Each node's table used by others, error propagate through network
+
+\subsection{Making Routing Scalable}
+At the moment, can't store all destinations in routing tables. Routing table exchange would swamp links.\\
+Solution: Aggregate routers into regions known as ``autonomous systems'' (AS) (a.k.a ``domains'')\\
+\textbf{intra-AS routing:}
+\begin{itemize}
+	\item routing among hosts, routers in same AS (``network'')
+	\item all routers in AS must run \textbf{same} intra-domain protocol
+	\item routers in \textit{different} AS can run \textit{different} intra-domain routing protocol
+	\item gateway router: at ``edge'' of its own AS, has link(s) to router(s) in other AS'es
+\end{itemize}
+\textbf{inter-AS routing}
+\begin{itemize}
+	\item routing among AS'es
+	\item gateways perform inter-domain routing (as well as intra-domain routing)
+\end{itemize}
+\subsubsection{Interconnected ASes}
+Forwarding table configured by both intra-AS and inter-AS routing algorithm
+\begin{itemize}
+	\item intra-AS routing determine entries for destinations within AS
+	\item inter-AS and intra-AS determine entries for external destinations
+\end{itemize}
+\subsubsection{Intra-AS Routing}
+Also known as \textbf{Interior Gateway Protocols (IGP)}. Most common intra-AS routing protocols:
+\begin{description}
+	\item[RIP:] Routing Information Protocol
+	\item[OSPF:] Open Shortest Path First (IS-IS protocol essentially same as OSPF)
+	\item[IGRP:] Interior Gateway Routing Protocol (Cisco proprietary \textit{for decades, until 2016})
+\end{description}
+\begin{note}{OSPF (Open Shortest Path First)}
+	\begin{itemize}
+		\item ``open'': publicly available
+		\item uses link-state algorithm
+		\begin{itemize}
+			\item link state packet dissemination
+			\item topology map at each node
+			\item route computation using Dijkstra's algorithm
+		\end{itemize}
+		\item router floods OSPF link-state advertisements to all other routers in \textbf{entire} AS
+		\begin{itemize}
+			\item carried in OSPF messages directly over IP (rather than TCP or UDP)
+			\item link state: for each attached link
+		\end{itemize}
+		\item \textbf{IS-IS routing} protocol: nearly identical to OSPF
+	\end{itemize}\vspace{1em}
+	\textbf{``Advanced Features''}
+	\begin{itemize}
+		\item \textbf{security:} all OSPF messages authenticated (to prevent malicious intrusion)
+		\item \textbf{multiple} same-cost \textbf{paths} allowed (only one path in RIP)
+		\item for each link, multiple cost metrics for different \textbf{TOS} (e.g. satellite link cost set low for best effort ToS; high for real-time ToS)
+		\item integrated uni- and \textbf{multi-cast} support (Multicast OSPF (MOSPF) uses same topology data base as OSPF)
+		\item \textbf{hierarchical} OSPF in large domains
+	\end{itemize}
+\end{note}
+\subsubsection{Hierarchical OSPF}
+\begin{description}
+	\item[two-level hierarchy:] local area, backbone
+	\begin{itemize}
+		\item link-state advertisements only in area
+		\item each nodes has detailed area topology; only know direction (shortest path) to nets in other areas
+	\end{itemize}
+	\item[area border routers:] ``summarize'' distances to nets in own area, advertise to other Area Border routers
+	\item[backbone routers:] run OSPF routing limited to backbone
+	\item[boundary routers:] connect to other AS'es
+\end{description}
+\subsubsection{Internet inter-AS routing}
+\begin{note}{BGP (Border Gateway Protocol)}
+	\begin{itemize}
+		\item The de facto inter-domain routing protocol
+		\item BGP provides each AS a means to:
+		\begin{itemize}
+			\item \textbf{eBGP:} obtain subnet reachability information from neighboring ASes
+			\item \textbf{iBGP:} propagate reachability information to all AS-internal routers
+			\item determine ``good'' routes to other networks based on reachability information and \textbf{policy}
+		\end{itemize}
+		\item allows subnet to advertise its existence to rest of Internet: ``I am here''
+	\end{itemize}
+\end{note}
+
+\subsection{Software Defined Networking (SDN)}
+Internet network layer: historically has been implemented via distributed, per-router approach
+\begin{itemize}
+	\item \textbf{monolithic} router contains switching hardware, runs proprietary implementation of Internet standard protocols (IP, RIP, IS-IS, OSPF, BGP) in proprietary router OS (e.g. Cisco IOS)
+	\item different ``middleboxes'' for different network layer functions: firewalls, load balancers, NAT boxes, ...
+\end{itemize}
+Why a logically centralized control plane?
+\begin{itemize}
+	\item easier network management: avoid router misconfiguration, greater flexibility of traffic flows
+	\item table-based forwarding (recall OpenFlow API) allows ``programming'' routers
+	\begin{itemize}
+		\item centralized ``programming'' easier: compute tables centrally and distribute
+		\item distributed ``programming'' more difficult: compute tables as result of distributed algorithm (protocol) implemented in each and every router
+	\end{itemize}
+	\item open (non-proprietary) implementation of control plane
+\end{itemize}
+\subsubsection{SDN perspective: Data Plane Switches}
+\begin{itemize}
+	\item fast, simple, commodity switches implementing generalized data-place forwarding in hardware
+	\item switch flow table computed, installed by controller
+	\item API for table-based switch control (e.g. OpenFlow) -- defines what is controllable and what is not
+	\item protocol for communicating with controller (e.g. OpenFlow)
+\end{itemize}
+\subsubsection{SDN perspective: SDN controller}
+\begin{itemize}
+	\item maintain network state information
+	\item interacts with network control applications ``above'' via northbound API
+	\item interacts with network switches ``below'' via southbound API
+	\item implemented as distributed system for performance, scalability, fault-tolerance, robustness
+\end{itemize}
+\subsubsection{SDN perspective: Control Applications}
+\begin{itemize}
+	\item ``brains'' of control: implement control functions using lower-level services, API provided by SND controller
+	\item unbundled: can be provided by $3^{rd}$ party: distinct from routing vendor, or SDN controller
+\end{itemize}
+\begin{note}{OpenFlow Protocol}
+	\begin{itemize}
+		\item operates between controller, switch
+		\item TCP used to exchange messages (optional encryption)
+		\item thress classes of OpenFlow messages:
+		\begin{itemize}
+			\item controller-to-switch
+			\item asynchronous (switch to controller)
+			\item symmetric (misc)
+		\end{itemize}
+	\end{itemize}
+\end{note}
+\subsubsection{OpenFlow: controller-to-switch messages}
+\textbf{Key controller-to-switch messages}
+\begin{description}
+	\item[features:] controller queries switch features, switch replies
+	\item[configure:] controller queries/sets switch configuration parameters
+	\item[modify-state:] add, delete, modify flow entries in the OpenFlow tables
+	\item[packet-out:] controller can send this packet out of specific switch port
+	\item[packet-in:] transfer packet (and its control) to controller. See packet-out message from controller
+	\item[flow-removed:] flow table entry deleted at switch
+	\item[port status:] inform controller of a change on a port
+\end{description}
+\begin{leftbar}
+	Fortunately, network operators don't ``program'' switches by creating/sending OpenFlow messages directly. Instead use higher-level abstraction at controller
+\end{leftbar}
+\subsection{OpenDaylight (ODL) controller}
+\begin{itemize}
+	\item ODL Lithium controller
+	\item network apps may be contained within, or be external to SDN controller
+	\item Service Abstraction Layer: interconnects internal, external applications and services
+\end{itemize}
+\subsection{ONOS controller}
+\begin{itemize}
+	\item control apps separate from controller
+	\item intent framework: high-level specification of service: what rather than how
+	\item considerable emphasis on distributed core: service reliability, replication performance scaling
+\end{itemize}
+
+\subsection{ICMP: Internet Control Message Protocol}
+\begin{table}[H]
+	\centering
+	\caption{ICMP Types and Codes}
+	\begin{tabular}{llp{6cm}}
+		\toprule
+		Type & Code & Description\\
+		\midrule
+		0 & 0 & echo reply (ping)\\
+		3 & 0 & destination network unreachable\\
+		3 & 1 & destination host unreachable\\
+		3 & 2 & destination protocol unreachable\\
+		3 & 3 & destination port unreachable\\
+		3 & 6 & destination network unknown\\
+		3 & 7 & destination host unknown\\
+		4 & 0 & source quench (congestion control -- not used)\\
+		8 & 0 & echo request (ping)\\
+		9 & 0 & route advertisement\\
+		10 & 0 & router discovery\\
+		11 & 0 & TTL expired\\
+		12 & 0 & bad IP header\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\begin{itemize}
+	\item used by hosts and routers to communicate network-level information
+	\begin{itemize}
+		\item error reporting: unreachable host, network, port, protocol
+		\item echo request/reply (used by ping)
+	\end{itemize}
+	\item network-layer ``above'' IP: ICMP messages carried in IP datagrams
+	\item \textbf{ICMP message:} type, code, plus first 8 bytes of IP datagram causing error
+\end{itemize}
+
+\subsection{Network Management and SNMP}
+\begin{leftbar}
+	``Network management includes the deployment, integration and coordination of the hardware, software, and human elements to monitor, test, poll, configure, analyze, evaluate, and control the network and element resources to meet the real-time, operational performance, and Quality of Service requirements at a reasonable cost.''
+\end{leftbar}
+\textbf{Managed devices} contain \textbf{managed objects} whose data is gathered into a \textbf{Management Information Base (MIB)}
+\subsubsection{SNMP Protocol: Message Types}
+\begin{table}[H]
+	\centering
+	\caption{SNMP Message Types}
+	\begin{tabular}{rp{5cm}}
+		\toprule
+		Message type & Function\\
+		\midrule
+		GetRequest&\multirow{3}{*}{\begin{minipage}{5cm}manager-to-agent: ``get me data'' (data instance, next data in list, block of data)\end{minipage}}\\
+		GetNextRequest&\\
+		GetBulkRequest&\\
+		\midrule
+		InformRequest & manager-to-manager: here's MIB value\\
+		\midrule
+		SetRequest & manager-to-agent: set MIB value\\
+		\midrule
+		Response & agent-to-manager: value, response to request\\
+		\midrule
+		Trap & agent-to-manager: inform manager of exceptional event\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\end{multicols*}
+\begin{table}[H]
+	\centering
+	\caption{SNMP Message Formats}
+	\begin{tabular}{llllllll}
+		\toprule
+		\multicolumn{8}{c}{$\leftarrow$ SNMP PDU $\rightarrow$}\\
+		&\multicolumn{3}{c}{$\leftarrow$ Get/set header $\rightarrow$}&\multicolumn{4}{c}{$\leftarrow$ Variables to get/set $\rightarrow$}\\
+		PDU Type & Request ID & Error Status & Error Index & Name & Value & Name & Value\\
+		(0 - 3) && (0 - 5) &&&&&\\
+		\midrule
+		&\multicolumn{5}{c}{$\leftarrow$ Trap header $\rightarrow$}&\multicolumn{2}{c}{$\leftarrow$ Trap info $\rightarrow$}\\
+		PDU Type & Enterprise & Agent Addr & Trap Type & Specific code & Timestamp & Name & Value\\
+		4 && (0 - 7) &&&&\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\begin{multicols*}{2}
