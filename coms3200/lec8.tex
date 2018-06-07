@@ -324,11 +324,11 @@ Why a logically centralized control plane?
 	\begin{tabular}{llllllll}
 		\toprule
 		\multicolumn{8}{c}{$\leftarrow$ SNMP PDU $\rightarrow$}\\
-		&\multicolumn{3}{c}{$\leftarrow$ Get/set header $\rightarrow$}&\multicolumn{4}{c}{$\leftarrow$ Variables to get/set $\rightarrow$}\\
+		&$\leftarrow$& Get/set header &$\rightarrow$&$\leftarrow$&\multicolumn{2}{c}{Variables to get/set}&$\rightarrow$\\
 		PDU Type & Request ID & Error Status & Error Index & Name & Value & Name & Value\\
 		(0 - 3) && (0 - 5) &&&&&\\
 		\midrule
-		&\multicolumn{5}{c}{$\leftarrow$ Trap header $\rightarrow$}&\multicolumn{2}{c}{$\leftarrow$ Trap info $\rightarrow$}\\
+		&$\leftarrow$&\multicolumn{3}{c}{Trap header}&$\rightarrow$&\multicolumn{2}{c}{$\leftarrow$ Trap info $\rightarrow$}\\
 		PDU Type & Enterprise & Agent Addr & Trap Type & Specific code & Timestamp & Name & Value\\
 		4 && (0 - 7) &&&&\\
 		\bottomrule
