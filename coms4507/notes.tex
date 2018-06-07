@@ -11,6 +11,7 @@
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{graphicx}
 \usepackage{enumitem}
+\usepackage{gensymb}
 \setlist{nosep}
 
 \newcounter{note}\setcounter{note}{0}
@@ -46,11 +47,12 @@
 	\textbf{Contributors:}
 	\begin{itemize}
 		\item Daniel Fitz (Sanchez)
+		\item Jake Dunn (nomad)
 	\end{itemize}
 	\newpage
-	
+
 	\begin{multicols*}{2}
-		
+
 \section{Exam Structure}
 \textbf{Exam Is Open Book!}
 \subsection{What is Covered?}
@@ -90,6 +92,47 @@ Two parts with total \~ 55 marks
 	\item Describe how Aurasium interacts with the Andriod system and applications
 	\item Describe if and how malicious application can detect the presence of Aurasium
 \end{itemize}
-		
-	\end{multicols*}
+
+\pagebreak
+\section{Seminar Paper Summaries}
+\subsection{\#30 Cold Boot Attacks on Encryption Keys}
+Halderman et al., Lest We Remember: Cold Boot Attacks on Encryption Keys, USENIX Security Symposium, 2008
+\subsubsection{Abstract}
+"Contrary to popular assumption, DRAMs used in most modern computers retain their contents for several seconds after power is lost,
+even at room temperature and even if removed from a motherboard. Although DRAMs become less reliable when they are not refreshed,
+they are not immediately erased, and their contents persists sufficiently for malicious (or forensic) acquisition of usable full-system
+memory images.
+
+We show that this phenomenon limits the ability of an operating system to protect cryptographic key material from an attacker
+with physical access. We use cold reboots to mount successful attacks on popular disk encryption systems using no special devices or
+materials. We experimentally characterize the extent and predictability of memory remanence and report that remanence times can be
+increased dramatically with simple cooling techniques.
+
+We offer new algorithms for finding cryptographic keys in memory images and for correcting errors caused by bit decay.
+Though we discuss several strategies for partially mitigating these risks, we know of no simple remedy that would eliminate them."
+
+\subsubsection{Notes}
+\begin{itemize}
+	\item DRAMs typically lose their contents over a period of several seconds, if the chips are cooled to low temperatures (-50\degree C), the data can persist for minutes - hours.
+	\item The researchers used non-destructive disk forensics techniques to create memory images, and extract the keys needed to decrypt several popular disk encryption systems (BitLocker, TrueCrypt and FileVault)
+	\item If a system is rebooted, often the BIOS will overwrite portions of memory, and some systems are configured to perform a destructive memory test during its Power-On Self Test (POST)
+	\item A warm boot is initiated by the host operating system and gives the OS a chance to cleanly exit application and wipe memory.
+	A cold boot is initiated either by pressing the system restart button, or temporarily removing the power, this gives the OS not opportunity to scrub memory state.
+	\item In order to create images of the memory, the DRAM in a running system is first cooled, then a cold boot is initiated and the system is booted into a special forensics tool via PXE network boot/USB etc. The cooled DRAM could also be removed an installed into another machine, bypassing any BIOS/POST protections.
+	\item Algorithms were developed to extract cryptographic keys and correct bit errors in the range of 5\% - 50\%, this is achievable by comparing the key to other key precompute schedules stored in memory. ie. RSA's p + q values are often stored alongside the private key in order to perform faster computations.
+	\item The paper describes in detail the process for reconstructing DES, AES, RSA and tweak keys.
+	\item A method was developed in order to identify keys in memory, even in the presence of bit errors. This is done by again looking for additional key schedules, searching for blocks of memory that closely satisfy the combinatorial properties of a valid key schedule
+	\item The paper also describes in detail the process for identifying AES, DES, RSA and file system encryption keys in a memory dump.
+	\item Countermeasures discussed include:
+	\subitem Scrubbing Memory: software should overwrite keys when they are no longer needed, and prevent keys from being paged to disk
+	\subitem Limiting booting from external media: the majority of attacks were only possibly by booting into the forensics tools
+	\subitem Suspending a system safely: require a password in order to wake a suspended computer, memory should be encrypted during suspension with a key derived from the password.
+	\subitem Avoid precomputation: precomputations should be cached for a certain period and scrubbed if not re used.
+	\subitem Key Expansion: Apply some transform to keys when they are stored in memory in order to make it more difficult to reconstruct
+	\subitem Physical Defence: Lock/Encase the DRAM to prevent removal
+	\subitem Architectural changes: Design DRAM that loses its state very rapidly past the intended refresh interval
+	\subitem Encrypting in the disk controller: Perform disk encryption operations in disk controller rather than by software in the main CPU, and storing the keys in the disk controller rather than DRAM.
+	\subitem Trusted computing: Deploying trusted computing hardware will help the machine determine whether it is safe to store keys in DRAM at this time or not.
+\end{itemize}
+\end{multicols*}
 \end{document}
