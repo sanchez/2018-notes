@@ -1,0 +1,17 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection*{\#24 An Analysis of Anonymity in Bitcoin Using P2P Network Traffic}
+\begin{description}
+	\item[Phase 0:] Prune transaction data to remove potential sources of noise
+	\item[Phase 1:] Using relay patterns we have observed for transactions, hypothesize an ``owner'' IP for each transaction
+	\item[Phase 2:] Break transactions down into their individual Bitcoin addresses. We do this to create more granular (Bitcoin address, IP) pairings
+	\item[Phase 3:] Compute statistical metrics for our (Bitcoin address, IP) pairings
+	\item[Phase 4:] Identify pairings that may represent ownership relationships
+	\item[Phase 5:] Eliminate ownership pairings that fall below our defined thresholds
+\end{description}
+\begin{itemize}
+	\item Creates a Bitcoin client, CoinSeer, to collect data of the peers in the network (collects about 60GB of data per week)
+	\item Able to map between 252 to 1162 Bitcoin addresses to IP addresses that likely owned these addresses
+	\item Using ip masking services or online wallets reduces the accuracy of this
+	\item No mention of dynamic IPs
+\end{itemize}

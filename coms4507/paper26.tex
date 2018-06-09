@@ -1,0 +1,29 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection*{\#26 A survey of attacks on Ethereum smart contracts}
+\subsubsection{Vulnerabilities in Solidity}
+\begin{itemize}
+	\item \textbf{Call to the Unknown:} Some of the primitives used in Solidity to invoke functions and to transfer ether may have the side effect of invoking the fallback function of the callee/recipient
+	\item\textbf{Gasless Send}
+	\item\textbf{Exception Disorders}
+	\begin{itemize}
+		\item In Solidity there are several situations where an exception may be raised: (the execution runs out of gas, the call stack reaches its limit, the command throw is executed)
+		\item However, Solidity is not uniform in the way it handles exceptions: there are two different behaviors, which depend on how contracts call each other
+	\end{itemize}
+	\item\textbf{Type Casts:} The Solidity compiler detects some type errors, but not others. Even in presence of type errors, the EVM doesn't throw error at runtime
+	\item\textbf{Re-entrancy:} The atomicity and sequentiality of transactions may induce programmers to belive that, when a non-recursive function is invoked, it cannot be re-entered before its termination. However, this is not always the case, because the fallback mechanism may allow an attacker to re-enter the caller function
+	\item\textbf{Keeping Secret:} Fields in contracts can be public, i.e. directly readable by everyone, or private, i.e. not directly readable by other users/contracts. Still, declaring a field as private does not guarantee its secrecy
+\end{itemize}
+\subsubsection{Vulnerabilities in EVM}
+\begin{itemize}
+	\item \textbf{Immutable bugs:} Once a contract is published on the blockchain, it can no longer be altered
+	\item\textbf{Ether lost in transfer:} When sending ether, one has to specify the recipient address, which takes the form of a sequence of 160 bits. However, many of these addresses are orphans, i.e. they are not associated to any user or contract. If some ether is sent to an orphan address, it is lost forever (note that there is no way to detect whether an address is orphan).
+	\item\textbf{Stack size limit:} Each time a contract invokes another contract the call stack associated with the transaction grows by one frame. The call stack is bounded to 1024 frames: when this limit is reached, a further invocation throws an exception
+\end{itemize}
+\subsubsection{Vulnerabilities in Blockchain}
+\begin{itemize}
+	\item \textbf{Unpredictable state:} The state of a contract is determined by the value of its fields and balance. In general, when a user sends a transaction to the network in order to invoke some contract, he cannot be sure that the transaction will be run in the same state the contract was at the time of sending that transaction
+	\item\textbf{Generating randomness:} EVM bytecode is deterministic, so for generating of random numbers an initialization seed is chosen uniquely for all miners, based on the details of the block. A malicious miner/group of miner could create a block with the intention of biasing the outcome of this random seed
+	\item\textbf{Time constraints:} Miners can choose the timestamp for the block mined, which can cause issues with various smart contracts, particularly when functions are dependent on specific times
+\end{itemize}
+Common cause of insecurity in smart contracts is the difficulty in detecting mismatches between intended and actual behavior, a non-Turing complete, human readable language could help overcome this issue.
