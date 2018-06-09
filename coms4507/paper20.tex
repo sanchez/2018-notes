@@ -1,0 +1,25 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection*{\#20 On Scaling Decentralized Blockchains}
+\begin{itemize}
+	\item Tackles the question of whether blockchains can be scaled up to match the performance of a mainstream payment processor, and what it takes to get there
+	\item Finds that fundamental protocol redesign is needed for blockchains to scale significantly while retaining their decentralization
+	\item Identifies a three-way trade-off among consensus speed, bandwidth, and security. You can do two well, but usually one is traded off
+	\item Separates the different areas of a Blockchain system into 5 distinct planes: Network, Consensus, Storage, View and Side (Planes)
+	\item \textbf{Network Plane:} role of propagating transaction messages, specifically valid transactions. Two major inefficiencies:
+	\begin{itemize}
+		\item To avoid DoS attacks, where an invalid transaction is attempted to be propagated, a node must fully receive and attempt to validate the transaction before ignoring it if it's invalid
+		\item Transactions are propagated, and then later, a block is propagated when it is mined (which contains all the previously propagated transactions). Each transaction is transmitted twice
+	\end{itemize}
+	\item \textbf{Consensus Plane:} the role of mining blocks and verifying their legitimacy and addition to the Blockchain
+	\begin{itemize}
+		\item Held back by proof-of-work, which facilitates the `three-way trade-off' identified above. Changing this has the potential to overcome this problem
+	\end{itemize}
+	\item \textbf{Storage Plane:} essentially a `global memory' that stores and provides availability for authenticated data produced by the Consensus Plane
+	\begin{itemize}
+		\item Essentially the distributed ledger
+		\item Weakness with Bitcoin's distributed ledger is that each node stores the entire ledger, resulting in many duplicates
+	\end{itemize}
+	\item\textbf{View Plane:} facilitates the function of a view over the UTXO (unspent transaction outputs) set. It has a lot of similarities to the Storage Plane
+	\item\textbf{Side Plane:} allows off-the-main-chain consensus
+\end{itemize}
