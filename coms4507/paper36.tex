@@ -1,0 +1,25 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{\#36 Chip and PIN is broken}
+\begin{itemize}
+	\item EMV is the dominant protocol used for smart card payments worldwide
+	\item Secures transactions by authenticating card and customer using a combination of cryptographic authentication codes, digital signatures, and entry of a PIN
+	\item A man-in-the-middle attack is possible, trick the terminal that the PIN was entered while telling the card it wasn't entered
+	\item The attack is possible because the PIN is never explicitly authenticated
+	\item The attack works by intercepting communication and modify bits that say the card is authenticated
+	\item Many banks deny this attack is possible saying the card cannot be used without the correct PIN
+\end{itemize}
+3 phases of the EMV protocol:
+\begin{description}
+	\item[Card authentication:] Tells the terminal which bank to communicate with, and that the card is valid
+	\item[Cardholder verification:] Tells the terminal that the PIN entered (into the terminal) is the correct PIN for this card
+	\item[Transaction authorization:] Tells the terminal that the bank that issues this card will subsequently authorize this transaction
+\end{description}
+Key steps of the attack:
+\begin{enumerate}
+	\item Card reader is required to read the data of a legit card
+	\item That data is fed into a (python) program which pipes the information to an FPGA
+	\item FPGA programs the data onto a dummy card
+	\item The dummy card allows the attack to listen to the communications between card and terminal
+	\item When the (python) program sees the terminal send the PIN, the attack begins $\rightarrow$ the card itself sees that no pin was entered
+\end{enumerate}

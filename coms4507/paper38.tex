@@ -1,0 +1,15 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{\#38 Side-Channel Leaks in Web Applications: a Reality Today, a Challenge Tomorrow}
+\begin{itemize}
+	\item Software-as-a-service is becoming mainstream and more applications are delivered through the Web
+	\item A web application contains browser-side and server-side components
+	\item Part of the application's internal information flows are exposed on the network
+	\item Despite encryption, side-channel attacks can leak user information
+	\item Types of information already being leaked out: Healthcard, taxation, investment, and web searches
+	\item From this illnesses/medications/surgeries/family income/investments despite HTTPS encryption and WPA/WPA2 WiFi encryption
+	\item Root causes are fundamental characteristics of web applications: stateful communication, low entropy, and significant traffic distinctions.
+	\item Works by checking which information is repeated from other users and generating an ambiguity set (e.g. Male/Female would generate two sets of data which be relatively split 50/50)
+	\item Autocomplete helps side-channel attacks because the attack relies on changes to the users' state
+	\item Most solutions for this attack are application-specific, however padding can be added to information (but this increases overhead and bandwidth usage)
+\end{itemize}

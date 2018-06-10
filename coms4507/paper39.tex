@@ -1,0 +1,15 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{\#39 A convenient method for securely managing passwords}
+\begin{itemize}
+	\item Provides a password manager program
+	\item Users enter a master password and then get the individual password for that site
+	\item Protects against leaked passwords from different sites
+	\item Generated passwords are more protected against dictionary and brute force attacks
+	\item Instead of the user providing a password for each site (like normal password managers), this generates a password based on the site you are at
+	\item Combines site name, username and the master password with a hash function to generate the password
+	\item Minimal support for periodic password changes
+	\item Changing master password requires changing all the passwords
+	\item $k1$ is used during initialization, it is the number of times username and master password are concatenated (cached for session of user)
+	\item $k2$ is used during password generation, number of times site name, concatenated with master password, concatenated with with result
+\end{itemize}

@@ -1,0 +1,49 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{\#32 Android Security: A Survey of Issues, Malware Penetration and Defences}
+\begin{itemize}
+	\item Security features provided by Android:
+	\begin{itemize}
+		\item Application sandboxing
+		\item Permissions at framework-level
+		\item Secure system partition
+		\item Secure Google Play Store
+		\item Various other security enhancements over the years:
+		\begin{itemize}
+			\item Mandatory Access Control (MAC) policies since 4.3 (Jelly Bean)
+			\item Authentication required when using Android Debug Bridge
+			\item Removing \texttt{setuid()} and \texttt{setgid()} functions
+		\end{itemize}
+	\end{itemize}
+	\item Security issues faced by the Android platform
+	\begin{itemize}
+		\item Updates
+		\begin{itemize}
+			\item Original Equipment Manufacturers (OEMs) have the responsibility to provide updates to the consumers who provide their product
+			\item Even though Android itself is open source, and freely distributed, many of these OEMs add further modifications to suit their business interests
+			\item It may even suit an OEM to not release an update, if there is no financial reason to do so
+			\item This leads to fragmentation, where some devices are able to update, and some aren't, and the proliferation in exploits and vulnerabilities as it becomes worthwhile to attack older Android OS's
+		\end{itemize}
+		\item Native Code Execution: In older Android OS's, native code execution can execute publicly at the root level
+		\item Types of Threats
+		\begin{itemize}
+			\item Privilege Escalation attacks
+			\item Privacy leaks through permissions
+			\item Malicious apps can spy on users
+			\item Malicious apps can use the device to make phone calls/send messages
+			\item Colluding attacks
+			\item Denial of service attack
+		\end{itemize}
+	\end{itemize}
+	\item Malware Penetration Technique
+	\begin{itemize}
+		\item Repackaging popular apps
+		\item Drive-by download
+	\end{itemize}
+	\item Various ways to detect, assess and analyse Android applications, the best ones usually are off-device
+	\item Two main methods of detection:
+	\begin{description}
+		\item[Static:] Utilizes control-flow and data-flow analysis to detect improper patterns in an application's design. Can be less successful if the app is encrypted or uses transformation techniques
+		\item[Dynamic:] Executes applications in a sand-boxed environment in order to monitor activities and identify anomalous behavior. Can be less successful if the app uses anti-emulation techniques
+	\end{description}
+\end{itemize}

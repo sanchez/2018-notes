@@ -1,0 +1,20 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{\#40 The TESLA Broadcast Authentication Protocol}
+\begin{itemize}
+	\item \textbf{TESLA:} Times Efficient Stream Loss-tolerant Authentication
+	\item Broadcast protocol that allows for source authentication
+	\item Low communication and computational overhead
+	\item Easily scaled to large number of receivers, and tolerates packet loss
+	\item Uses symmetric  cryptographic functions (MAC functions)
+	\item Assume all network nodes are loosely time synchronized
+	\item Time synchronization is required because there needs to be a delay in transmitting the key, if the attacker knows when the key is sent otherwise they could pretend to be the attacker
+	\item An attacker could flood the sender with time synchronization requests, leading to a DoS attack
+	\item Buffering of packets is needed because the key isn't sent till later
+\end{itemize}
+Order of execution:
+\begin{enumerate}
+	\item An authentication code is appended to the packet (only sender knows)
+	\item Receiver will receive a packet and not know how to authenticate
+	\item Later sender will send the key to the receiver, allowing for packet authentication
+\end{enumerate}

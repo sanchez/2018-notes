@@ -1,0 +1,16 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{\#35 Detecting and Defending against third-party tracking on the web}
+\begin{itemize}
+	\item Estimates that trackers capture up to 20\% of a user's browsing behavior
+	\item Two main types of trackers: within-site trackers (like Google Analytics), and cross-site trackers (like DoubleClick)
+	\item Firefox addon, ShareMeNot, which drastically mitigates the prevalence of third-party social widget tracking
+\end{itemize}
+Category of trackers:
+\begin{description}
+	\item[Analytics:] Within-Site, Serves as third-party analytics engine for sites
+	\item[Vanilla:] Cross-Site, Uses third-party storage to track users across sites
+	\item[Forced:] Cross-Site, Forces user to visit directly (e.g. via popup or redirect)
+	\item[Referred:] Cross-Site, Relies on a \textbf{Vanilla}, \textbf{Forced}, or \textbf{Personal} tracker to leak unique identifiers
+	\item[Personal:] Cross-Site, Visited directly by the user in other contexts
+\end{description}
