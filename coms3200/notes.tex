@@ -1,5 +1,6 @@
 % !TeX spellcheck = en_US
 \documentclass[12pt, a4paper]{article}
+\usepackage[table]{xcolor}
 \usepackage[scaled]{helvet}
 \renewcommand\familydefault{\sfdefault}
 \usepackage[T1]{fontenc}
@@ -252,7 +253,122 @@
 	\begin{multicols*}{2}
 	\section{Acronyms}
 	\input{acronyms}
+\end{multicols*}
+
+\newpage
+\section{2017 solutions}
+\subsection{Question 1}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{q1}
+\end{figure}
+\begin{table}[H]
+	\centering
+	\caption{Dijkstra's method}
+	\rowcolors{2}{gray!25}{white}
+	\begin{tabular}{lrrrrrrrr}
+		\toprule
+		Step &       N' & D(a),p(a) & D(b),p(b) & D(c),p(c) & D(d),p(d) & D(e),p(e) & D(f),p(f) & D(h),p(h) \\ \midrule
+		0    &        g &       4,g &  $\infty$ &       1,g &  $\infty$ &  $\infty$ &  $\infty$ &       8,g \\
+		1    &       gc &       4,g &       2,c &       1,g &       4,c &  $\infty$ &  $\infty$ &       8,g \\
+		2    &      gcb &       3,b &       2,c &           &       4,c &  $\infty$ &  $\infty$ &       8,g \\
+		3    &     gcba &       3,b &           &           &       4,c &  $\infty$ &       5,a &       8,g \\
+		4    &    gcbaf &           &           &           &       4,c &       6,f &       5,a &       8,g \\
+		5    &   gcbafe &           &           &           &       4,c &       6,f &           &       8,g \\
+		6    &  gcbafed &           &           &           &       4,c &           &           &       6,d \\
+		7    & gcbafedh &           &           &           &           &           &           &       6,d \\
+		8    &          &           &           &           &           &           &           &
+	\end{tabular}
+\end{table}
+\begin{table}[H]
+	\begin{tabular}{lll}
+		\toprule
+		From node g to & Minimum Path & Minimum Distance \\ \midrule
+		a              & gcba         & 3                \\
+		b              & gcb          & 2                \\
+		c              & gc           & 1                \\
+		d              & gcd          & 4                \\
+		e              & gcbafe       & 6                \\
+		f              & gcbaf        & 5                \\
+		h              & gcdh         & 6
+	\end{tabular}
+\end{table}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{q1b}
+\end{figure}
+If output ports from \textbf{g} to nodes \textbf{a}, \textbf{c}, and \textbf{h} are called `ga', `gc', and `gh' respectively, show a forwarding table, based on the above minimum paths, which shows the output links from g for all destination nodes
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lc}
+		\toprule
+		List of destination nodes & To be sent over link\\
+		\midrule
+		None (other routes faster) & ga\\
+		All (quickest routes for all) & gc\\
+		Non (other routes faster) & gh
+	\end{tabular}
+\end{table}
+\subsection{Question 2}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{p{10cm}ll}
+		\toprule
+		Purpose of this Protocol                                                        & Name           & Layer       \\ \midrule
+		Example: Retrieve web pages                                                     & HTTP           & Application \\
+		Convey network management control and information messages                      & SNMP           & Application \\
+		Send email message to a mail server                                             & SMTP           & Application \\
+		Download email messages from a mail server                                      & IMAP/POP3      & Application \\
+		``Ping'' a host                                                                 & IMCP           & Network     \\
+		Convert a hostname to an IP address                                             & DNS            & Application \\
+		Convert an IP address to a MAC address                                          & ARP            & Link        \\
+		Sending intra-AS link-state routing messages                                    & OSPF/IS-IS     & Network     \\
+		Setting up multimedia stream connections                                        & SIP            & Transport   \\
+		Providing connectivity between hosts and access points in WiFi networks         & 802.11         & Physical    \\
+		An enhanced version of connection-oriented stream transport which adds security & QUIC (TLS/SSL) & Application
+	\end{tabular}
+\end{table}
+\subsection{Question 3}
+TCP packet inside an IP packet inside Ethernet frame (preamble and CRC)\\
+\texttt{aa aa aa aa aa aa aa ab}\qquad \texttt{00 00 5e 00 01 08 98 90}\\
+\texttt{96 d8 35 a9 08 00 45 00\qquad 00 28 41 71 40 00 80 06}\\
+\texttt{00 00 0a 21 02 98 d0 5c\qquad ec 52 e1 75 00 50 e7 3e}\\
+\texttt{50 0c 1b a0 80 d4 50 11\qquad f7 39 c9 82 00 00 00 00}\\
+\texttt{00 00 00 00 c8 aa ab cd}\\
+IP is 40 bytes long\\
+\begin{table}[H]
+	\begin{tabular}{ll}
+		\toprule
+		Field                        & (Format) Value                                           \\ \midrule
+		Ethernet Source Address      & (Hexadecimal) 98:90:96:d8:35:a9                          \\
+		Ethernet Destination Address & (Hexadecimal) 00:00:5e:00:01:08                          \\
+		IP Source Address            & (Dotted Decimal) 0a 21 02 98 $\rightarrow$ 10.33.2.152   \\
+		IP Destination Address       & (Dotted Decimal) d0 5c ec 52 $\rightarrow$ 208.92.236.82 \\
+		TCP Source Port              & (Decimal) e1 75 $\rightarrow$ 57717                      \\
+		TCP Destination Port         & (Decimal) 00 50 $\rightarrow$ 80                         \\
+		IP Version                   & (Decimal) 4                                              \\
+		IP Header Length in bytes    & (Decimal) 20                                             \\
+		IP Datagram Length in bytes  & (Decimal) 28                                              \\
+		TCP Flags                    & (Binary) URG: 0                                          \\
+		                             & (Binary) ACK: 1                                          \\
+		                             & (Binary) PSH: 0                                          \\
+		                             & (Binary) RST: 0                                          \\
+		                             & (Binary) SYN: 0                                          \\
+		                             & (Binary) FIN: 1                                          \\
+		TCP Sequence Number          & (Hex) e7 3e 50 0c                                        \\
+		TCP Acknowledgment Number    & (Hex) 1b a0 80 d4                                        \\
+		IP Header Checksum           & (Hex) 00 00                                              \\
+		TCP Internet Checksum        & (Hex) c9 82                                              \\
+		Ethernet CRC                 & (Hex) ab cd
+	\end{tabular}
+\end{table}
+\subsection{Question 4}
+\subsubsection{Link-state and distance-vector}
+Distance-vector, each node tells its neighbors everything it knows about the network. In Link-State, each router broadcasts the state of its own links to the entire network. Leaving each router to build up a graph of the network. LS has the advantage that is updates router's graphs quicker across the network because it broadcasts changes. DV advantage is that it uses less memory and CPU by not having to build up graphs, only populate a routing table
+\subsubsection{Destination-based forwarding and Software-defined-networking}
+Destination-based forwarding forwards packets towards their end destination by a routing table of destinations and links. SDN uses a central controller to direct packets using more complex rules than just routing tables. Advantage of destination-based: is that's very simple to implement and is self-managing. Advantage of SDN: you can route packets by type of traffic or link cost (peering agreement)
+\subsubsection{TCP and UDP}
+TCP uses a 3-way handshake to open a `connection' between hosts, and within that connection, packets are guaranteed to arrive eventually. UDP packets are send off and forgotten about, and may not arrive. TCP advantage: IP address can not be spoofed. UDP advantage: save the overhead dealing with connections for simple messages or real-time applications
+\subsubsection{Go-Back-N and Selective-Repeat}
+GBN will retransmit all the packets after the last successful ACK that timed out, whereas SR will only retransmit the lost packets that weren't ACK'd. GBN advantage is it doesn't need to ACK every single packet, just every X number. SR saves retransmitting even correctly received packet
 
 
-\end{multicols*}	
 \end{document}
