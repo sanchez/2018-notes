@@ -27,6 +27,7 @@
 \newcounter{note}\setcounter{note}{0}
 \renewcommand{\thenote}{\arabic{note}}
 \newenvironment{note}[1]{
+	\begin{minipage}{\linewidth}
 	\stepcounter{note}
 	\ifstrempty{#1}{
 		\mdfsetup{
@@ -48,7 +49,7 @@
 	\mdfsetup{innertopmargin=0pt,linecolor=blue!20,linewidth=2pt,topline=true,frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
 	\begin{mdframed}[]\relax
 }{
-	\end{mdframed}
+	\end{mdframed}\end{minipage}
 }
 
 \begin{document}
@@ -179,6 +180,7 @@
 	\input{lec7}
 	
 	\section{Chapter 5}
+	% Add BGP, OSPF, IS-IS, RIP (know if they are inter-AS or intra-AS, link-state or distance-vector)
 	\input{lec8}
 	
 	\section{Chapter 6}
@@ -193,7 +195,20 @@
 	\section{Chaper 9}
 	\input{lec13}
 	
+\end{multicols*}	
+	
 	\newpage
+	\section{Packet Format}
+	\input{format}
+	
+	\newpage
+	\begin{multicols*}{2}
+		\section{Protocols}
+		\input{protocols}
+	\end{multicols*}
+	
+	\newpage
+	\begin{multicols*}{2}
 	\section{Acronyms}
 	\input{acronyms}
 

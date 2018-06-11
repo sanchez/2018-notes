@@ -35,7 +35,7 @@
 \end{description}
 
 \subsection{Transport Protocol Services}
-\subsubsection{TCP}
+\subsubsection{TCP}\label{sec:tcp}
 \begin{description}
 	\item[Reliable Transport] between sending and receiving process
 	\item[Flow Control:] sender won't overwhelm receiver
@@ -44,7 +44,7 @@
 	\item[Does Not Provide:] timing, minimum throughput guarantee, security
 \end{description}
 
-\subsubsection{UDP}
+\subsubsection{UDP}\label{sec:udp}
 \begin{description}
 	\item[Unreliable Data Transfer] between sending and receiving process
 	\item[Does Not Provide:] reliability, flow control, congestion control, timing, throughput guarantee, security, or connection setup
@@ -71,7 +71,7 @@
 	\item cleartext passwords sent into socket traverse Internet encrypted
 \end{itemize}
 
-\subsection{HTTP: Hypertext Transfer Protocol}
+\subsection{HTTP: Hypertext Transfer Protocol}\label{sec:http}
 \begin{itemize}
 	\item Web's application layer protocol
 	\item client/server model. Client request website and server serves HTTP object in response
@@ -128,7 +128,7 @@ Uses: authorization, shopping carts, recommendations, user session state (Web, e
 	\item \textbf{Server:} response contains no object if cached copy is up-to-date: \texttt{HTTP/1.0 Not Modified}
 \end{itemize}
 
-\subsection{Electronic Mail: SMTP}
+\subsection{Electronic Mail: SMTP}\label{sec:smtp}
 \textit{RFC 2821}
 \begin{itemize}
 	\item uses TCP to reliably transfer email message from client to server, port 25
@@ -164,7 +164,7 @@ Difference to HTTP being, HTTP is server sending data, SMTP is client connection
 	\item[HTTP:] gmail, Hotmail, Yahoo, etc
 \end{description}
 
-\subsection{DNS: Domain Name System}
+\subsection{DNS: Domain Name System}\label{sec:dns}
 \begin{itemize}
 	\item Lookup between names (e.g. google.com) and IP addresses
 	\item \textbf{Distributed Database} implemented in hierarchy of many \textbf{name servers}

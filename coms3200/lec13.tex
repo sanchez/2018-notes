@@ -75,7 +75,7 @@ $$ d_i = (1-\alpha)d_{i-1}+\alpha(r_i-t_i) $$
 %	\item[login server]
 %\end{description}
 
-\subsection{Real-Time Protocol (RTP)}
+\subsection{Real-Time Protocol (RTP)}\label{sec:rtp}
 \begin{itemize}
 	\item RTP specifies packet structure for packets carrying audio, video data
 	\item RFC 3550
@@ -104,7 +104,7 @@ RTP libraries provide transport-layer interface that extends UDP:
 	\subitem routers provide best-effort service, making no special effort to ensure that RTP packets arrive at destination in timely matter
 \end{itemize}
 
-\subsection{Real-Time Control Protocol (RTCP)}
+\subsection{Real-Time Control Protocol (RTCP)}\label{sec:rtcp}
 \begin{itemize}
 	\item works in conjuncation with RTP
 	\item each participant in RTP session periodically sends RTCP control packets to all other participants
@@ -120,7 +120,7 @@ RTP libraries provide transport-layer interface that extends UDP:
 	\item[source description packets:] email address of sender, sender's name, SSRC of associated RTP stream. Provide mapping between the SSRC and the user/host name
 \end{description}
 
-\subsection{SIP: Session Initiation Protocol}
+\subsection{SIP: Session Initiation Protocol}\label{sec:sip}
 \textbf{long-term vision:}
 \begin{itemize}
 	\item all telephone calls, video conference calls take place over Internet

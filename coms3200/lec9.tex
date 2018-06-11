@@ -81,19 +81,20 @@ Given a broadcast channel of rate $R$ bps. An ideal multiple access protocol nee
 	\end{itemize}
 	\item simple
 \end{itemize}
+
 \subsection{MAC Protocols}
 \begin{description}
 	\item[Channel Partitioning:] divide channel into smaller ``pieces'' (time slots, frequency, code). Allocate piece to node for exclusive use
 	\item[Random Access:] channel not divided, allow collisions, ``recover'' from collisions
 	\item[``Taking Turns'':] nodes take turns, but nodes with more to send can take longer turns
 \end{description}
-\subsubsection{TDMA: time division multiple access}
+\subsubsection{TDMA: time division multiple access}\label{sec:tdma}
 \begin{itemize}
 	\item access to channel in ``rounds''
 	\item each station gets fixed length slot (length = packet transmission time) in each round
 	\item unused slots go idle
 \end{itemize}
-\subsubsection{FDMA: frequency division multiple access}
+\subsubsection{FDMA: frequency division multiple access}\label{sec:fdma}
 \begin{itemize}
 	\item channel spectrum divided into frequency bands
 	\item each station assigned fixed frequency band
@@ -120,7 +121,7 @@ Given a broadcast channel of rate $R$ bps. An ideal multiple access protocol nee
 		\item CSMA, CSMA/CD, CSMA/CA
 	\end{itemize}
 \end{itemize}
-\subsubsection{Slotted ALOHA}
+\subsubsection{Slotted ALOHA}\label{sec:saloha}
 \textbf{Assumptions:}
 \begin{itemize}
 	\item all frames same size
@@ -150,13 +151,13 @@ Given a broadcast channel of rate $R$ bps. An ideal multiple access protocol nee
 	\item nodes may be able to detect collision in less than time to transmit packet
 	\item clock synchronization
 \end{itemize}
-\subsubsection{Pure (unslotted) ALOHA}
+\subsubsection{Pure (unslotted) ALOHA}\label{sec:paloha}
 \begin{itemize}
 	\item unslotted Aloha: simpler, no synchronization
 	\item when frame first arrives $\rightarrow$ transmit immediately
 	\item collision probability increases: frame sent at $t_0$ collides with other frames sent in $[t_0-1,t_0+1]$
 \end{itemize}
-\subsubsection{CSMA (carrier sense multiple access)}
+\subsubsection{CSMA (carrier sense multiple access)}\label{sec:CSMA}
 \textbf{CSMA:} listen before transmit
 \begin{itemize}
 	\item \textbf{if channel sensed idle:} transmit entire frame
@@ -164,7 +165,7 @@ Given a broadcast channel of rate $R$ bps. An ideal multiple access protocol nee
 	\item \textbf{collisions can still occur:} propagation delay means two nodes may not hear each other's transmission
 	\item \textbf{collision:} entire packet transmission time wasted (distance and propagation delay play role in determining collision probability)
 \end{itemize}
-\subsubsection{CSMA/CD (collision detection)}
+\subsubsection{CSMA/CD (collision detection)}\label{sec:CSMA/CD}
 \textbf{CSMA/CD:} carrier sensing, deferral as in CSMA
 \begin{itemize}
 	\item collisions \textit{detected} within short time
@@ -202,13 +203,13 @@ Given a broadcast channel of rate $R$ bps. An ideal multiple access protocol nee
 	\item high load: collision overhead
 \end{itemize}
 \textbf{``taking turns'' protocols:} look for best of both worlds!
-\subsubsection{Polling}
+\subsubsection{Polling}\label{sec:polling}
 \begin{itemize}
 	\item master node ``invites'' slave nodes to transmit in turn
 	\item typically used with ``dumb'' slave devices
 	\item concerns: polling overhead, latency, single point of failure (master)
 \end{itemize}
-\subsubsection{Token Passing}
+\subsubsection{Token Passing}\label{sec:token}
 \begin{itemize}
 	\item control \textbf{token} passed from one node to next sequentially
 	\item token message
@@ -216,7 +217,7 @@ Given a broadcast channel of rate $R$ bps. An ideal multiple access protocol nee
 \end{itemize}
 
 \subsection{Cable Access Network}
-\subsubsection{DOCSIS: Data Over Cable Service Interface Spec}
+\subsubsection{DOCSIS: Data Over Cable Service Interface Spec}\label{sec:docsis}
 \begin{itemize}
 	\item FDM over upstream, downstream frequency channels
 	\item TDM upstream: some slots assigned, some have contention
@@ -244,7 +245,7 @@ MAC (or LAN or physical or Ethernet) address:
 	\item MAC flat address $\rightarrow$ portability (can move LAN card from one LAN to another)
 	\item IP hierarchical address not portable (address depends on IP subnet to which node is attached)
 \end{itemize}
-\subsubsection{ARP: Address Resolution Protocol}
+\subsubsection{ARP: Address Resolution Protocol}\label{sec:arp}
 \textbf{ARP table:} each IP node (host, router) on LAN has table
 \begin{itemize}
 	\item IP/MAC address mappings for some LAN nodes: \texttt{<IP address; MAC address; TTL>}

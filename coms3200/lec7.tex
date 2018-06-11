@@ -37,7 +37,7 @@
 	\item[Generalized forwarding:] forward based on any set of header field values
 \end{description}
 \subsubsection{Destination-based forwarding}
-A link interface is assigned to a range of destination address ranges\newpage
+A link interface is assigned to a range of destination address ranges\\
 \begin{note}{Longest Prefix Matching}
 	When looking for forwarding table entry for given destination address, use \textbf{longest} address prefix that matches destination address. Longest prefix matching: often performed using ternary content addressable memories (TCAMs). Cisco Catalyst can hold up $\approx$1M routing table entries in TCAM.
 \end{note}
@@ -104,7 +104,7 @@ A link interface is assigned to a range of destination address ranges\newpage
 	\item[WFQ scheduling:] generalized Round Robin. Each class gets weighted amount of service in each cycle
 \end{description}
 
-\subsection{IP}
+\subsection{IP}\label{sec:ip}
 \subsubsection{IP Datagram Format}
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{ip}
@@ -136,7 +136,7 @@ CIDR: Classless InterDomain Routing
 	\item subnet portion of address of arbitrary length
 	\item address format: \texttt{a.b.c.d/x}, where \texttt{x} is \# bits in subnet portion of address
 \end{itemize}
-\subsubsection{DHCP: Dynamic Host Configuration Protocol}
+\subsubsection{DHCP: Dynamic Host Configuration Protocol}\label{sec:dhcp}
 \begin{leftbar}
 	\textbf{Goal:} allow host to \textit{dynamically} obtain its IP address from network server when it joins network
 \end{leftbar}
@@ -158,13 +158,13 @@ DHCP can return more than just allocated IP address on subnet:
 	\item name and IP address of DNS server
 	\item network mask (indicating network versus host portion of address)
 \end{itemize}
-\subsubsection{ICANN}
+\subsubsection{ICANN}\label{sec:icann}
 \begin{itemize}
 	\item allocates addresses
 	\item manages DNS
 	\item assigns domain names, resolves disputes
 \end{itemize}
-\subsubsection{NAT}
+\subsubsection{NAT}\label{sec:nat}
 All datagrams \textbf{leaving} local network have \textbf{same} single source NAT IP address
 \begin{leftbar}
 	\textbf{Motivation:} local network uses just one IP address as far as outside world is concerned
@@ -191,7 +191,7 @@ All datagrams \textbf{leaving} local network have \textbf{same} single source NA
 		\item NAT traversal: what if client wants to connect to server behind NAT?
 	\end{itemize}
 \end{itemize}
-\subsubsection{IPv6}
+\subsubsection{IPv6}\label{sec:ipv6}
 \begin{leftbar}
 	32-bit address space soon to be completely allocated
 \end{leftbar}
