@@ -192,8 +192,49 @@
 	\section{Chapter 8}
 	\input{lec12}
 	
-	\section{Chaper 9}
+	\section{Chapter 9}
 	\input{lec13}
+	
+	\section{Day in the life of a web request}
+	\subsection{Connecting to the Internet}
+	\begin{itemize}
+		\item connecting laptop needs to get its own IP address, addr of first-hop router, addr of DNS server: use \textbf{DHCP}
+		\item DHCP request \textbf{encapsulated} in \textbf{UDP}, encapsulated in \textbf{IP}, encapsulated in \textbf{802.3} Ethernet
+		\item Ethernet frame \textbf{broadcast} (dest: FFFFFFFFFFFF) on LAN received at router running \textbf{DHCP} server
+		\item Ethernet \textbf{demuxed} to IP demuxed, UDP demuxed to DHCP
+		\item DHCP server formulates \textbf{DHCP ACK} containing client's IP address, IP address of first-hop router for client, name and IP address of DNS server
+		\item encapsulate at DHCP server, frame forwarded (\textbf{switch learning}) through LAN, demultiplexing at client
+		\item DHCP client receives DHCP ACK reply
+	\end{itemize}
+	\textit{Client now has IP address, knows name and addr of DNS server, IP address of its first-hop router}
+	\subsubsection{ARP (before DNS, before HTTP)}
+	\begin{itemize}
+		\item before sending \textbf{HTTP} request, need IP address of www.google.com: \textbf{DNS}
+		\item DNS query created, encapsulated in UDP, encapsulated in IP, encapsulated in Ethernet. To send frame to router, need MAC address of router interface: \textbf{ARP}
+		\item\textbf{ARP query} broadcast, received by router, which replies with \textbf{ARP reply} giving MAC address of router interface
+		\item client now knows MAC address of first hop router, so can now send frame containing DNS query
+	\end{itemize}
+	\subsubsection{using DNS}
+	\begin{itemize}
+		\item IP datagram containing DNS query forwarded via LAN switch from client to $1^{st}$ hop router
+		\item IP datagram forwarded from campus network into Comcast network, routed (tables created by \textbf{RIP, OSPF, IS-IS} and/or \textbf{BGP} routing protocols) to DNS server
+		\item demuxed to DNS server
+		\item DNS server replies to client with IP address of www.google.com
+	\end{itemize}
+	\subsubsection{TCP connection carrying HTTP}
+	\begin{itemize}
+		\item to send HTTP request, client first opens \textbf{TCP socket} to web server
+		\item TCP \textbf{SYN segment} (step 1 in 3-way handshake) inter-domain routed to web server
+		\item web server responds with \textbf{TCP SYNACK} (step 2 in 3-way handshake)
+		\item TCP \textbf{connection established}
+	\end{itemize}
+	\subsubsection{HTTP request/reply}
+	\begin{itemize}
+		\item \textbf{HTTP request} sent into TCP socket
+		\item IP datagram containing HTTP request routed to www.google.com
+		\item web server responds with \textbf{HTTP reply} (containing web page)
+		\item IP datagram containing HTTP reply routed back to client
+	\end{itemize}
 	
 \end{multicols*}	
 	
