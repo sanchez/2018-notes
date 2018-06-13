@@ -1,0 +1,18 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{\#44 The Web Never Forgets: Persistent Tracking Mechanisms in the Wild}
+Three advanced web tracking mechanisms:
+\begin{itemize}
+	\item Explores three web tracking mechanisms:
+	\begin{description}
+		\item[Canvas Fingerprinting:] Canvas fingerprinting uses the HTML5 canvas element to draw an invisible image. The site can then call the Canvas' APIs `\texttt{ToDataURL}' method to get the canvas pixel data in URL form. Now the site can hash this pixel data, and as long as they unique images (which are invisible to the end user), these can serve as fingerprints for the user accessing the site
+		\item[Evercookies:] Cookies that actively circumvent a users' attempts to clear cookies by abusing various browser storage mechanisms
+		\item[Cookie Syncing:] Allows trackers to cooperate with each other, when they see a friendly cookie that doesn't necessarily belong to them. This allows for back-end server-side data merges that are completely hidden from the end user
+	\end{description}
+	\item Mitigation for:
+	\begin{description}
+		\item[Canvas Fingerprinting:] The Tor browser simply notifies a user that a website attempted to draw using the HTML5 canvas tool, and allows the user to accept/decline the attempt (since this tool also has legitimate uses)
+		\item[Evercookies:] The straightforward way is to just clear all browser storage locations. Depending on which browser you use, this may be hard to achieve. If you use Adobe Flash, this is not a robust solution as the storage Flash uses can be utilized by multiple browsers and is therefore not isolated to one
+		\item[Cooking Syncing:] No robust way to stop cookies from cooperating. EFF's Privacy Badger add-on uses a heuristic method to block third-party cookies. Another way is to just not allow any sort of third-party traffic to store on your computer, but this can have negative impacts on certain websites, and will be frivolous if you already have certain cookies already on your system
+	\end{description}
+\end{itemize}

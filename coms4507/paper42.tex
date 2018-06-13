@@ -1,0 +1,19 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{\#42 Honeywords: Making Password-Cracking Detectable}
+\begin{itemize}
+	\item Creates a set of passwords for each account which are ``honeyword'' passwords
+	\item When an attacker gets access to the hash passwords, do not know which is real or honeyword
+	\item If the honeyword is attempted to be used as a login, alarm is set off
+	\item Secondary server is used to check if password is real or honeyword (honeychecker)
+	\item Works only if database is compromised, rather than physical system
+	\item Works for every account compared to honeypot technique
+	\item Open Problems:
+	\begin{itemize}
+		\item How to ensure security of the honeychecker system
+		\item How to maintain the integrity of the honeycheck if a compromised computer system attacks it
+		\item What to do after the honeyword is entered? Simply disable the triggered account?
+		\item How to protect against a man-in-the-middle
+		\item Cam password models underlying cracking algortihms be easily adapted for use in chaffing-with-a-password-model
+	\end{itemize}
+\end{itemize}

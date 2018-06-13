@@ -1,0 +1,15 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{\#43 RSA Key Extraction via Low-Bandwidth Acoustic Cryptanalysis}
+\begin{itemize}
+	\item Able to get the full 4096-bit RSA keys used for encryption
+	\subitem When using the library GnuPG
+	\item Uses small acoustic noises made by electric components
+	\item Very low bandwidth (20kHz to a few hundred kHz), compared to the GHz-scale clock rates
+	\item Takes roughly an hour for a standard attack
+	\item Acoustic shield can be used, but makes cooling difficult
+	\item Noisy environments can be filtered out in the data processing phase
+	\item Parallel software load doesn't help reduce this attack, shifts leakage frequency to a lower range
+	\item Cipher text randomization, works by generating a random 4096 bit number and perform few calculations with it. Attack can't distinguish between the real and random number (Modulus randomization works and is similar to this)
+	\item Padding the ciphertext with 0s or n-bits, attacker won't know then the ciphertext is beginning
+\end{itemize}

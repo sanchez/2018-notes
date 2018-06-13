@@ -1,0 +1,9 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{\#50 Client Puzzles: A Cryptographic countermeasure against connection depletion attacks}
+\begin{itemize}
+	\item Provides a solution to TCP SYN flooding
+	\subitem This is DoS attack where the attacker opens a series of connections and never closes them
+	\item The solution is to send a cryptographic puzzle to the client, the client must solve this puzzle before the connection is initiated
+	\item The time for the client to solve the puzzle is greater than the server to generate a new puzzle
+\end{itemize}

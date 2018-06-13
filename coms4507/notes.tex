@@ -1,5 +1,5 @@
 % !TeX spellcheck = en_US
-\documentclass[12pt, a4paper]{article}
+\documentclass[12pt, a4paper]{report}
 \usepackage[scaled]{helvet}
 \renewcommand\familydefault{\sfdefault}
 \usepackage[T1]{fontenc}
@@ -13,6 +13,17 @@
 \usepackage{enumitem}
 \usepackage{gensymb}
 \setlist{nosep}
+\usepackage{booktabs}
+\usepackage{tikzsymbols}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+\usepackage{multirow}
 
 \newcounter{note}\setcounter{note}{0}
 \renewcommand{\thenote}{\arabic{note}}
@@ -54,7 +65,7 @@
 
 \begin{multicols*}{2}
 
-\section{Exam Structure}
+\chapter{Exam Structure}
 \textbf{Exam Is Open Book!}
 \subsection{What is Covered?}
 \begin{itemize}
@@ -94,8 +105,10 @@ Two parts with total $\approx$ 55 marks
 	\item Describe if and how malicious application can detect the presence of Aurasium
 \end{itemize}
 
-\pagebreak
-\section{Seminar Paper Summaries}
+\chapter{Lecture Notes}
+\input{lec1}
+
+\chapter{Paper Summaries}
 
 \input{paper20}
 \input{paper21}
@@ -115,6 +128,16 @@ Two parts with total $\approx$ 55 marks
 \input{paper38}
 \input{paper39}
 \input{paper40}
+\input{paper41}
+\input{paper42}
+\input{paper43}
+\input{paper44}
+\input{paper45}
+\input{paper46}
+\input{paper47}
+\input{paper48}
+\input{paper49}
+\input{paper50}
 
 
 \end{multicols*}
