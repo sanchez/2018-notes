@@ -81,7 +81,7 @@ How can Blind Signatures solve anonymity problem in eCash?
 	\end{itemize}
 \end{note}
 
-\section{Cryptographic (one-way) Hash Function}
+\subsection{Cryptographic (one-way) Hash Function}
 \begin{itemize}
 	\item Also called: digital fingerprint, message digest
 	\item Compact way to remember what files or blocks of data we have seen
@@ -95,7 +95,7 @@ Properties of a hash function:
 	\item[Collision resistance:] It is computationally infeasible to find any two distinct inputs $x_1$ and $x_2$ so that $h(x_1)=h(x_2)$ (Collisions do exist, actually there is an infinite number of them)
 \end{description}
 
-\subsection{Ideal One-way Cryptographic Hash Function ``Random Oracle'' Model}
+\subsubsection{Ideal One-way Cryptographic Hash Function ``Random Oracle'' Model}
 \begin{itemize}
 	\item A machine with an input and an output
 	\item When an input arrives, if the input has arrived before $\rightarrow$ give same output as last time. Else generate a new random output and record the input and output
