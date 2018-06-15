@@ -1,0 +1,122 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Lecture 5: Secret Sharing}
+Requirements:
+\begin{itemize}
+	\item Neither Alice nor Bob alone should be able to reconstruct $M$
+	\item If Alice and Bob cooperate, they should be able to reconstruct $M$
+	\item Choose a random $m$-bit number $X1$
+	\item Calculate $X2=M\oplus X1$ ($\oplus$ is bit-wise XOR)
+	\item Give $X1$ to Alice and $X2$ to Bob
+	\item Construct the message $M=X1\oplus X2$
+\end{itemize}
+
+\subsection{One Time Pad (OTP)}
+\begin{itemize}
+	\item The only unbreakable (classical) cipher ($C=M\oplus K$, $M=C\oplus K$)
+	\item ``Perfect security or secrecy''
+	\begin{itemize}
+		\item Cannot be broken, even by attacker with infinite amount of computing power and time
+		\item This is in contrast to ``computational security'' (e.g. it would take an attacker > 1 Billion years to brute force, with all the computing power currently available)
+	\end{itemize}
+	\item Not practical
+	\begin{itemize}
+		\item Need very large key (same size as plaintext)
+		\item Key needs to be completely random
+		\item Key cannot be reused
+	\end{itemize}
+\end{itemize}
+\subsubsection{Secret Sharing among 3 people}
+	\begin{itemize}
+		\item We want: $M=X1\oplus X2\oplus X3$
+		\item X1 and X2 are chosen randomly, $X3 = X1\oplus X2\oplus M$
+		\item If there are only two shares, it still produces a random number
+	\end{itemize}
+\begin{note}{Secret Sharing among $n$ people}
+	\begin{itemize}
+		\item Split secret $M$ between $n$ people
+		\item Generate $n-1$ random numbers
+		\item $X_n = X_1\oplus X_2\oplus X_3\oplus\ldots X_{n-1}\oplus M$
+		\item $M = X_1\oplus X_2\oplus X_3\oplus\ldots X_{n-1}\oplus M_n$
+		\item Knowing fewer than $n$ shares gives absolutely no information about the secret $M$
+	\end{itemize}
+\end{note}
+
+\subsection{Threshold Secret Sharing}
+\begin{itemize}
+	\item (t, n)-threshold scheme
+	\item Method of sharing secret $M$ among set of $n$ participants, only $t$ participants needed to reconstruct $M$
+\end{itemize}
+\subsubsection{Shamir's Threshold Secret Sharing}
+\begin{itemize}
+	\item Invented by Adi Shamir (`S' in RSA) in 1979
+	\item Linear Equation: $y=mx+c$
+	\subitem $m$: random number (kept secret)
+	\subitem $c$: secret to be shared
+	\item Distribute shares of the secret by points on the line. (X=0, Y) not a good option
+	\item 2 points uniquely determine a straight line and hence get the message
+	\item We cannot loose precision (round), otherwise we loose the ability to completely reconstruct the secret (use integers only)
+	\subitem Do computations in a \textbf{Finite Field}
+\end{itemize}
+\begin{note}{Shamir's (3,n)-threshold}
+	\begin{itemize}
+		\item Use a second order polynomial
+		\item $y=a_2x^2+a_1x+c$
+		\subitem $c$: secret
+		\subitem $a_1$, $a_2$: random (kept secret)
+	\end{itemize}
+\end{note}
+\subsubsection{Lagrange Interpolation}
+\begin{itemize}
+	\item Use Lagrange Interpolation to solve the equation
+	\item Given $t$ points $(x_j,y_j)$, Lagrange Interpolation allows finding a polynomial $P(x)$ of degree ($t-1$) that goes through these points
+	\item Shamir's secret sharing scheme is sometimes called ``Lagrange Interpolation Scheme''
+\end{itemize}
+$$ P(x)=\sum^t_{j=1}P_j(x)$$
+$$P_j(x)=y_j\prod^t_{k=1, k\neq j}\frac{x-x_k}{x_j-x_k}$$
+\begin{note}{Fields}
+	\begin{leftbar}
+		``Algebraic structure where we can `add' and `multiply' they way we are used to with `ordinary numbers'
+	\end{leftbar}
+	Properties:
+	\begin{itemize}
+		\item Commutativity $a+b=b+a$,$a\times b=b\times a$
+		\item Distributivity $a\times(b+c)=(a\times b)+(a\times c)$
+		\item Associativity $a+(b+c)=(a+b)+c$, $a\times(b\times c)=(a\times b)\times c$
+		\item Closure: For any $a$, $b$ belonging to $F$, $a+b$ and $a\times b$ also belong to $F$
+		\item Neutral elements
+		\subitem Addition $a+0=a$
+		\subitem Multiplication $a\times1=a$
+		\item Inverse elements
+		\subitem Addition: For every $a$ in $F$, there exists an element $-a$ in $F$, such that $a+(-a)=0$
+		\subitem Multiplication: For every $a\neq 0$ in $F$, there exists an element $a^{-1}$ in $F$, such that $a\times a^{-1}=1$
+	\end{itemize}
+\end{note}
+\subsubsection{Finite Field (Galois Field)}
+\begin{itemize}
+	\item Finite Field (Galois Field): Field with finite number of elements (`numbers')
+	\item For a prime number $p$, integer addition and multiplication \textbf{modulo $p$} is a Finite Field!
+	\item Extended Euclidean Algorithm can be used for computing large multiplicative and inverses of mod numbers
+\end{itemize}
+
+\subsection{Research Challenges}
+\begin{itemize}
+	\item How to avoid cheating
+	\item How to reconstruct secret without having to reveal shares
+	\item How to verify that all participants provide a valid share (\textit{Verifiably Secure Secret Sharing})
+	\item How to refresh shares (\textit{Proactive Secret Sharing})
+\end{itemize}
+
+\subsection{Threshold Cryptography}
+\begin{itemize}
+	\item Shamir's scheme provides the basic concept for \textbf{Threshold Cryptography}
+	\item Threshold cryptography has a range of applications
+	\begin{itemize}
+		\item It can be used whenever we cannot or do not want to rely on a single entity (person) to perform some cryptographic operation during the operation of the system (P2P applications, wireless ad-hoc networks, Blockchain, ...)
+	\end{itemize}
+	\item Threshold signature schemes
+	\begin{itemize}
+		\item Instead of relying on a single entity to provide a digital signature, this task can be distributed among $n$ entities, using an $(t,n)$-threshold scheme
+		\item Only $t$ out of $n$ participant need to sign a document with their partial signature to create a valid signature
+	\end{itemize}
+\end{itemize}
