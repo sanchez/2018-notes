@@ -141,7 +141,7 @@ Bitcoin also supports \textbf{Pay to script hash (P2SH)} addresses
 		\item 1 input
 		\item 1 ``normal'' output
 		\item 1 change output (back to owner)
-		\subitem Create new ``Change Address' to maintain ``anonymity''
+		\subitem Create new ``Change Address'' to maintain ``anonymity''
 	\end{itemize}
 	\item Aggregating Transaction
 	\begin{itemize}
@@ -199,6 +199,11 @@ Bitcoin also supports \textbf{Pay to script hash (P2SH)} addresses
 	\item Once confirmed (via solving hash puzzle), a block is added to the blockchain
 	\item The `Nonce' is the solution of the hash puzzle
 \end{itemize}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{blockStructure}
+	\centering
+	\caption{Block Structure}
+\end{figure}
 \subsubsection{How are blocks added to the Blockchain?}
 \begin{itemize}
 	\item Multiple nodes (miners) are working towards solving the hash puzzle for a new block
