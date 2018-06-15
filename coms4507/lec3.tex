@@ -3,8 +3,11 @@
 \section{Lecture 3: Bitcoin, Cryptocurrencies Blockchain Technology}
 \subsection{Sybil Attack}
 \begin{itemize}
+	\item The Sybil attack in computer security is an attack wherein a reputation system is subverted by forging identities in peer-to-peer networks.
+	\item Creates a large number of false identities in order to flood the network and take it over.
 	\item Named after the subject of the book \textbf{Sybil}, a case study of a woman diagnosed with multiple personality disorder
-	\item Such fals identities are called \textbf{``Sybils''}, in the context of P2P systems
+	\item Such false identities are called \textbf{``Sybils''}, in the context of P2P systems
+	\item One approach to preventing these “Sybil attacks” is to have a trusted agency certify identities.
 	\item Or \textbf{``Sockpuppets''} in the context of the Internet, e.g. to manipulate public opinion
 	\begin{leftbar}
 		``... referred to a false identity assumed by a member of an Internet community who spoke to, or about, themselves while pretending to be another person. `The term now includes other misleading uses of online identities, such as those created to praise, defend or support a person or organization, to manipulate public opinion, or to circumvent a suspension or ban from a website''\\
@@ -138,7 +141,7 @@ Bitcoin also supports \textbf{Pay to script hash (P2SH)} addresses
 		\item 1 input
 		\item 1 ``normal'' output
 		\item 1 change output (back to owner)
-		\subitem Create new ``Change Address' to maintain ``anonymity''
+		\subitem Create new ``Change Address'' to maintain ``anonymity''
 	\end{itemize}
 	\item Aggregating Transaction
 	\begin{itemize}
@@ -167,7 +170,7 @@ Bitcoin also supports \textbf{Pay to script hash (P2SH)} addresses
 		\item and an unlocking script (Typically \textbf{ScriptSig})
 	\end{itemize}
 	\item A locking script is a condition placed on an output
-	\item It specifies the conditions that must be met to spend or consum the output in the future
+	\item It specifies the conditions that must be met to spend or consume the output in the future
 	\begin{itemize}
 		\item Typically a \textbf{valid digital signature} of the claimed owner
 		\item Can be other things, to implement basic `smart contracts'
@@ -196,6 +199,11 @@ Bitcoin also supports \textbf{Pay to script hash (P2SH)} addresses
 	\item Once confirmed (via solving hash puzzle), a block is added to the blockchain
 	\item The `Nonce' is the solution of the hash puzzle
 \end{itemize}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{blockStructure}
+	\centering
+	\caption{Block Structure}
+\end{figure}
 \subsubsection{How are blocks added to the Blockchain?}
 \begin{itemize}
 	\item Multiple nodes (miners) are working towards solving the hash puzzle for a new block
