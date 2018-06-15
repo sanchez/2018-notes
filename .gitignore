@@ -3,3 +3,6 @@
 *.toc
 *.log
 *.out
+*_latexmk
+*.fls
+
