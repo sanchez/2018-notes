@@ -1,0 +1,27 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Spectre and Meltdown Attacks}
+\subsection{Spectre}
+\begin{itemize}
+	\item Attack on other programs or same programs memory using the Speculative Executor and CPU Cache
+	\item Speculative Executor sees a branch and executes the code inside the branch regardless of the output of the branch condition. Result is stored on CPU Cache
+	\item Once the code executes the branch condition, the data is removed from CPU Cache
+	\item Scan the CPU Cache and check for values using reading time, if read time is low then the value is in the cache (and a the value of speculative execution)
+	\item Speculative Execution can inject on a branch forcing it to speculative execute and read the result of that branch
+	\item Can run in V8 engine (Javascript), KVM (Kernel Virtual Machine)
+	\item Target program needs to run on same core (can flood the CPU with programs running 100\%)
+\end{itemize}
+\subsection{Meltdown}
+\begin{itemize}
+	\item More focused at using the Out-of-order execution and CPU Cache
+	\item Out-of-order runs lines of code at the same time or before other lines which might take time
+	\item Allows functions to be run that grant higher level permissions without having those permissions
+	\item Requires no to minimal knowledge of the computer system
+\end{itemize}
+\subsection{Differences}
+\begin{itemize}
+	\item Spectre requires knowledge of the target program or host and how memory is handled and stored, Meltdown not as much
+	\item Spectre is difficult to patch for and has significant speed impacts
+	\item Spectre is used for accessing memory, Meltdown can access permissioned content
+	\item Meltdown is more targeted to kernel space
+\end{itemize}

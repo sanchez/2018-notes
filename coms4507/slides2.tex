@@ -1,0 +1,14 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Proof of Stake}
+\begin{itemize}
+	\item Proof-of-stake improves upon proof-of-work by providing greater security, reduced risk of centralization and drastic improvements to energy efficiency
+	\item In PoS, the creator of the next block is decided randomly, and requires candidates to raise a `stake' of the cryptocurrency in order to be considered
+	\item This stake is known as a bond, and it is used as a collateral to vouch for a block
+	\item In PoW you know a chain with the highest collateral (higher value of bonds)
+	\item An idea present in this implementation is that people who want to create the next block are invested into the platform and the cryptocurrency, as they are providing a stake of their commitment. In proof-of-work, a miner only has to solve the puzzle
+	\item The `Nothing at Stake' problem is an issue initially faced in Peercoin, where there was only rewards given for creating blocks, and no punishments. This creates the situation where a validator, in the case of a forked blockchain, is incentivized to build upon both of the forks, rather than one or the other (which would be the case in proof-of-work, because the miner has to commit to solving the puzzle for a particular fork, a miner does not have the luxury of choosing)
+	\item A solution to the `Nothing at Stake' problem is to punish a validator for creating a block on two separate chains, by deducting the value in their stake, essentially fining them for bad behavior
+	\item The `Long-Range Attack' vulnerability is another issue with Proof of Stake
+	\item The long range attack can be done if there is an attacker with 1\% of all coins at or shortly after the genesis block. that attacker then starts their own chain, and starts mining it. Although the attacker will find themselves selected for producing a block only 1\% of the time, they can easily produce 100 times as many blocks, and simply create a longer blockchain in that way
+\end{itemize}

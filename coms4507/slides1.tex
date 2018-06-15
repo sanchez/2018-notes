@@ -1,0 +1,12 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Ethereum: Sharding}
+\begin{itemize}
+	\item In all blockchain protocols currently, each node stores all the states and processes all the transactions. Good for security but terrible for scalability
+	\item Sharding tries to solve this by allowing smaller subsets of nodes to verify transactions
+	\item This concept is borrowed from traditional relational databases
+	\item Each shard gets its own set of validators (proof-of-stake is required for sharding blockchains)
+	\item Sharding is generally considered a good idea because it increases scalability without sacrificing decentralization and without reducing the security of the blockchain
+	\item Attackers need to control approximately 33\% of the validator pool to have a chance at taking over the entire blockchain to successfully attack a shard
+	\item Random sampling bolsters the security of the system, each shard, making it hard for attackers to coordinate attacks because they do not know which shard the hostile nodes will end up in
+\end{itemize}

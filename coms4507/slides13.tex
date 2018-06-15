@@ -1,0 +1,28 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Signal Protocol}
+\begin{itemize}
+	\item Describes the Signal protocol used for end-to-end encryption in WhatsApp, Messenger and Google's Allo
+	\item Combines the Double Ratchet Algorithm, prekeys and a triple Diffie-Hellman (3-DH) handshake
+	\item Supports end-to-end encrypted group chats as well, using pairwise double ratchet and multi-cast encryption
+	\item Key idea to ratcheting is that the session keys are updated with every message sent. It's called a double ratchet because each participant of the conversation can update the ratchet by sending a message
+	\subitem ``This effectively forces the attacker to intercept all communication between the honest parties, since [they] loses access as soon as one uncompromised message is passed between them...Future Secrecy, or Post-Compromise Security'' -Wikipedia
+	\item Public Key Types:
+	\begin{description}
+		\item[Identity Key Pair:] Generated at install time
+		\item[Signed Pre-Key:] Generated at install time, signed by the identity key and rotated on a periodic timed basis
+		\item[One-Time Pre-Keys:] A queue of key pairs for one time use, generated at installed time and replenished as needed
+		\item[Root Key:] Used to create chain keys
+		\item[Chain Key:] Used to create message keys
+		\item[Message Key:] 80 byte key used to encrypt message contents (32 bytes for an AES-256 key, 32 bytes for a HMAC-SHA256 key, 16 bytes for an IV (Initialization Vector))
+	\end{description}
+	\item Establishing a session:
+	\begin{enumerate}
+		\item The initiator requests the public identity key, public signed pre key and a single public one-time pre key for the recipient
+		\item The server returns the values. A one-time pre key is only used once, so it is removed from the server after it is requested. If the recipients latest batch of one-time pre-keys has been consumed no one-time pre-key can be returned
+		\item The initiator saves the recipient's identity key as \texttt{Irecipient}, the signed pre-key as \texttt{Srecipient}, and the one-time pre-key as \texttt{Orecipient}
+		\item The initiator loads its own identity key as \texttt{Iinitiator}
+		\item The initiator calculates a master secret as: \texttt{master\_secret = ECDH(Iinitiator, Srecipient) || ECDH(Einitiator, Irecipient) || ECDH(Einitiator, Srecipient) || ECDH(Einitiator, Orecipient)}\\
+		Where \texttt{ECDH} stands for Elliptic-curve Diffie-Hellman. If there is no one-time pre-key the last operation is omitted
+	\end{enumerate}
+\end{itemize}

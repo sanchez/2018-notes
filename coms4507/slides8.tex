@@ -1,0 +1,33 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Ripple}
+\begin{itemize}
+	\item Ripple is a real-time gross settlement system and currency exchange network
+	\item Ripple existed before blockchains, and its main goals are to provide speed, scalability, transparency and stability. With an emphasis on the first two
+	\item Ripple required two parties for a transaction to occur
+	\begin{itemize}
+		\item A regulated financial institution holds funds and issues balances on behalf of customers
+		\item Second, market makers, which can be hedge funds or currency traders that provide liquidity in the currency they want to trade in
+	\end{itemize}
+	\item In Ripple, users make payments in transactions denominated in either fiat transactions or Ripple's internal currency, XRP
+	\item When transactions are made in XRP, Ripple can account for the whole transaction history in its internal ledger
+	\item For other currencies, Ripple can account for the whole transaction history in its internal ledger
+	\item For other currencies, Ripple can only amount for amounts owed (not balances of the users)
+	\item Components of the Ripple Network:
+	\begin{description}
+		\item[Server:] Like a node, runs the Ripple server. Can act as a validator or a spectator
+		\item[Unique Node List (UNL):] A list of servers that a server communicates with to form consensus. These servers have to be ``honest''
+		\item[Proposer:] A server that broadcasts transactions. Every server tries to include every valid transaction. Only proposals from servers on the UNL are considered
+		\item[Ledger:] A record of the amount of currency in each user's account. Each ledger contains:
+		\begin{itemize}
+			\item A set of transactions
+			\item Account Information
+			\item Timestamp
+			\item Ledger Number
+			\item A status bit (to denote whether the ledger is validated or not)
+		\end{itemize}
+		\item[Consensus and Validating Servers:] Responsible for determining consensus. Verifying proposed changes. Needs to meet escalating consensus
+	\end{description}
+	\item Ripple has a protection to avoid an attacker spamming XRP transactions, for each XRP transaction, a commission is charged, so attackers will eventually run out of XRP
+	\item Biggest blow to Ripple is that while it's distributed, it's not at all decentralized. Ripple owns and runs most of the nodes and maintains a significant percentage of XRP
+\end{itemize}

@@ -113,8 +113,22 @@ Two parts with total $\approx$ 55 marks
 \input{lec3}
 \input{lec5}
 
-\chapter{Paper Summaries}
+\chapter{Seminar Slides}
+\input{slides1}
+\input{slides2}
+\input{slides3}
+\input{slides4}
+\input{slides5}
+\input{slides6}
+\input{slides7}
+\input{slides8}
+\input{slides9}
+\input{slides10}
+\input{slides11}
+\input{slides12}
+\input{slides13}
 
+\chapter{Paper Summaries}
 \input{paper20}
 \input{paper21}
 \input{paper22}
@@ -143,6 +157,36 @@ Two parts with total $\approx$ 55 marks
 \input{paper48}
 \input{paper49}
 \input{paper50}
+
+\chapter{Do you need a Blockchain?}
+\begin{itemize}
+	\item Essentially Blockchain is only suitable for any system that requires a database or someway to store data, multiple writers (having only one writer would better suit using a regular database as better throughput) and no Trusted Third Party (TTP) that can always be relied on for writing. Otherwise don't use blockchain
+	\item Types of Blockchain (Private/Public $\rightarrow$ Reader, Permissioned/Permissionless $\rightarrow$ Centralized)
+	\begin{itemize}
+		\item Permissionless Blockchain
+		\item Public Permissioned Blockchain
+		\item Private Blockchain
+	\end{itemize}
+\end{itemize}
+\section{What are some examples where a blockchain would be necessary?}
+\begin{description}
+	\item[DOAs (Decentralized Autonomous Organizations)] CAN be useful, although they likely wouldn't need to use a full fledged permissionless blockchain in most cases
+	\item[Finance (interbank payments):] Multiple parties that don't trust each other that need high number of readers but not necessarily high throughput. Although this would certainly still use the central bank only has a TTP to authorize other banks and be a permissioned blockchain, public vs private is a matter of public opinion
+	\item[IoT:] Payment systems between machines, smart cars charging at electric charging stations, small devices requiring data processing from untrusted server. However, sensors play a huge role and thus need to be trusted by all parties, thus this depends on a case by case basis
+	\item[Voting:] Multiple parties not trusting the outcome as valid, need a mechanism that is able to verify votes, where they came from, only one vote spent, cannot forge votes or create new ones. Essentially system requires public verifiability as many mutually untrusted parties exist
+	\item[Smart Contracts:] Well suited as no need for TTP. Either permissioned or permissionless
+	\item[Multi-party Trade:] Exchanging digital goods without trusted dispute mediator, physical goods still require TTP to handle disputes
+	\item[Proof of ownership:] In the case of patenting, it would be handy to have a verifiable record, however this does not always fully prove ownership
+\end{description}
+\section{Properties of Distributed Ledgers vs Centralized Systems}
+\begin{itemize}
+	\item Public verifiability
+	\item Transparency
+	\item Privacy
+	\item Integrity
+	\item Redundancy
+	\item Trust Anchor
+\end{itemize}
 
 
 \end{multicols*}

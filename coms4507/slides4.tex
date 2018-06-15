@@ -1,0 +1,36 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{IOTA}
+\begin{itemize}
+	\item Runs on a non-blockchain distributed ledger, designed for IoT devices
+	\item Features
+	\begin{itemize}
+		\item Designed to support micropayments as no transaction fees exist
+		\item Trinary based system
+		\item No new IOTA's every produced, all created in genesis node
+	\end{itemize}
+	\item Mining
+	\begin{itemize}
+		\item Users are the miners, every user must perform work to provide the security/integrity of the network, because of this no miner fees needed
+	\end{itemize}
+	\item Distributed Ledger
+	\begin{itemize}
+		\item IOTA's key difference is that it is not implemented on a Blockchain, but implemented on a ``Tangle'', which is just a DAG (Directed Acyclic Graph)
+		\item Biggest benefit of the DAG system is that it's more scalable, and should actually perform better with more nodes contributing to the Tangle
+	\end{itemize}
+	\item Address Creation
+	\begin{itemize}
+		\item Uses keccak-384 to produce public and private keys
+		\item Public Key addresses should only be used once to send, as sending exposes private key by using Winternitz one-time signature
+	\end{itemize}
+	\item Verification
+	\begin{itemize}
+		\item New transactions must verify existing transactions in order ot be confirmed (essentially just verifying that new transaction aren't trying to cheat)
+		\item To select the transactions to verify, IOTA uses the Markov Chain Monte Carlo (MVCMC) algorithm to find existing transactions to verify that have not been verified yet
+		\item MCMC designed to discourage/ignore lazy transactions that try verifying heavily verified transactions (to improve their chance of being confirmed (i.e. close to or at the genesis node)), while also not ignoring valid transactions by being too picky
+	\end{itemize}
+	\item Consensus
+	\begin{itemize}
+		\item Proof of work: certain size hash must be found to validate a transaction, intended to prevent spam attacks
+	\end{itemize}
+\end{itemize}

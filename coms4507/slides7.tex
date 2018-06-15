@@ -1,0 +1,11 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{PeerCoin}
+\begin{itemize}
+	\item Implements both Proof-of-Stake and Proof-of-Work
+	\item Proof-of-Stake was implemented to avoid the 51\% attack possibility that exists with Proof-of-Work. With proof-of-stake coin blocks
+	\item Proof-of-Work is still used for the initial minting function, but after 30 days you become eligible to receive blocks from the proof-of-stake implementation
+	\item I don't think anything stops you from mining after this 30 days, so you can still be pumping out the proof-of-work blocks while also `double dipping' and getting block rewards from proof-of-stake
+	\item The more people mining, the smaller the block reward is
+	\item Currently, the PeerCoin blockchain does use a considerable amount of energy, but the idea is for it to get more energy efficient over time, as miners become ``stakeholders'' and reduce their proof-of-work SHA solving since they're getting rewards from proof-of-stake anyway
+\end{itemize}

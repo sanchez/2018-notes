@@ -1,0 +1,22 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Quorum}
+\begin{itemize}
+	\item An enterprise focused version of Ethereum. A permissioned blockchain of known participants
+	\item Developed to provide the Financial Services Industry with a permissioned implementation of Ethereum that supports transaction and contract privacy
+	\item The primary features of Quorum, and therefore extensions over public Ethereum, are:
+	\begin{itemize}
+		\item Transaction and contract privacy
+		\item Multiple voting-based consensus mechanisms
+		\item Network/Peer permissions management
+		\item Higher performance
+	\end{itemize}
+	\item Quorum currently includes the following components:
+	\begin{itemize}
+		\item Quorum Node (modified Geth Client)
+		\item Constellation -- Transaction Manager
+		\item Constellation -- Enclave
+	\end{itemize}
+	\item Constellation is a message transferring agent that implements PGP encryption to allow parties to send private transactions between approved parties while storing a hash of the transaction on the public blockchain (integrity) and private transaction data locally (off chain)
+	\item Enclave acts as a virtual hardware security module, and manages all the encryption/decryption in an isolated manner, working hand-in-hand with the transaction manager
+\end{itemize}

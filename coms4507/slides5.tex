@@ -1,0 +1,37 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{HashGraph}
+\begin{itemize}
+	\item HashGraph boasts itself as an alternative way to achieve a distributed ledger
+	\item HashGraph becomes a `graph' by not excluding forks (as a Blockchain would)
+	\item Using the Gossip protocol, the HashGraph `weaves' branches back into the main chain
+	\item HashGraph doesn't use proof-of-work or proof-of-stake. Virtual voting is used to reach consensus
+	\item Virtual Voting:
+	\begin{description}
+		\item[3 steps:]
+			\begin{itemize}
+				\item Divide rounds
+				\item Decide fame
+				\item Find order
+			\end{itemize}
+		\item[Divide rounds:]
+			\begin{itemize}
+				\item Two concepts, rounds and witnesses
+				\item The first event for a member's node is that node's first witness
+				\item The first witness is the beginning of the first round for that node
+				\item All subsequent rounds are part of that first round until a new witness is discovered
+				\item A witness is discovered when a node creates an event that can strongly see $\frac{2}{3}$ of the witnesses in the current round
+			\end{itemize}
+		\item[Decide fame:]
+			\begin{itemize}
+				\item A witness must be either a famous witness, or not
+				\item If many of the witnesses in the next round can see a witness, it has a high chance of being famous
+				\item Votes are cast on the fame of witnesses ($\frac{2}{3}$ of votes need to be cast to determine a witness' fame or infamy)
+			\end{itemize}
+		\item[Find order:]
+			\begin{itemize}
+				\item Events are sorted into either before the famous witness was decided, or after the famous witness was decided
+			\end{itemize}
+	\end{description}
+	\item Absolute unique order to all transactions
+\end{itemize}
