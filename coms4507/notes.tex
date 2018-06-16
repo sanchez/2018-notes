@@ -188,6 +188,50 @@ Two parts with total $\approx$ 55 marks
 	\item Trust Anchor
 \end{itemize}
 
+\chapter{Past Exams}
+\section{2017 Sample}
+
+\subsection{Question 1}
+Alice, Bob, Charlie and Debbie use Shamir's method to implement a (2, 4)-threshold secret sharing scheme to share the secret $K$. Computations are done in GF(7), i.e. modulo 7. Bob's and Charlie's shares are as follows:\\
+Bob: $(x_B,y_B)=(3,5)$\\
+Charlie: $(x_C,y_C)=(5,4)$\\
+Compute the shared secret $K$\\\\
+
+\begin{align*}
+	5 &= 3m+c \tag{Bob}\\
+	\frac{5-c}{3} &= m\\
+	\frac{5}{3} - \frac{1c}{3} &= m\\
+	\frac{12}{3} - \frac{15c}{3} &= m\\
+	4 - 5c &= m\\
+	m &= 4-5c\\
+	4 &= 5m+c \tag{Charlie}\\
+	4 &= 5(4-5c)+c\tag{Sub Bob into Charlie}\\
+	4 &= 20 - 25c + c\\
+	4 &= 20 - 24c\\
+	4 &= 6 - 3c\\
+	-2 &= -3c\\
+	2 &= 3c\\
+	\frac{2}{3} &= c\\
+	\frac{30}{3} &= c\\
+	10 &= c\\
+	3 &= c
+\end{align*}
+
+\subsection{Question 3}
+Blind Signatures are used to enable a user to verify the a set of information without knowing what that information is. This is used to maintain anonymity in cryptocurrencies where a coin will be blindly signed by the bank to ensure they can't trace payments. The RSA signature process uses a blind signature to get information signed without the singer knowing what they are signing.
+
+\subsection{Question 4}
+In a Shamir secret sharing scheme, the secret is the constant term $c$ of a polynomial of degree $4$. Computations are done in GF(991), i.e. modulo the prime 991. Suppose Alice, Bob and Susie have the following three shares: $(2,197),(4,874),(13,547)$. How many possibilities are there for the secret? How much information can be gained from the three shares? Explain your answer.\\\\
+
+Because the polynomial is of degree 4, there is still one point of freedom which does not provide any additional knowledge of the curve. The only known information is that the secret lies somewhere between 0 and 991.
+
+\subsection{Question 5}
+Generate two valid shares for a secret $K=30$ in a (3, 4)-threshold secret sharing scheme (Blakely's method). Computations are done in GF(37). Explain the individual steps involved.\\\\
+
+$$ y = m_1x^3 + m_2x^2 + m_3x + c$$
+Share 1: $y = 5x^3 + 3x^2 + 10x + 30$
+Random points: $(1,48), (2, 102), (10, 5430) \rightarrow (1, 11), (2, 28), (10, 28)$
+
 
 \end{multicols*}
 \end{document}
