@@ -1,0 +1,80 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\begin{note}{Increase in Demand}
+	\textbf{Increase} in demand $\rightarrow$ \textbf{Right shift} in demand $\rightarrow$ \textbf{Positive movement} in demand\\Figure~\ref{fig:left} shows the curve shifting.
+\end{note}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[axis lines=left,xlabel={Price (\$/can)},ylabel={Quantity ('000s of cans)}]
+			\addplot[domain=0:16,color=blue]{4-(x/4)} node[above,pos=0.3] {$D_1$};
+			\addplot[domain=0:24,color=red]{6-(x/4)} node[above,pos=0.3] {$D_2$};
+			\node[dot] (left) at (axis cs:8,2){};
+			\node[dot] (right) at (axis cs:16,2){};
+			\draw[->, line width=0.7mm] (left) -- (right);
+			\draw[dotted, line width=0.5mm] (axis cs:0,2) -- (left);
+			\draw[dotted, line width=0.5mm] (axis cs:8,0) -- (left);
+			\draw[dotted, line width=0.5mm] (axis cs:16,0) -- (right);
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Right Shift in demand}\label{fig:right}
+\end{figure}
+\begin{note}{Decrease in Demand}
+	\textbf{Decrease} in demand $\rightarrow$ \textbf{Left shift} in demand $\rightarrow$ \textbf{Negative movement} in demand\\Figure~\ref{fig:right} shows the curve shifting.
+\end{note}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[axis lines=left,xlabel={Price (\$/can)},ylabel={Quantity ('000s of cans)}]
+			\addplot[domain=0:16,color=blue]{4-(x/4)} node[above,pos=0.3] {$D_1$};
+			\addplot[domain=0:24,color=red]{6-(x/4)} node[above,pos=0.3] {$D_2$};
+			\node[dot] (left) at (axis cs:8,2){};
+			\node[dot] (right) at (axis cs:16,2){};
+			\draw[->, line width=0.7mm] (right) -- (left);
+			\draw[dotted, line width=0.5mm] (axis cs:0,2) -- (left);
+			\draw[dotted, line width=0.5mm] (axis cs:8,0) -- (left);
+			\draw[dotted, line width=0.5mm] (axis cs:16,0) -- (right);
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Left Shift in demand}\label{fig:left}
+\end{figure}
+
+\section{Factor Causing a Shift in Demand}
+\begin{itemize}
+	\item Change in consumer taste (or preference)
+	\item Change in population
+	\item Change in expectations of future price rises
+	\item Change price of a substitute
+	\item Change in price of a complement
+	\item Change in income (and the product is normal)
+	\item Change in income (and the product is inferior)
+\end{itemize}
+Requires the assumption that \textbf{price remains fixed} and some other factor changes so as to affect the quantity demanded by the consumer
+\begin{note}{Substitutes}
+	A product or service that \textbf{can be used in place of} other products or services. i.e. used as replacements.
+\end{note}
+\begin{note}{Complements}
+	Products or services that \textbf{are consumed together}.
+\end{note}
+\begin{note}{Normal Goods}
+	As \textbf{income increases}, consumer demand \textbf{increases} for the product or service. As \textbf{income decreases}, consumer demand \textbf{decreases} for the product or service
+\end{note}
+\begin{note}{Inferior Goods}
+	As \textbf{income decreases}, consumer demand \textbf{increases} for the product or service. As \textbf{income increases}, consumer demand \textbf{decreases} for the product or service
+\end{note}
+
+\section{Factor Causing a Shift in Supply}
+\begin{itemize}
+	\item Change in number of suppliers in the market
+	\item Change in expectations of future selling price
+	\item Change in level of input costs
+	\item Change production to a new, substitute product
+	\item Changes in technology
+	\item Changes in government taxes on a product
+\end{itemize}
+Again, a shift assumes \textbf{price remains fixed} and some other factor changes to affect the quantity supplied by the producer
+\subsection{A Shift in Supply}
+\begin{align*}
+\text{Profit} &= \text{revenue} - \text{expenses}\\
+&= \frac{\text{price}}{\text{unit}}\times\text{quantity}-\text{expenses}
+\end{align*}

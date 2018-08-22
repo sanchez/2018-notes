@@ -28,6 +28,11 @@
 \usepackage{multirow}
 \usepackage{pgf-umlsd}
 \usepackage{soul}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzstyle{dot} = [shape=circle, fill=black]
+%\usepgfplotslibrary{external}
+%\tikzexternalize
 
 \newcounter{note}\setcounter{note}{0}
 \renewcommand{\thenote}{\arabic{note}}
@@ -72,11 +77,19 @@
 \input{lec1}
 \input{lec2}
 \input{lec3}
+\input{lec4}
+
+%\end{multicols*}
+
+\chapter{EMC Tutes}
+\input{emc1}
+\input{emc2}
 
 \end{multicols*}
 
 \chapter{CML Quizzes}
 \input{cml1}
+\input{cml1_2}
 
 %\end{multicols*}
 \end{document}

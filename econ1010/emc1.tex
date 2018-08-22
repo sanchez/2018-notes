@@ -1,0 +1,24 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Supply and Demand}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[axis lines=left,xlabel={S*},ylabel={P*}]
+			\addplot[domain=0:1,color=blue]{1-x} node[above,pos=0.7] {$D$};
+			\addplot[domain=0:1,color=red]{x} node[above,pos=0.7] {$S$};
+			\node[label={e},dot] (e) at (axis cs:0.5,0.5){};
+			\node[label={45:{$P*$}},dot] (p) at (axis cs:0,0.5){};
+			\node[label={45:{$Q*$}},dot] (q) at (axis cs:0.5,0){};
+			\draw[dotted, line width=0.5mm] (p) -- (e);
+			\draw[dotted, line width=0.5mm] (q) -- (e);
+		%	\node[dot] (left) at (axis cs:8,2){};
+		%	\node[dot] (right) at (axis cs:16,2){};
+		%	\draw[->, line width=0.7mm] (right) -- (left);
+		%	\draw[dotted, line width=0.5mm] (axis cs:0,2) -- (left);
+		%	\draw[dotted, line width=0.5mm] (axis cs:8,0) -- (left);
+		%	\draw[dotted, line width=0.5mm] (axis cs:16,0) -- (right);
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Left Shift in demand}\label{fig:left}
+\end{figure}
