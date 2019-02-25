@@ -7,3 +7,5 @@
 *.fls
 *.tks
 *.txss
+*.md5
+*.auxlock

@@ -1,0 +1,184 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Introduction to Distributed Systems}
+
+\subsection{Definitions of Distributed Systems}
+\begin{leftbar}
+	A collection of independent computers that appear to its users as a single coherent system (Andrew Tannenbaum)
+\end{leftbar}
+\begin{leftbar}
+	A system where I can't get my work done because a computer has failed that I've never even heard of (Leslie Lamport)
+\end{leftbar}
+A distributed system is a collection of independent computers that are used jointly to perform a single task or to provide a single service.
+
+\begin{note}{Characteristics}
+	\begin{itemize}
+		\item Multiple computers
+		\subitem CPU, memory, storage, I/O
+		\item Interconnections
+		\subitem variety of interconnection architectures
+		\item Resources
+		\subitem remote access to resources
+		\subitem resource can be shared
+	\end{itemize}
+\end{note}
+
+\subsection{Goals of Distributed Systems}
+\begin{itemize}
+	\item Transparency (hiding distribution)
+	\subitem System presents itself as a single computer system
+	\item Openness
+	\subitem Interoperability, portability, heterogeneity
+	\item Scalability
+	\subitem Ability to grow
+\end{itemize}
+
+\subsubsection{Transparency}
+\begin{description}
+	\item[Access:] Hide differences in data representation and how a resource is accessed
+	\item[Location:] Hide where a resource is located
+	\item[Migration:] Hide that a resource may move to another location
+	\item[Relocation:] Hide that a resource may be moved to another location while in use
+	\item[Replication:] Hide that a resource is replicated
+	\item[Concurrency:] Hide that a resource may be shared by several competitive users
+	\item[Failure:] Hide the failure and recovery of a resource
+\end{description}
+
+\subsubsection{Openness}
+\begin{itemize}
+	\item Interoperability
+	\item Portability
+	\item Heterogeneity
+	\item Standard interfaces
+	\item Interface Definition Language (IDL)
+\end{itemize}
+
+\subsubsection{Scalability}'
+Three axis of scalability:
+\begin{itemize}
+	\item Administratively
+	\item Geographically
+	\item Size (users, resources)
+\end{itemize}
+
+\paragraph{Algorithms vs Scalability}
+Decentralized algorithms should be used:
+\begin{itemize}
+	\item No machine has complete information about the system state
+	\item Machines make decisions based only on local information
+	\item Failure of one machine does not ruin the algorithm
+	\item There is no implicit assumption that a global clock exists
+\end{itemize}
+
+\paragraph{Scaling Techniques}
+\begin{itemize}
+	\item Hiding communication latencies
+	\subitem Asynchronous communication
+	\subitem Client-side processing
+	\item Distribution
+	\subitem Split and spread functionality across the system
+	\subitem Decentralize algorithms
+	\item Replication (including caching)
+\end{itemize}
+\textit{If asynchronous communication cannot be used - communication should be reduced}
+
+\subsection{Types of Distributed Systems}
+\subsubsection{Distributed Computing Systems}
+\begin{itemize}
+	\item Cluster Computing Systems
+	\subitem Just a bunch of computers all connected over a shared network
+	\item Grid Computing Systems
+	\subitem Layered System: Applications $\rightarrow$ Collective Layer $\rightarrow$ (Connectivity layer / Resource layer) $\rightarrow$ Fabric layer
+	\item Cloud Computing
+	\subitem Paradigm for enabling \textbf{network access} to a scalable and elastic pool of \textbf{shareable physical or virtual resources} with on-demand self-service provisioning and administration
+\end{itemize}
+\subsubsection{Distributed Information Systems}
+\begin{itemize}
+	\item Transaction processing systems
+	\subitem There are many information systems in which many distributed operations on (possibly distributed) data have to have the following behavior (either all of the operations are executed, or none of them is executed):
+	\begin{description}
+		\item[BEGIN\_TRANSACTION:] Mark the start of a transaction
+		\item[END\_TRANSACTION:] Terminate the transaction and try to commit
+		\item[ABORT\_TRANSACTION:] Kill the transaction and restore the old values
+		\item[READ:] Read data from a file, a table, or otherwise
+		\item[WRITE:] Write data to a file, a table, or otherwise
+	\end{description}
+\end{itemize}
+\begin{note}{Distributed Transactions - Model}
+	A transaction is a collection of operations that satisfies the following ACID properties:
+	\begin{description}
+		\item[Atomicity:] All operations either succeed, or all of them fail. When the transaction fails, the state of the object will remain unaffected by the transaction.
+		\item[Consistency:] A transaction establishes a valid state transaction. This does not exclude the possibility of invalid, intermediate states during the transaction's execution.
+		\item[Isolation (Serialisability):] Concurrent transaction do not interfere with each other. It appears to each transaction \textit{T} that other transactions occur either \textit{before T}, or \textit{after T}, but never both.
+		\item[Durability:] After the execution of a transaction, its effects are made permanent: changes to the state survive failures.
+	\end{description}
+\end{note}
+\begin{itemize}
+	\item Enterprise application integration
+	\subitem Middleware as a communication facilitator in enterprise application integration
+	\subitem Multiple applications communicate to the middleware which then talks to all the server-side applications
+\end{itemize}
+\subsubsection{Distributed Pervasive Systems}
+Pervasive systems:
+\begin{itemize}
+	\item Embedded devices
+	\item Mobile devices
+	\item Heterogeneous networks
+	\item (Autonomic) Adaptation to context changes
+	\subitem Adaptation to changes in the infrastructure
+	\subitem Adaptation to user tasks/needs
+\end{itemize}
+Requirements for pervasive systems:
+\begin{itemize}
+	\item Embrace contextual changes
+	\item Encourage ad hoc composition
+	\item Recognize sharing as the default
+\end{itemize}
+
+\paragraph{Home Systems (Smart Homes)}
+Integration of entertainment and appliances into an ``intelligent'' adaptive system. May include health-monitoring and also provide support for independent living of the elderly.
+
+\paragraph{Sensor Networks}
+There is a variety of sensor networks, e.g.
+\begin{itemize}
+	\item A small set of sensors supporting smart home
+	\item A network of thousands of sensors providing climate monitoring
+\end{itemize}
+
+\subsection{Architectures of Distributed Systems}
+\subsubsection{Architecture styles}
+\begin{itemize}
+	\item Layered architectures
+	\item Object-based architectures
+	\item Data-centered architectures
+	\item Event-based architectures
+\end{itemize}
+
+\subsubsection{System architectures}
+(how software components are distributed on machines)
+\begin{itemize}
+	\item Centralized architectures (client-server: two-tiered, three-tiered, N-tiered)
+	\begin{itemize}
+		\item The simplest organization is to have only two types of machines:
+		\begin{itemize}
+			\item A client machine containing only the programs implementing (part of) the user-interface level
+			\item A server machine containing the rest
+			\subitem the programs implementing the processing and data level
+		\end{itemize}
+	\end{itemize}
+	\item Decentralized architectures (peer-to-peer)
+	\begin{itemize}
+		\item Overlay network is constructed in a random way
+		\item Each node has a list of members but the list is created in unstructured (random) way
+	\end{itemize}
+	\item Hybrid architectures (edge-server, collaborative DS)
+	\subitem Clients participate in providing services: e.g. file sharing, when part of file is downloaded it's seeded to other clients
+\end{itemize}
+
+\begin{note}{Application Layering}
+	\begin{itemize}
+		\item The user-interface level
+		\item The processing level
+		\item The data level
+	\end{itemize}
+\end{note}
