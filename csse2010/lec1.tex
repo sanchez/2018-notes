@@ -1,0 +1,78 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Bits, Bytes and Binary}
+\subsection{Structured Computer Organization}
+\begin{description}
+	\item[Level 5:] Problem-oriented language level
+	\item[Level 4:] Assembly language level
+	\item[Level 3:] Operating system machine level
+	\item[Level 2:] Instruction set architecture level
+	\item[Level 1:] Microarchitecture level
+	\item[Level 0:] Digital Logic level
+\end{description}
+
+\subsection{Unsigned Number in Binary}
+Each bit position has a value $\rightarrow 2^n$ (starting at zero). Add all values of the positions together and that's unsigned value.
+
+\subsection{Converting Decimal to Binary}
+\begin{itemize}
+	\item Method 1
+	\subitem rewrite $n$ as sum of powers of 2 (by repeatedly subtracting largest power of 2 not greater than $n$)
+	\subitem Assemble binary number from 1's in bit positions corresponding to those powers of 2, 0's elsewhere
+	\item Method 2
+	\subitem Divide $n$ by 2
+	\subitem Remainder of division (0 or 1) is next bit
+	\subitem Repeat with $n$ = quotient
+\end{itemize}
+
+\begin{note}{Example}
+	Convert 53 to binary
+	\begin{align*}
+		\frac{53}{2} &= 26 \text{ rem } 1 \Rightarrow 1\\
+		\frac{26}{2} &= 13 \text{ rem } 0 \Rightarrow 0\\
+		\frac{13}{2} &= 6 \text{ rem } 1 \Rightarrow 1\\
+		\frac{6}{2} &= 3 \text{ rem } 0 \Rightarrow 0\\
+		\frac{3}{2} &= 1 \text{ rem } 1 \Rightarrow 1\\
+		\frac{1}{2} &= 1 \text{ rem } 1 \Rightarrow 1
+	\end{align*}
+	$\therefore 53 \equiv 0b110101$
+\end{note}
+
+\subsection{Least and Most Significant Bits}
+\begin{description}
+	\item[Most Significant Bit (MSB):] Bit that's worth the most, the left-most bit
+	\item[Least Significant Bit (LSB):] Bit that's worth the least, the right-most bit
+\end{description}
+
+\begin{note}{Radices}
+	\begin{itemize}
+		\item \textbf{Radix:} number system base
+		\item A radix-k number system
+		\subitem $k$ different symbols to represent digits 0 to $k-1$
+		\subitem Value of each digit is (from the right) $k^0, k^1, k^2, k^3, \ldots$
+		\item Often convenient to deal with
+		\subitem\textbf{Octal} (radix-8) - Symbols: 0, 1, 2, 3, 4, 5, 6, 7
+		\subsubitem\textit{One octal digit corresponds to 3 bits}
+		\subitem\textbf{Hexadecimal} (radix-16) - Symbols: 0, 1, 2, 3, 4, 5, 6, 7, 7, 8, 9, A, B, C, D, E, F
+		\subsubitem\textit{One hexadecimal digit corresponds to 4 bits (useful)}
+	\end{itemize}
+\end{note}
+
+\begin{note}{Radix Identification}
+	\begin{itemize}
+		\item Hexadecimal
+		\subitem Leading 0x (C, Atmel AVR)
+		\subitem Trailing h (Some assembly languages)
+		\subitem Leading \$ (Atmel AVR Assembly)
+		
+		\item Octal
+		\subitem Leading 0 (C, Atmel AVR)
+		\subitem Trailing q (Some assembly languages)
+		\subitem Leading @ (Some assembly languages)
+		
+		\item Binary
+		\subitem Leading 0b (Atmel AVR Assembly, Some C)
+		\subitem Trailing b (Some assembly languages)
+		\subitem Leading \% (some assembly languages)
+	\end{itemize}
+\end{note}

@@ -1,0 +1,97 @@
+% !TeX spellcheck = en_US
+\documentclass[12pt, a4paper]{report}
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{float}
+\usepackage{framed}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{gensymb}
+\setlist{nosep}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{tikzsymbols}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+\usepackage{multirow}
+\usepackage{pgf-umlsd}
+\usepackage{soul}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzstyle{dot} = [shape=circle, fill=black]
+%\usepgfplotslibrary{external}
+%\tikzexternalize
+
+\newcounter{note}\setcounter{note}{0}
+\renewcommand{\thenote}{\arabic{note}}
+\newenvironment{note}[1]{
+	\begin{minipage}{\linewidth}
+		\stepcounter{note}
+		\ifstrempty{#1}{
+			\mdfsetup{
+				frametitle={
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=blue!20]
+					{\strut Note~\thenote};
+				}
+			}
+		}{
+			\mdfsetup{
+				frametitle={
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=blue!20]
+					{\strut Note~\thenote:~#1};
+				}
+			}
+		}
+		\mdfsetup{innertopmargin=0pt,linecolor=blue!20,linewidth=2pt,topline=true,frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+		\begin{mdframed}[]\relax
+		}{
+	\end{mdframed}\end{minipage}
+}
+\newenvironment{code}{\ttfamily}{\par}
+
+\begin{document}
+	\tableofcontents
+	\vspace{2em}
+	\textbf{Contributors:}
+	\begin{itemize}
+		\item Daniel Fitz (Sanchez)
+	\end{itemize}
+	\section{Assessment}
+	\begin{itemize}
+		\item Online Quizzes (10\% = Best 10 $\times$ 1\%)
+		\subitem Due Mondays at 8am
+		\item Mid-semester exam (10\% or 20\%)
+		\subitem Saturday (centrally scheduled - sometime week 5 to 7)
+		\subitem Multiple-choice, open-book
+		\item Prac Exam (Pass/Fail)
+		\subitem Held during Monday/Wednesday Learning Lab sessions in week 6
+		\subitem You must pass in order to pass the course
+		\item Project (20\%)
+		\subitem Develop a microcontroller program
+		\item Final Exam (50\% or 60\%)
+		\subitem Short answer, problem solving, open-book
+	\end{itemize}
+
+	\newpage
+
+\begin{multicols*}{2}
+
+\chapter{Lecture Notes}
+\input{lec1}
+
+\end{multicols*}
+\end{document}
