@@ -1,0 +1,68 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Logic Gates}
+\begin{description}
+	\item[NOT Gate:] Inverts the signal (i.e. input is true, output is false)
+	\item[AND Gate:] Output is true only if \textbf{all} inputs are true
+	\item[NAND Gate:] Opposite of AND, always true unless all inputs are true
+	\item[OR Gate:] Output is true when at \textbf{least one} input is true
+	\item[XOR Gate:] Output is true if only one input is true
+\end{description}
+
+\begin{note}{XOR Multiple Inputs}
+	For more than 2 inputs, XOR is true if there is an odd number of inputs true. Also referred to as the ``odd function''	
+\end{note}
+
+\subsection{Logic Functions}
+\begin{itemize}
+	\item Logic functions can be expressed as expressions involving:
+	\subitem variables (literals), e.g. A B X
+	\subitem functions, e.g. $+ . \oplus \overline{A}$
+	\item Rules about how this works called \textbf{Boolean algebra}
+	\item Variables and functions can only take on values \textbf{0} or \textbf{1}
+\end{itemize}
+
+\subsubsection{Convenctions}
+\begin{description}
+	\item[Inversion:] $\overline{A}$ (overline of A)
+	\item[AND:] dot(.) or implied by adjacency. $AB=A.B$
+	\item[OR:] plus sign. $OR(A,B,C) = A+B+C$
+	\item[XOR:] $OR(A, B) = A\oplus B=\overline{A}B+A\overline{B}$
+	\item[NAND:] $\overline{ABC}$
+	\item[NOR:] $\overline{A+B}$
+\end{description}
+
+\subsubsection{Representations of Logic Functions}
+There are four representations of logic functions (assume function of $n$ inputs)
+\begin{itemize}
+	\item\textbf{Truth Table}
+	\subitem Lists output for all $2^n$ combinations of inputs
+	\item\textbf{Boolean Function} (or equation)
+	\subitem Describes the conditions under which the function output is true
+	\item\textbf{Logic Diagram}
+	\subitem Combination of logic symbols joined by wires
+	\item\textbf{Timing Diagram}
+\end{itemize}
+
+\subsection{Logic Function Implementation}
+Any logic function can be implemented as the OR of AND combinations of the inputs. Called \textbf{sum of products}.
+
+\end{multicols}
+\begin{table}[H]
+	\centering
+	\caption{Boolean Identities}
+	\begin{tabular}{l|ll}
+		\textbf{Name} & \textbf{AND Form} & \textbf{OR Form}\\\hline
+		Identity Law & $1A=A$ & $0+A=A$\\
+		Null Law & $0A=0$ & $1+A=1$\\
+		Idempotent Law & $AA=A$ & $A+A=A$\\
+		Commutative Law & $AB=BA$ & $A+B=B+A$\\
+		Associative Law & $(AB)C=A(BC)$ & $(A+B)+C = A+(B+C)$\\
+		Distributive Law & $A+BC=(A+B)(A+C)$ & $A(B+C)=AB+AC$\\
+		Absorption Law & $A(A+B)=A$ & $A+AB=AB$\\
+		De Morgan's Law & $\overline{AB}=\overline{A}+\overline{B}$ & $\overline{A+B}=\overline{A}\overline{B}$
+	\end{tabular}
+	
+\end{table}
+\begin{multicols}{2}
+

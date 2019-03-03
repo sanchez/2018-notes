@@ -37,8 +37,7 @@
 \newcounter{note}\setcounter{note}{0}
 \renewcommand{\thenote}{\arabic{note}}
 \newenvironment{note}[1]{
-	\begin{minipage}{0.9\linewidth}
-		\vspace{1em}
+	\begin{minipage}{\linewidth}
 		\stepcounter{note}
 		\ifstrempty{#1}{
 			\mdfsetup{
@@ -72,29 +71,30 @@
 		\item Daniel Fitz (Sanchez)
 	\end{itemize}
 	\section{Assessment}
+	Participation and Consultation (Weekly from Week 2 to Week 13):
 	\begin{itemize}
-		\item Online Quizzes (10\% = Best 10 $\times$ 1\%)
-		\subitem Due Mondays at 8am
-		\item Mid-semester exam (10\% or 20\%)
-		\subitem Saturday (centrally scheduled - sometime week 5 to 7)
-		\subitem Multiple-choice, open-book
-		\item Prac Exam (Pass/Fail)
-		\subitem Held during Monday/Wednesday Learning Lab sessions in week 6
-		\subitem You must pass in order to pass the course
-		\item Project (20\%)
-		\subitem Develop a microcontroller program
-		\item Final Exam (50\% or 60\%)
-		\subitem Short answer, problem solving, open-book
+		\item Group discussions on that week's topic
+		\item Design activities for website project
+		\item Formative submission of Design Report: Part A
+		\item General participation in practicals/tutorials
+	\end{itemize}
+	During Week 10 Practicals:
+	\begin{itemize}
+		\item Series of tasks to test your knowledge of HTML and CSS
+		\item Everyone will be asked to complete the same type of task
+	\end{itemize}
+	Due Exam Week 1:
+	\begin{itemize}
+		\item Design Report describing and justifying design of website
+		\item Website Implementation (HTML/CSS/jQuery/JavaScript) according to brief
 	\end{itemize}
 
 	\newpage
 
-\begin{multicols}{2}
+\begin{multicols*}{2}
 
 \chapter{Lecture Notes}
 \input{lec1}
-\input{lab1}
-\input{lec2}
 
-\end{multicols}
+\end{multicols*}
 \end{document}

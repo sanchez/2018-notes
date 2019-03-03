@@ -37,8 +37,7 @@
 \newcounter{note}\setcounter{note}{0}
 \renewcommand{\thenote}{\arabic{note}}
 \newenvironment{note}[1]{
-	\begin{minipage}{0.9\linewidth}
-		\vspace{1em}
+	\begin{minipage}{\linewidth}
 		\stepcounter{note}
 		\ifstrempty{#1}{
 			\mdfsetup{
@@ -73,28 +72,28 @@
 	\end{itemize}
 	\section{Assessment}
 	\begin{itemize}
-		\item Online Quizzes (10\% = Best 10 $\times$ 1\%)
-		\subitem Due Mondays at 8am
-		\item Mid-semester exam (10\% or 20\%)
-		\subitem Saturday (centrally scheduled - sometime week 5 to 7)
-		\subitem Multiple-choice, open-book
-		\item Prac Exam (Pass/Fail)
-		\subitem Held during Monday/Wednesday Learning Lab sessions in week 6
-		\subitem You must pass in order to pass the course
-		\item Project (20\%)
-		\subitem Develop a microcontroller program
-		\item Final Exam (50\% or 60\%)
-		\subitem Short answer, problem solving, open-book
+		\item Two Projects
+		\subitem Visualization
+		\subitem Graphics
+		\item Each has 3 components
+		\subitem Proposal (pass/fail)
+		\subitem Presentation (inadequate/poor/good/excellent)
+		\subitem Report (1-7)
+	\end{itemize}
+	For the visualization project, show that you can analysis, understand, and/or communicate or teach about data
+	\begin{itemize}
+		\item Multiple independent variables
+		\item Multiple dependent variables
+		\item Complex behavior over space
+		\item Complex behavior over time
 	\end{itemize}
 
 	\newpage
 
-\begin{multicols}{2}
+\begin{multicols*}{2}
 
 \chapter{Lecture Notes}
 \input{lec1}
-\input{lab1}
-\input{lec2}
 
-\end{multicols}
+\end{multicols*}
 \end{document}

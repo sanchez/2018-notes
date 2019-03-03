@@ -1,0 +1,40 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{Conversions}
+Easiest to convert from most formats to binary then to the desired format.
+
+\subsubsection{Octal}
+\begin{description}
+	\item[From Binary:] Group bits into series of 3 and then convert to decimal (0b010 = 02)
+	\item[To Binary:] Convert each octal number to binary and append
+\end{description}
+
+\subsubsection{Hex}
+\begin{description}
+	\item[From Binary:] Group bits into series of 4 and then convert to hex with overflow being apart of the alphabet (0b1100 = 0xC)
+	\item[To Binary:] Convert each hex number to binary and append
+\end{description}
+
+\subsubsection{Decimal}
+\begin{description}
+	\item[From Binary:] Add together the powers of two at each position $n$ ($0b1010 = 2^3 + 2^1 = 10$)
+	\item[To Binary:] Starting with LSB, divide by 2 with the remainder being bit value at position. ($9 = 9/2 = 4 rem 1, 4/2 = 2 rem 0, 2/2 = 1 rem 0, 1/2 = 0 rem 1. \therefore 9 = 0b1001$)
+\end{description}
+
+
+\subsection{Negative Numbers}
+\subsubsection{Signed Magnitude}
+Leftmost bit is the sign bit, true is negative and false is positive
+
+\subsubsection{One's Complement}
+Leftmost bit = sign-bit (as per signed magnitude), true is negative and false is positive. If negative all bits are inverted
+
+\subsubsection{Two's Complement}
+MSB signifies if negative, true is negative and false is positive. To negate invert all bits and add decimal 1.
+\begin{leftbar}
+	Allows addition without requiring conversion	
+\end{leftbar}
+
+
+\subsubsection{Excess $2^{m-1}$}
+e.g. for 8 bits, excess-128. Add 128 to the original bit and convert to binary
