@@ -1,0 +1,71 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Introduction to Distributed Systems}
+\paragraph{What is the role of middleware in a distributed system?}
+Middleware provides distributed transparency such as:
+\begin{itemize}
+	\item Access Transparency
+	\item Location Transparency
+	\item Concurrency Transparency	
+\end{itemize}
+
+\paragraph{Explain what is meant by distribution transparency and give examples of different types of transparency.}
+Distribution transparency allows aspects of distributed systems (such as accessing of data or individual software components) to be hidden and appear to the end user as a single system. Examples:
+\begin{itemize}
+	\item Access Transparency
+	\item Location Transparency
+	\item Migration Transparency
+	\item Relocation Transparency
+	\item Replication Transparency
+	\item Concurrency Transparency
+	\item Failure Transparency	
+\end{itemize}
+
+\paragraph{Why is it sometimes so hard to hide the occurrence and recovery from failures in a distributed system?}
+It can be difficult to identify the state of remote components. For example how do you tell the difference between unavailable resource and a slow resource?
+
+\paragraph{Why is it not always a good idea to aim at implementing the highest degree of transparency possible?}
+Aiming at the highest degree of transparency may lead to a considerable loss of performance that users are not willing to accept.
+
+\paragraph{What is an open distributed system and what benefits does openness provide?}
+An open distributed system offers services according to a clearly defined set of rules and interfaces. An open system is capable of easily interoperating with other open systems but also allows applications to be easily ported between different implementations of the same system. Furthermore, an open distributed system allows software/hardware components of different natures (e.g. Windows, Linux workstations etc) to participate in the system. A few benefits are:
+\begin{itemize}
+	\item The same system can deliver the service to different types of clients and applications
+	\item The same system can work given different computing environments
+	\item The same system can be extended to allow computing and storage technologies by different vendors	
+\end{itemize}
+
+
+\paragraph{Describe precisely what is meant by a scalable system.}
+A system is scalable with respect to either its number of components, geographical size, or number and size of administrative domains, if it can grow in one or more of these dimensions without an unacceptable loss of performance.
+
+\paragraph{Scalability can be achieved applying different techniques. What are these techniques?}
+Scaling can be achieved through:
+\begin{itemize}
+	\item Workload and data distribution. This requires distributed/parallel algorithms
+	\item Using decentralised architecture
+	\item Data replication, and caching	
+\end{itemize}
+
+
+\subsection{Architecture of Distributed Systems}
+
+\paragraph{If a client and a server are placed far apart, we may see network latency dominating overall performance. How can we tackle this problem?}
+\begin{enumerate}
+	\item Buffering the communication so there is enough data presented to the client while more data is being transferred	
+	\item Perform more client-size processing and caching to reduce communication load
+	\item Multithreaded communication requests on client and server to reduce network latency
+\end{enumerate}
+
+
+\paragraph{What is a three-tiered client-server architecture?}
+A three-tiered client-server architecture consists of three logical layers, where each layer is, in principle, implemented at a separate machine. The highest layer consists of a client user interface, the middle layer contains the actual application, and the lowest layer implements the data that are being used.
+
+\paragraph{What is the different between a vertical distribution and a horizontal distribution?}
+\begin{description}
+	\item[Vertical distribution:] Multiple layers, each implemented on a different machine
+	\item[Horizontal distribution:] Single layer, implemented across multiple machines (distributed database)
+\end{description}
+
+\paragraph{In a structured overlay network, messages are routed according to the topology of the overlay. What is an important disadvantage of this approach?}
+When a message is routed across a structure overlay network (which is a logical network) the shortest path between source and destination may not be the physical shortest path. While the source and receivers may be logically very close to each other, they could be physically at the remotest part of the network.
