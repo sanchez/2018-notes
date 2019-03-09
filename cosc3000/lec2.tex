@@ -1,0 +1,50 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\subsection{Visualisation Procedure}
+Iteractive process:
+\begin{itemize}
+	\item Locate/acquire data
+	\item Parse data
+	\item Filter data
+	\item Clean/analyse/derive
+	\item Map to geometry
+	\item Render
+	\item Interact	
+\end{itemize}
+
+\subsection{Data acquisition}
+Access considerations:
+\begin{itemize}
+	\item Need a reliable (credible) source (e.g. govt/university)
+	\item Need the right to use the data
+	\item Acknowledge source
+	\item May need to register/pay
+	\item May have to apply in writing
+	\item Download directly/automatically?
+	\item Dataset[s] may be huge/dynamic
+	\item Can their server cope?
+	\item Be a good internet citizen (... or get blocked)	
+\end{itemize}
+
+\section{Univariate data}
+\begin{description}
+	\item[Univariate data:] multiple measurements for one thing
+	\item[Bivariate data:] multiple measurements of two things, \textit{temperature and windspeed at a station}
+	\item[Multivariate data:] multiple measurements of 3 or more things
+\end{description}
+
+\subsection{Descriptive Statistics}
+\subsubsection{Measures of variation}
+\begin{description}
+	\item[Ranges:] max-min, inter-quartile, boxplots
+	\item[Standard Deviation:] $s=\sqrt{\frac{1}{n-1}\sum^n_{i=1}\left(x_i - \bar{x}\right)^2}$
+	\item[Variance:] $s^2$
+	\item[Skewness:] asymmetry $\frac{
+	\frac{1}{n}\sum^n_{i=1}\left(x_i-\bar{x}\right)^3
+	}{
+	\left(
+		\frac{1}{n}\sum^n_{i=1}\left(x_i-\bar{x}\right)^2
+	\right)^\frac{3}{2}
+	}$ also (mean - mode)/s
+	\item[Kurtosis:] flatness (platykurtic) or sharpness (leptokurtic)
+\end{description}
