@@ -1,0 +1,269 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Communication}
+\begin{itemize}
+	\item Interprocess communication in DS is based on message exchange
+	\item Low level (transport) message passing does not provide distribution transparency
+	\subitem higher level models are needed
+	\item Distributed application need a variety of communication semantics
+	\begin{itemize}
+		\item Remote Procedure Call (RPC)
+		\item Message-Oriented Middleware (MOM)
+		\item Data streaming
+	\end{itemize}	
+\end{itemize}
+
+\subsection{Layered Protocols}
+Layers, interfaces, and protocols in the \textbf{Open Systems Interconnection Reference Model} (OSI)
+\begin{description}
+	\item[Application:] Application protocol
+	\item[Presentation:] Presentation protocol
+	\item[Session:] Session protocol
+	\item[Transport:] Transport protocol
+	\item[Network:] Network protocol
+	\item[Data link:] Data link protocol
+	\item[Physical:] Physical protocol
+\end{description}
+
+\subsubsection{Middleware Layer}
+Provides common protocols that can be used by many different applications
+\begin{itemize}
+	\item Security protocols
+	\item Transaction protocols
+	\item High-level communication models (e.g. RPC, message queuing services, etc)	
+\end{itemize}
+
+\subsection{Types of Communication}
+\subsubsection{Synchronicity in Communication}
+\begin{leftbar}
+	\textbf{Persistent communication} - message is stored in the system until receiver becomes active	
+\end{leftbar}
+
+\paragraph{Persistent asynchronous communication.} A will send a message to B and not wait for response back
+\paragraph{Persistent synchronous communication.} A sends a message and wait's for B to respond before continuing execution
+\paragraph{Transient asynchronous communication.} A sends a message, B will only receive the message if it is running
+\paragraph{Receipt-based transient synchronous communication.} A sends a message, B receives the message if it is active and returns an acknowledgement
+\paragraph{Delivery-based transient synchronous communication at message delivery.} A sends a message and waits for the acknowledge from B, B will receive the message and send an acknowledge when it starts on the job
+\paragraph{Response-based transient synchronous communication.} A sends a message and waits for the acknowledge from B, B will receive the message and send an acknowledge when it has finished the job
+
+\subsubsection{Steps of a Remote Procedure Call}
+\begin{enumerate}
+	\item Client procedure calls client stub (procedure invocation)
+	\item Client stub builds message, calls local OS
+	\item Client's OS sends message to remote OS
+	\item Remote OS gives message to server stub
+	\item Server stub unpacks parameters, calls server
+	\item Server does work, returns result to the stub
+	\item Server stub packs it in message, calls local OS
+	\item Server's OS sends message to client's OS
+	\item Client's OS gives message to client stub
+	\item Stub unpacks result, returns to client
+\end{enumerate}
+
+\begin{note}{Parameter Passing}
+	\textbf{Parameter marshalling:} There's more than just wrapping parameters into a message. Client and Server:
+	\begin{itemize}
+		\item have different data representations
+		\item have to agree on the same encoding (basic/complex data values)
+		\item Interpret data and transform them into machine-dependent representation	
+	\end{itemize}
+\end{note}
+
+\subsection{Parameter Specification and Stub Generation}
+\begin{itemize}
+	\item Parameters passed by value do not pose problems
+	\item Parameters passed by reference - some partial solutions exist (e.g. a small array can be sent to the server)
+	\item Interfaces (procedures) are often specified in Interface Definition Language (IDL) and compiled into stubs	
+\end{itemize}
+
+\subsubsection{Writing a Client and a Server}
+Three files output by the IDL compiler:
+\begin{itemize}
+	\item A header file (e.g. interface.h, in C terms)
+	\item The client stub
+	\item The server stub	
+\end{itemize}
+
+\subsection{Binding a Client to a Server}
+\begin{itemize}
+	\item Registration of a server makes it possible for a client to locate the server and bind to it
+	\item Server location is done in two steps:
+	\begin{enumerate}
+		\item Locate the server's machine
+		\item Locate the server on that machine
+	\end{enumerate}	
+\end{itemize}
+
+\subsection{Message-Oriented communication}
+\begin{itemize}
+	\item RPC (and RMI) are \textbf{synchronous} and \textbf{transient} (both sender and receiver have to be active
+	\item Transport level communication like TCP and UDP also \textbf{require that the sender and receiver are active} (transient communication)
+	\item Some applications require that messages are kept in the system until the receiver becomes active (e-mail is one example, but there are many more applications of this type)	
+\end{itemize}
+\subsubsection{Asynchronous Communication}
+\begin{itemize}
+	\item MOM -- Message-Oriented Middleware
+	\item Can store messages in the system
+	\item Applications communicate by inserting messages in queues
+	\item Messages are delivered by an overlay network of application layer servers (routers)
+	\item Each application has its own private queue to which other applications can send messages
+	\item There is no guarantee on when the message will be delivered and that it will be read	
+\end{itemize}
+
+\subsubsection{Message-Queueing Model}
+\begin{description}
+	\item[Put:] Append a message to a specific queue -- non-blocking
+	\item[Get:] Block until the specified queue is nonempty, and remove the first message
+	\item[Poll:] Check a specified queue for messages, and remove the first. Never block
+	\item[Notify:] Install a handler to be called when a message is put into the specified queue
+\end{description}
+
+\subsubsection{Message brokers}
+\begin{itemize}
+	\item Main role of brokers is to transform messages from sender's format to receiver's format
+	\item This functionality can be generalised to brokers matching applications based on messages
+	\subitem Applications \textit{publish} messages
+	\subitem Applications \textit{subscribe} for messages	
+\end{itemize}
+
+\begin{note}{MCA: Message Channel Agent}
+	Responsible for checking a message, wrapping it, and sending it to associated receiving ends	
+\end{note}
+
+\subsubsection{Channels}
+\begin{description}
+	\item[Transport type:] Determines the transport protocol to be used
+	\item[FIFO delivery:] Indicates that messages are to be delivered in the order they are sent
+	\item[Message length:] Maximum length of a single message
+	\item[Setup retry count:] Specifies maximum number of retries to start up the remote MCA
+	\item[Delivery retries:] Maximum times MCA will try to put received message into queue
+\end{description}
+
+\subsubsection{Message Transfer}
+\begin{description}
+	\item[MQopen:] Open a (possibly remote) queue
+	\item[MQclose:] Close a queue
+	\item[MQput:] Put a message into an opened queue
+	\item[MQget:] Get a message from a (local) queue	
+\end{description}
+
+\subsection{Transient Communication}
+\subsubsection{Berkeley Sockets}
+\begin{description}
+	\item[Socket:] Create a new communication end point
+	\item[Bind:] Attach a local address to a socket
+	\item[Listen:] Announce willingness to accept connections
+	\item[Accept:] Block caller until a connection request arrives
+	\item[Connect:] Actively attempt to establish a connection
+	\item[Send:] Send some data over the connection
+	\item[Receive:] Receive some data over the connection
+	\item[Close:] Release the connection
+\end{description}
+
+\subsection{Actor model for communication}
+\begin{itemize}
+	\item The actor model adopts the philosophy that \textit{everything is an actor}
+	\item Can respond to a message it receives, can send a finite number of messages to other actors
+	\item Enabling asynchronous communication and control structures as patterns of passing messages
+	\item Resemble the Enterprise application integration framework	
+\end{itemize}
+
+\subsection{Stream-oriented communication}
+\begin{itemize}
+	\item Some applications need to exchange time-dependent information e.g. video, audio (continuous media)
+	\item Previously discussed models do not consider time
+	\item In continuous media the temporal relationship between different data items is essential	
+\end{itemize}
+
+\subsection{Different transmission modes}
+\begin{itemize}
+	\item Asynchronous transmission mode
+	\subitem Sequential transmission without restrictions on when data is to be delivered (e.g. file transfer)
+	\item Synchronous transmission mode
+	\subitem Max end-to-end delay for each unit in a data stream (e.g. sensor sample temperature)
+	\item Isochronous transmission mode (streams)
+	\subitem Data transfer bounded by maximum and minimum end-to-end delay (bounded jitter e.g. audio/video)	
+\end{itemize}
+
+\subsection{Streams}
+Streams can be simple or complex (i.e. can include several related substreams)
+\begin{itemize}
+	\item Unidirectional (source $\rightarrow$ sinks)
+	\item Simple (single flow of data e.g. audio, video)
+	\item Complex (stereo audio, movie)	
+\end{itemize}
+
+\subsubsection{Streams and QoS}
+Streams need timely delivery of data
+\begin{itemize}
+	\item Non functional requirements (time, bandwidth, volume, reliability) are expressed as Quality of Service (QoS)
+	\item There are many models for QoS specifications: e.g. IntServ, DiffServ, MPLS
+	\item In IntServ (Integrated Services), QoS is specified as a flow specification -- flow reservation
+	\item In DiffServ (Differentiated Services), QoS is specified for a class (e.g. expedited forwarding class)	
+\end{itemize}
+Properties for Quality of Service:
+\begin{itemize}
+	\item The required bit rate at which data should be transported (application specific)
+	\item The maximum delay until a session has been set up (when to start sending data)
+	\item The maximum end-to-end delay
+	\item The maximum delay variance, or jitter
+	\item The maximum round-trip delay	
+\end{itemize}
+
+\subsubsection{Stream Synchronisation}
+\begin{itemize}
+	\item Given	a complex stream, how are substreams synchronised?
+	\item Synchronisation takes place at the level of data units (e.g. synchronise two streams only between data units)
+	\item Issues which need to be considered:
+	\subitem Mechanisms for synchronising streams
+	\subitem Distribution of those mechanisms
+\end{itemize}
+
+\subsubsection{Distribution of synchronisation mechanisms}
+\begin{itemize}
+	\item The receiving side needs to have a complete synchronisation specification
+	\item Synchronisation specification can be multiplexed together with other substreams into a complex stream (and is demultiplexed after receiving)	
+\end{itemize}
+
+\subsubsection{Multicast communication}
+\begin{itemize}
+	\item Application level multicasting -- setting a path for information dissemination
+	\begin{itemize}
+		\item Nodes (applications) organise into an overlay network
+		\item Overlay network disseminates information
+		\item Network layer routing is independent of the overlay (communication may not be optimal)
+	\end{itemize}
+	\item Overlay organisation
+	\begin{itemize}
+		\item Nodes may organise themselves into a tree, or
+		\item Nodes organise themselves into a mesh network
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Gossip-based data dissemination}
+\begin{itemize}
+	\item Epidemic protocols are often used for data dissemination
+	\begin{itemize}
+		\item There is no central component which coordinates dissemination
+		\item Information is propagated using local information only
+	\end{itemize}
+	\item Node is \textit{infected} if is has data which it wants to spread
+	\item Node which has not seen this data is \textit{susceptible}	
+\end{itemize}
+
+\begin{note}{Information Dissemination Models}
+	\begin{itemize}
+		\item Anti-entropy propagation model
+		\begin{itemize}
+			\item Node $P$ picks another node $Q$ at random
+			\item Subsequently exchanges updates with $Q$
+		\end{itemize}	
+		\item Approaches to exchanging updates
+		\begin{itemize}
+			\item $P$ only pushes its own updates to $Q$
+			\item $P$ only pulls in new updates from $Q$
+			\item $P$ and $Q$ send updates to each other
+		\end{itemize}
+		\item One variant is the ``gossiping'' protocol
+	\end{itemize}
+\end{note}

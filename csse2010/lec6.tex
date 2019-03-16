@@ -1,0 +1,40 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Shift Registers}
+\subsection{Combinational vs Sequential Circuits}
+\begin{itemize}
+	\item\textbf{Combinational} Circuits
+	\begin{itemize}
+		\item Logic gates only (no flip-flops)
+		\item Output is uniquely determined by the inputs
+		\subitem i.e. you'll always get the same output for a given set of inputs
+	\end{itemize}
+	\item\textbf{Sequential} Circuits
+	\begin{itemize}
+		\item Include flip-flops
+		\item Output determined by current inputs and current \textbf{state} (values in the flip-flops)
+		\item Output can change when clock ``ticks'' (rising edge)	
+	\end{itemize}
+\end{itemize}
+\subsubsection{Sequential Circuits}
+\begin{itemize}
+	\item\textbf{State} is value stored in flip-flops
+	\item Output depends on input and state
+	\subitem or sometimes just the state
+	\item Next state depends on inputs and state	
+\end{itemize}
+
+\subsubsection{Synchronous Sequential Circuit}
+\begin{itemize}
+	\item Storage elements (flip-flops) can only change at discrete instants of time	
+\end{itemize}
+
+\subsection{Registers}
+\begin{itemize}
+	\item A \textbf{register} is a group of flip-flops
+	\subitem $n$-bit register consists of $n$ flip-flops capable of storing $n$ bits
+	\item A register is a sequential circuit \textit{without} any combinational logic
+\end{itemize}
+
+\subsubsection{Shift Register}
+A shift register is a register which is capable of shifting its binary information in one or both directions

@@ -1,0 +1,27 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Time-series}
+\paragraph{Nature of Time series data}
+\begin{itemize}
+	\item unidirectional
+	\item discrete/continuous/(oridinal?)
+	\item point-based/intervals
+	\item can be nested
+	\subitem measure something every day, another dataset of the same measurement is taken hourly
+	\item can exhibit \textbf{cycles}
+	\subitem days, week(end)s, months, seasons
+	\item some ideas may apply to other data with spacing, frequency	
+\end{itemize}
+Time-series data can either discrete or continuous:
+\begin{description}
+	\item[Continuous:] temperature vs time
+	\item[Discrete:] rainfall per day
+\end{description}
+
+\subsection{Time series periodicity}
+\begin{description}
+	\item[Fourier's theorem:] Any periodic function of time can be expressed as a sum of sine and cosine functions (i.e. as a Fourier series). Not periodic? Then you get a continuous Fourier integral rather than a discrete Fourier series.
+	\item[Fourier transform:] Converts time-domain function to frequency-domain spectrum (Fourier series or integral, which we also call the Fourier transform).
+	\item[Inverse Fourier transform:] Frequency-domain back to time-domain.
+\end{description}
+Method used on the computer is known as a \textbf{Fast Fourier Transform (FFT)}.

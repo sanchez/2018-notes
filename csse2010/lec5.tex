@@ -1,0 +1,30 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Flip-flops}
+\subsection{D Flip Flop}
+\begin{itemize}
+	\item\textbf{D} is input
+	\item\textbf{Q} is output
+	\item\textbf{CLK} (clock) is control input	
+\end{itemize}
+Q copies the value of D (and remembers it) whenever CLK goes from 0 to 1 (\textbf{rising edge}).
+
+\subsubsection{Characteristic Table}
+\textbf{Characteristic table} defines operation of flip-flop in tabular form
+\begin{table}[H]
+	\centering\caption{D Flip-Flop Characteristic Table}
+	\begin{tabular}{c|c}
+		D & Q(t+1)\\\hline
+		0 & 0\\
+		1 & 1
+	\end{tabular}
+\end{table}
+
+\subsection{Flip-Flops Vs Latches}
+\begin{itemize}
+	\item The last few slides show \textbf{latches}
+	\subitem These are \textbf{level-triggered} devices
+	\item Remember we want to capture the input value at rising \textbf{edge} (a short instant)!
+	\item Any devices based on edges are referred to as \textbf{flip-flops}
+	\subitem These are \textbf{edge-triggered} devices	
+\end{itemize}
