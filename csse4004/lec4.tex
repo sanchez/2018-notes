@@ -1,0 +1,247 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Naming}
+\subsection{Names, Identifiers and Addresses}
+\begin{itemize}
+	\item Names refer to entities
+	\subitem e.g. processes, users, mailboxes, network connections
+	\item Special types of names exist:
+	\begin{itemize}
+		\item Addresses
+		\item Identifiers
+		\item Human-friendly names
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Addresses}
+\begin{itemize}
+	\item To use (operate on) an entity you need an access point
+	\item The name of an access point is an \textit{address}
+	\item Entities can have more than one access point at a time
+	\item An entity may change access points e.g. when it changes location
+	\item \textit{Location-independent names} are not tied to an address
+\end{itemize}
+
+\subsubsection{Identifiers}
+Special type of name that:
+\begin{itemize}
+	\item Refers to at most one entity
+	\item Always refers to the same entity
+	\item Are limited to one per entity
+\end{itemize}
+
+\subsubsection{Human-friendly names}
+Generally represented as a character string e.g. \texttt{www.news.com.au} or \texttt{/root/ryan/slides}
+
+\subsection{Flat Naming}
+Random bit strings (name doesn't help locate access point)
+\begin{itemize}
+	\item Names must be resolved to address
+	\item There are many name resolution approaches for flat names:
+	\begin{itemize}
+		\item Broadcasting (or multicasting) approaches
+		\item Forwarding pointers
+		\item Home-based approaches (e.g. Mobile IP)
+		\item Distributed Hash Tables (DHTs)
+		\item Hierarchical approaches
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Broadcasting}
+Broadcasting (or multicasting) the ID requesting the entity to return its current address. e.g. ARP (Address Resolution Protocol)
+
+\subsubsection{Forwarding Pointers}
+\begin{itemize}
+	\item When entity moves, it leaves a pointer to its new location
+	\item To find entity, must follow trail of pointers to entity's current location
+	\item Problems:
+	\begin{itemize}
+		\item Can get long chains of pointers (not scalable)
+		\item If chain breaks, can't find entity
+	\end{itemize}
+	\item Potential solution:
+	\subitem Stub Scion Pair (SSP) chains	
+\end{itemize}
+
+\subsubsection{Home-Based Approach}
+\begin{itemize}
+	\item Approach designed for mobile entities
+	\item Entities have home location that keeps track of entity's current location
+	\item Example of home-based approach is Mobile IP:
+	\begin{itemize}
+		\item Mobile entity has fixed IP address
+		\item All traffic to mobile entity goes to entity's Home Agent (home location)
+		\item Home Agent forwards traffic to Care-Of-Address (mobile entity's IP in its current network)
+		\item Whenever mobile entity changes network, it gets new Care-Of-Address, which it registers with Home Agent
+	\end{itemize}	
+\end{itemize}
+
+\subsubsection{Distributed Hash Tables}
+\begin{itemize}
+	\item Consist of many distributed nodes
+	\item Map data to a key value using a hash function
+	\item Each node is responsible for key values (and the associated data) in a particular range
+	\item Have fast lookup times	
+\end{itemize}
+
+\subsubsection{Hierarchical Approach}
+\begin{itemize}
+	\item Network is divided into \textbf{domains}, with each domain subdivided into smaller subdomains
+	\item \textbf{Leaf domain} is lowest level domain (typically LAN or Cell in mobile phone network)
+	\item Each domain has a \textbf{directory node} that keeps track of entities in that domain
+	\item Directory nodes for leaf domains store address of entities in that domain
+	\item Directory nodes for non-leaf domains store reference to lower-level domain containing entities	
+\end{itemize}
+
+\subsection{Structured Naming}
+\begin{itemize}
+	\item Flat names are not convenient for humans
+	\item Structured names:
+	\begin{itemize}
+		\item Composed from simple human-readable names
+		\item Generally supported by naming systems
+		\item Names are organised into a \textbf{name space}
+	\end{itemize}	
+\end{itemize}
+
+\subsubsection{Name Spaces}
+\begin{itemize}
+	\item Name spaces for structured names are represented as a labelled, directed naming graph in which:
+	\begin{itemize}
+		\item A \textbf{leaf node} represents a (named) entity
+		\item A \textbf{directory node} is an entity that refers to other nodes
+		\subitem Outgoing edge is represented as (edge label, node identifier)
+		\item \textbf{Root node} has only outgoing edges
+	\end{itemize}
+	\item Naming graphs are usually directed acyclic graphs
+	\item Each path in a naming graph can be referred to by a sequence of edge labels separated by a special character	
+\end{itemize}
+
+\subsubsection{Name Resolution in a Name Space}
+\begin{itemize}
+	\item Need to know how and where to start $\rightarrow$ need closure mechanism
+	\item Closure mechanism deals with selecting initial node in a name space from which name resolution is to start
+	\item Closure mechanisms are often implicit	
+\end{itemize}
+
+\subsubsection{Linking and Mounting}
+\begin{itemize}
+	\item Aliases
+	\begin{itemize}
+		\item Another name for the same entity
+		\item Symbolic links in UNIX enable more than one path for a file
+	\end{itemize}
+	\item Mounting
+	\begin{itemize}
+		\item Used to merge different name spaces transparently
+	\end{itemize}	
+\end{itemize}
+
+\subsubsection{Name Resolution}
+\begin{itemize}
+	\item Structured names resolved using naming service (implemented by name servers)
+	\item Naming service allows addition, removal and lookup of names
+	\item DS naming services are distributed
+	\item Large-scale distributed naming services are usually hierarchical:
+	\subitem\textbf{Global level:} high-level directory nodes
+	\subitem\textbf{Administrational level:} mid-level directory nodes grouped into separate administrations
+	\subitem\textbf{Managerial level:} low-level directory nodes within a single administration
+	\item The Domain Name System is a good example of a structured name resolution mechanism
+\end{itemize}
+
+\subsubsection{DNS}
+\begin{itemize}
+	\item Large distributed name service used by Internet
+	\item DNS name space is hierarchical
+	\item DNS labels use alphanumeric character strings separated by a ``.''
+	\item A path name in DNS is called a domain name
+	\item DNS is primarily used to lookup IP addresses for hosts and mail servers
+	\item Client (e.g. browser) contacts name resolver
+	\item Name resolver uses either \textbf{iterative} or \textbf{recursive} approach
+	\item Iterative name resolution:
+	\begin{enumerate}
+		\item Name resolver contacts name servers for help
+		\item Starts at root name server
+		\item Each name server resolves as much of name as it can before referring name resolver to another name server who knows more
+		\item Process repeats until name is fully resolved, or cannot be resolved anymore
+	\end{enumerate}	
+	\item Recursive name resolution:
+	\begin{enumerate}
+		\item Name resolver sends name to root name server
+		\item Intermediate result not passed to client, rather it is sent to next name server
+		\item Process repeats until name is fully resolved, then servers pass fully resolved name back
+		\item Root name server passes fully resolved name to name resolver
+	\end{enumerate}
+\end{itemize}
+Comparison between Iterative and Recursive:
+\begin{itemize}
+	\item Recursive approach has higher performance demand on name servers
+	\item Recursive approach can use result caching more effectively
+	\item Iterative approach has higher communication costs	
+\end{itemize}
+
+\subsection{Attribute-based Naming}
+\begin{itemize}
+	\item Each entity is described by \textit{(attribute, value)} pairs
+	\item Attribute-based queries:
+	\subitem Users specify attributes they are looking for
+	\subitem Naming system should return one (or more) entities with the specified attributes
+	\item Attribute-based naming systems are commonly known as \textbf{directory services}
+	\item Lightweight Directory Access Protocol (LDAP) is a common directory service	
+\end{itemize}
+
+\subsubsection{LDAP}
+\begin{itemize}
+	\item Derived from OSI X.500 directory service
+	\item LDAP directory service stores \textit{directory entries}
+	\item Directory entries consist of (attribute, value) pairs
+	\item Directory Information Base (DIB) is collection of all directory entries in an LDAP service
+	\item Each LDAP directory entry has globally unique name (Directory Information Tree) based on hierarchy of naming attributes
+	\subitem e.g. /C=NL/O=Vrije/OU=Comp.Sc	
+\end{itemize}
+\begin{table}[H]
+	\centering
+	\caption{Simple Example of LDAP directory entry}
+	\begin{tabular}{lc|l}
+		\textbf{Attribute} & \textbf{Abbr} & \textbf{Value}\\\hline
+		Country & C & NL\\
+		Locality & L & Amsterdam\\
+		Organisation & O & Vrije\\
+		OrganisationalUnit & OU & Comp.Sc\\
+		CommonName & CN & Main Server\\
+		Mail\_Servers & -- & 137.37.20.3, 130.37.24.6\\
+		FTP\_Server & -- & 130.37.20.20\\
+		WWW\_Server & -- & 130.37.20.20	
+	\end{tabular}
+\end{table}
+
+\subsubsection{Decentralised Schemes}
+\begin{itemize}
+	\item Driven by advent of peer-to-peer
+	\item Need efficient mapping of (attribute,value) pairs to avoid exhaustive search of networks
+	\item Two Approachs:
+	\begin{itemize}
+		\item Distributed Hash Tables (INS/Twine)
+		\item Semantic Overlay Networks
+	\end{itemize}
+\end{itemize}
+
+\begin{note}{Distributed Hash Tables}
+	\begin{itemize}
+		\item In INS/TWINE each entity (resource) is described by a hierarchical attribute-value tree (AVTree)
+		\item Every path from root of AVTree gets unique hash value
+		\item Node in DHT responsible for hash value will keep reference to actual resource
+		\item Query for (type-book) will get hashed to value 5 and sent to node responsible for storing hash value 5
+	\end{itemize}
+\end{note}
+
+\begin{note}{Semantic Overlay Networks}
+	\begin{itemize}
+		\item When there is no organised attribute-based naming resolution scheme, nodes must discover for themselves where resources are located
+		\item To make queries efficient, nodes can track nodes with similar resources
+		\item Measuring similarity based on attributes is difficult $\rightarrow$ different nodes have different definitions of attributes
+		\item Possibly ignore attributes and use file names
+		\subitem Similarity measured as number of files in common	
+	\end{itemize}
+\end{note}
+

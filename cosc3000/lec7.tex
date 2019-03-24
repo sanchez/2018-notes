@@ -1,0 +1,38 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{3D and 4+D Visualisation}
+\begin{itemize}
+	\item If we have 3 variables, we can plot them using 3 axes
+	\item Gives us a 3D plot which is represented as a 2D image
+	\item We may need cues to help identify the information
+	\item More than 3D can be quite difficult to understand
+	\subitem Quantitative methods become useful	
+\end{itemize}
+
+
+\section{Multivariate data analysis}
+\textit{Yeah look, there was content but idk}
+
+\section{Spatial statistics}
+\begin{itemize}
+	\item\textbf{Location:} What's happening at positions of interest?
+	\item\textbf{Pattern:} Spatial arrangement of phenomena/events
+	\item Analogous to previous descriptive stats, + space
+\end{itemize}	
+
+\subsection{Measures of dispersion}
+Spectrum of dispersion (clustered $\rightarrow$ random $\rightarrow$ dispersed). Standard distance:
+\[\sqrt{
+	\frac{\sum_i{d_i^2}}
+		{n}
+}\]
+
+\subsection{Nearest neighbour analysis}
+\begin{itemize}
+	\item Observed nearest-neighbour distance: $D_\text{obs} =$ mean distance to all points' nearest neighbours
+	\item Expected nearest-neighbour distance: $D_\text{rand}=\frac{1}{2\sqrt{p}}$
+	\subitem $p=$ density of points
+	\item max clustering: $D_\text{obs}=0$
+	\item max dispersion: $D_\text{obs}=\sqrt{\frac{2}{p\sqrt{3}}}$
+	\item nearest-neighbour index $= \frac{D_\text{obs}}{D_\text{rand}} (\in [0, 2.15])$	
+\end{itemize}

@@ -1,0 +1,89 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{State Machines}
+\begin{itemize}
+	\item Sequential circuits can also be called
+	\subitem state machines
+	\subitem finite state machines (FSMs)
+	\item State machine has
+	\begin{itemize}
+		\item Finite number of possible states
+		\item Only one \textbf{current state}
+		\item Can \textbf{transition} to other states based on inputs and current state
+	\end{itemize}
+\end{itemize}
+
+\begin{note}{Types of State Machines}
+	\begin{description}
+		\item[Mealy Machines:] Outputs depend on current state and inputs
+		\item[Moore Machines:] Outputs depend only on current state (flip-flop values)
+		\subitem Outputs can only change when state changes
+	\end{description}	
+\end{note}
+
+\subsection{State diagram}
+\begin{figure}[H]
+	\begin{tikzpicture}[node distance=2cm,auto,every place/.style={draw}]
+		\node [place] (S1) {\begin{tabular}{c}S1\\00\end{tabular}};
+		\coordinate[node distance=1.5cm,left of=S1] (left-S1);
+		\draw[->,thick] (left-S1) -- (S1);
+		
+		\node [place] (S2) [right=of S1] {\begin{tabular}{c}S2\\01\end{tabular}};
+		\path[->] (S1) edge [bend left] node {$a$} (S2);
+		\path[->] (S2) edge [bend left] node {$b$} (S1);
+		\path[->] (S2) edge [loop above] node {$\bar{a}$} ();
+		\path[->] (S1) edge [loop above] node {$\bar{a}$} ();
+	\end{tikzpicture}	
+	\centering
+	\caption{Example single input state diagram}
+\end{figure}
+\textit{Note: I couldn't figure out how to add the line that is meant to go between the state label and the state number}
+
+\subsubsection{Completeness}
+Each possible combination of inputs should be addressed \textbf{exactly once} for each state. i.e. transition arrows from each state must encompass all possibilities (exactly once)
+
+\subsection{State tables}
+\begin{itemize}
+	\item State diagrams can also be represented in a state table	
+\end{itemize}
+
+\begin{table}[H]
+	\centering
+	\caption{Example State Table}
+	\begin{tabular}{cc|c|cc}
+		\textbf{Current State} & \textbf{Input $U$} & \textbf{Next State} & \multicolumn{2}{c}{\textbf{Outputs}}\\
+		&&& $Q_1$ & $Q_2$\\\hline
+		S0 & 0 & S3 & 0 & 0\\
+		S0 & 1 & S1 & 0 & 0\\
+		S1 & 0 & S0 & 0 & 1\\
+		S1 & 1 & S2 & 0 & 1\\
+		S2 & 0 & S1 & 1 & 0\\
+		S2 & 1 & S3 & 1 & 0\\
+		S3 & 0 & S2 & 1 & 1\\
+		S3 & 1 & S1 & 1 & 1
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Two-dimensional state table}
+	\begin{tabular}{c|cc|cc}
+		\textbf{Current} & \multicolumn{2}{c}{Next State} & \multicolumn{2}{c}{Outputs}\\
+		\textbf{State} & $\bar{U}$ & $U$ & $Q_1$ & $Q_0$\\\hline
+		S0 & S3 & S1 & 0 & 0\\
+		S1 & S0 & S2 & 0 & 1\\
+		S2 & S1 & S3 & 1 & 0\\
+		S3 & S2 & S0 & 1 & 1
+	\end{tabular}
+\end{table}
+
+\subsection{State encoding}
+\begin{itemize}
+	\item Must encode each state into flip-flop values
+	\item Choose
+	\subitem Number of flip-flops
+	\subitem Bit patterns that represent each state
+	\item Ideally, choose state encoding to make combinational logic simple, for both
+	\subitem Output logic
+	\subitem Next state logic	
+\end{itemize}

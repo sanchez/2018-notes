@@ -1,0 +1,27 @@
+% !TeX spellcheck = en_US
+% !TeX root = notes.tex
+\section{Counters}
+\begin{itemize}
+	\item A \textbf{counter} is a multi-bit register that goes through a determined sequence of states (values) upon the application of input pulses
+	\item A counter which follows binary number sequence is a \textbf{binary counter}
+	\subitem $n$-bit binary counter has $n$ flip-flops and can count from 0 to $2^n-1$
+\end{itemize}
+
+\begin{note}{State}
+	\begin{itemize}
+		\item Values stored in the flip-flops can be considered the \textbf{current state} of the circuit
+		\item D inputs to the flip-flops are the \textbf{next state}
+		\item D inputs are some function of the current state and inputs	
+	\end{itemize}
+\end{note}
+
+
+\paragraph{Key Points}
+\begin{itemize}
+	\item Next state is a function of previous state (and possibly inputs)
+	\item Count sequence can be binary numbers but does not have to be
+	\subitem If it is, counter is a \textbf{binary counter}
+	\item Circuits are \textbf{synchronous}
+	\subitem All flip-flops have the same clock	
+\end{itemize}
+

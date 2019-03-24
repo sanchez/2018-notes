@@ -33,6 +33,22 @@
 \usepackage{circuitikz}
 \tikzstyle{dot} = [shape=circle, fill=black]
 \usepackage{tikz-timing}
+\usetikzlibrary{arrows,shapes,automata,petri,positioning,calc}
+\tikzset{
+	place/.style={
+		circle,
+		thick,
+		draw=black,
+		fill=white,
+		minimum size=6mm,
+	},
+	state/.style={
+		circle,
+		thick,
+		draw=blue!75,
+		minimum size=6mm,
+	},
+}
 %\usepgfplotslibrary{external}
 %\tikzexternalize
 
@@ -101,6 +117,8 @@
 \input{lec4}
 \input{lec5}
 \input{lec6}
+\input{lec7}
+\input{lec8}
 
 \end{multicols}
 \end{document}
