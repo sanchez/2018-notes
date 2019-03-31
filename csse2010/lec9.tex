@@ -1,0 +1,53 @@
+\section{ALUs and Memory}
+\subsection{Parts of a CPU}
+\begin{itemize}
+	\item\textbf{Control Unit}
+	\subitem Fetches instructions from memory, makes the ALU and the registers perform the instruction
+	\item\textbf{ALU}
+	\subitem Performs arithmetic and logical operations
+	\item\textbf{Registers}
+	\subitem High speed memory -- stores temporary results and control
+\end{itemize}
+
+\subsection{Registers}
+Different types of registers
+\begin{itemize}
+	\item\textbf{Program Counter Register}
+	\subitem Stores the memory address of the next instruction to be fetched
+	\item\textbf{Instruction Register}
+	\subitem Contains the current instruction
+	\item\textbf{General Purpose Registers}
+	\subitem Contains data to be operated on (e.g. data read from memory), results of operations, ...
+	\subitem Width is CPU word size
+	\subitem Sometimes called the \textbf{register file}
+\end{itemize}
+
+\subsection{Buses}
+\textbf{Bus} = Common pathway (collection of ``wires'') connecting parts of a computer\\
+Characteristics:
+\begin{itemize}
+	\item Can be \textbf{internal} to CPU (e.g. ALU to registers)
+	\item Can be \textbf{external} to CPU (e.g. CPU to memory)
+	\item Buses have a \textbf{width} -- number of bits that can be transferred together over a bus
+	\subitem May not always be the same as the word size of the computer
+\end{itemize}
+
+\begin{note}{Arithmetic Logic Unit (ALU)}
+Does more than adding... \textbf{Function / control} input dictates the operation that the ALU is to perform, e.g.
+\begin{itemize}
+	\item Addition
+	\item Increment (+1)
+	\item Subtraction
+	\item Bitwise AND
+	\item Bitwise OR	
+\end{itemize}
+Like adders, ALUs can be made up from 1-bit slices
+\end{note}
+
+\subsection{Data Path}
+\begin{itemize}
+	\item Operands come from register file
+	\item Result written to register file
+	\item Implements routine instructions such as arithmetic, logical, shift
+	\item Width of registers/buses is the CPU word size	
+\end{itemize}

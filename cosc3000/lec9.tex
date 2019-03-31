@@ -1,0 +1,80 @@
+\section{Visualising multidimensional data}
+\subsection{Ternary plots}
+\begin{itemize}
+	\item Triangular ordination of \textit{proportions} of 3 components (i.e. $\sum=1$)
+	\item tricky but worth the effort
+	\item axes read parallel to each zero (center = 33\% each)	
+\end{itemize}
+
+\subsection{Scatterplot matrix}
+\begin{itemize}
+	\item tiled 2d visualisation of multiple variables
+\end{itemize}
+
+\subsection{Coplots}
+\begin{itemize}
+	\item conditional on one variable
+	\subitem slice through data
+	\subitem slices trade-off range and data
+	\subitem fit curves to see dependency
+	\subitem can also graph residuals etc.	
+\end{itemize}
+
+\subsection{3d point plots}
+\begin{itemize}
+	\item scatterplot in 3d
+	\item used to seeing a 3d object in 2d
+	\item if not too many points can use a stem plot	
+\end{itemize}
+
+\subsubsection{Interpolating}
+\begin{itemize}
+	\item if irregular x/y data
+	\item create lattice covering range of x and y
+	\item interpolate between z-values	
+\end{itemize}
+
+\subsubsection{viewing/presentation choices}
+\begin{itemize}
+	\item grid density
+	\begin{itemize}
+		\item sparse = lose surface definition
+		\item dense = lose depth perception
+	\end{itemize}
+	\item axis ratios
+	\begin{itemize}
+		\item as data if axes share same units
+		\item otherwise 1-1-1
+		\item or banked z-axis?
+	\end{itemize}
+	\item projection
+	\begin{itemize}
+		\item perspective: good for real objects (but distortion)
+		\item orthogonal: fixed lengths $\rightarrow$ data analysis (but front/back confusion)
+	\end{itemize}
+	\item orientation (azimuth and elevation)
+	\begin{itemize}
+		\item multiple rotations helpful (around z-axis, in equal steps)
+	\end{itemize}
+	\item other effects
+	\begin{itemize}
+		\item box
+		\item ticks
+		\item curtain
+		\item show/hide rear wires
+		\item colour
+	\end{itemize}	
+\end{itemize}
+All involve trade-offs
+\begin{itemize}
+	\item help or hindrance
+	\item should highlight data, not effect itself	
+\end{itemize}
+
+\subsubsection{colour representation}
+use of colour
+\begin{itemize}
+	\item none
+	\item height-related
+	\item gradient-related	
+\end{itemize}

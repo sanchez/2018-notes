@@ -1,0 +1,307 @@
+\section{Synchronisation}
+\subsection{Clock Synchronisation}
+\begin{itemize}
+	\item The problem with clocks in DS
+	\item Physical clocks
+	\item clock synchronisation algorithms:
+	\subitem network time protocol (NTP)
+	\subitem the berkeley algorithm
+	\subitem clock synchronisation in wireless networks	
+\end{itemize}
+
+\subsubsection{Physical Clocks}
+\begin{itemize}
+	\item Sometimes we need the exact time in DS
+	\item \textbf{Universal Coordinated Time (UTC)}
+	\begin{itemize}
+		\item Based on the number of transactions per second of the Cesium 133 atom
+		\item At present, the real time is taken as the average of approx. 50 Cesium clocks around the world (International Atomic Time - TAI)
+		\item Introduces a leap second from time to time to compensate that days are getting longer
+	\end{itemize}
+	\item UTC is broadcast through short wave radio and by satellite. Satellites can give an accuracy of about $\pm$ 0.5ms	
+\end{itemize}
+
+\subsubsection{Clock Synchronisation Algorithms}
+\begin{itemize}
+	\item Suppose we have a distributed system with a UTC receiver somewhere in it we still have to distribute its time to each machine
+	\item Assumptions:
+	\begin{itemize}
+		\item Every machine has a timer that generates an interrupt $H$ times per second
+		\item There is a clock in machine $p$ that \textbf{ticks} on each timer interrupt. Denote the value of that clock by $C_p(t)$, where $t$ is UTC time
+		\item Ideally, we have that for each machine $p$, $C_p(t)=t$ or, in other words, $\frac{dC}{dt}=1$	
+	\end{itemize}
+\end{itemize}
+If $\frac{dC}{dt}>1$, fast clock. If $\frac{dC}{dt} = 1$, perfect clock. If $\frac{dC}{dt} < 1$, slow clock.
+
+\begin{note}{Network Time Protocol (NTP)}
+	\begin{itemize}
+		\item The Network Time Protocol (NTP) was developer to synchronise clocks across DS
+		\item NTP achieves accuracy of between 1 and 50 ms
+		\item NTP servers are divided into strata reflecting the accuracy of their clocks
+		\item The most accurate servers are referred to as stratum-1 (and typically have direct access to a reference clock)
+		\item NTP operates pair-wise between servers	
+	\end{itemize}
+\end{note}
+
+\begin{note}{The Berkeley Algorithm}
+	\begin{itemize}
+		\item Berkeley algorithm uses averaging approach to correct clocks (so doesn't need WWW receiver)
+		\item Time daemon's clock must be manually set (periodically)
+		\item New time is calculated as follows:
+		\begin{itemize}
+			\item daemon announces its time to each node on the network
+			\item nodes report how far ahead/behind their clocks are
+			\item daemon calculates new time based on average of reported values
+			\item daemon tells each node how to adjust its clock
+		\end{itemize}
+	\end{itemize}
+\end{note}
+
+\begin{note}{Wireless Networks}
+	Clock synchronisation in wireless networks is problematic because:
+	\begin{itemize}
+		\item Nodes cannot always contact one another
+		\item Nodes are resource-constrained	
+	\end{itemize}
+	Reference Broadcast Synchronisation (RBS) designed for wireless sensor networks
+	\begin{itemize}
+		\item offers network internal synchronisation (not necessarily to UTC time)
+		\item sender broadcasts reference message with timestamp
+		\item receivers record difference between reference message timestamp and their own clock
+		\item receivers store time offset (calculated using simple linear regression algorithm) for each sender
+	\end{itemize}
+\end{note}
+
+\subsection{Logical Clocks}
+\begin{itemize}
+	\item The order in which events occur in the DS is often more important than the time that they occurred
+	\item The order of events can be established using logical clocks	
+\end{itemize}
+
+\subsubsection{Lamport's Algorithm}
+\begin{itemize}
+	\item Events in the DS can be ordered using Lamport's \textbf{happened-before} relation
+	\item The \textbf{happened-before} relation on the set of events in a DS is the smallest relation satisfying:
+	\begin{itemize}
+		\item if $a$ and $b$ are events in the same process, and $a$ occurs before $b$, then $a\rightarrow b$ is true
+		\item if $a$ is the event of a message being sent by one process, and $b$ is the receipt of that message in another process, then $a \rightarrow b$ is also true
+	\end{itemize}
+	\item This relation is transitive:	
+	\subitem $a\rightarrow b$ and $b\rightarrow c$, then $a\rightarrow c$
+	\item In Lamport's logical clock algorithm:
+	\begin{itemize}
+		\item each event $a$ has an associated time $C(a)$ based on the local clock
+		\item between any two events, the clock must tick at least once (i.e. no two events ever occur at the same time)
+		\item messages carry their sending time according to the sender's clock e.g. $C(b)$
+		\item when a message is received, its time is compared against the local clock. If the local clock is less than $C(b)$, \textbf{it is set to $C(b)+1$}
+	\end{itemize}
+	\item Events occurring in processes that do not interact (even indirectly through third parties) are said to be concurrent
+	\item Nothing can be said about the order of concurrent events
+	\item For example:
+	\begin{itemize}
+		\item Events $x$ and $y$ occur in two different processes (that do not interact at all)
+		\item The happened-before relation cannot be applied as $x$ and $y$ are concurrent
+		\item This means that $x\rightarrow y$ is not true, and $y\rightarrow x$ is not true
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Vector Clocks}
+\begin{itemize}
+	\item Lamport's algorithm ensures that if the happened-before relation exists between events $a$ and $b$, then $C(a) < C(b)$
+	\item But if $C(c) < C(d)$, Lamport's algorithm doesn't guarantee that $c$ happened before $d$
+	\item The problem is that Lamport's algorithm does not capture \textbf{causality}
+	\item Causality can be captured using vector clocks
+	\item The vector clock for an event $a$ is signified by $VC(a)$
+	\item For two events, $a$ and $b$, if $VC(a) < VC(b)$, then event $a$ causally precedes event $b$
+	\item To construct a vector clock, each process $P_i$ maintains a vector $VC_i$
+	\subitem $VC_i[i]$ is the value of the logical clock at $P_i$
+	\subitem If $VC_i[j] = k$, $P_i$ knows that at least $k$ events have occurred at $P_j$
+	\item For every event that occurs at $P_i$ the vector value $PC_i[i]$ is incremented by one
+	\item A process' vector is piggybacked onto all messages sent by that process
+	\item Every time a message is received, the recipient process updates its own vector ($VC_r$)
+	\item If we assume the message vector is $VC_m$, the update is performed by setting $VC_r[k] = MAX(VC_r[k], VC_m[k])$ for each $k$
+	\item The issue of total ordering and causal ordering of messages by the communication system is controversial
+	\item Total or causal ordering can also be provided in the application (\textbf{end-to-end} argument)	
+\end{itemize}
+
+\subsection{Mutual Exclusion}
+\begin{itemize}
+	\item Processes in a distributed system may want exclusive access to a shared resource
+	\item A mutual exclusion mechanism is required to prevent corruption (or inconsistent updates) of that resource
+	\item How to achieve mutual exclusion in DS?	
+\end{itemize}
+
+\subsubsection{A Centralised Algorithm}
+\begin{itemize}
+	\item Coordinator process enforces mutual exclusion over resource
+	\item Processes must ask coordinator for permission to access resource
+	\item Benefits of centralised approach:
+	\begin{itemize}
+		\item easy to implement
+		\item low message overhead
+		\item fair (access requests are processed in order)
+	\end{itemize}
+	\item Drawbacks:
+	\begin{itemize}
+		\item coordinator is a single point of failure
+		\item coordinator can be performance bottleneck
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Distributed, with no topology imposed (by Ricart and Agrawala)}
+\begin{itemize}
+	\item A process wanting to access a shared resource sends a message to all other processes. The message contains:
+	\begin{itemize}
+		\item the requested resource's name
+		\item the requesting process' process id
+		\item the requesting process' logical time
+	\end{itemize}
+	\item Recipients of the message follow one of three behaviours. If the recipient:
+	\begin{itemize}
+		\item doesn't want the resource, it sends back OK
+		\item currently holds the resource, then it checks if the logical time in the message is less than its own logical time. If so, it sends back OK. If not, it queues the message and sends back nothing.
+	\end{itemize}
+	\item To access the shared resource, a process must receive an OK from all other processes
+	\item When a process is finished with a resource it:
+	\begin{itemize}
+		\item sends OK messages to processes in its queue
+		\item deletes its queue
+	\end{itemize}
+	\item Benefits of approach:
+	\begin{itemize}
+		\item solution is fair
+		\item does not need a single coordinator
+	\end{itemize}
+	\item Drawbacks
+	\begin{itemize}
+		\item all processes are involved in all decisions (one slow process slows down others)
+		\item large number of messages required
+		\item single point of failure replaced with $n$ points of failure
+		\item processes must have accurate group membership list
+	\end{itemize}	
+\end{itemize}
+
+
+\subsubsection{Distributed, using a ring topology}
+\begin{itemize}
+	\item Uses a logical ring to order processes
+	\item Processes can only access the shared resource while in possession of a token
+	\item The token is passed on to the next node in the ring if:
+	\begin{itemize}
+		\item the current token holder does not want to access the shared resource
+		\item if the token holder is finished accessing the shared resource
+	\end{itemize}
+	\item The token circulates around the ring in one direction
+	\item Benefits of this approach:
+	\begin{itemize}
+		\item algorithm is simple
+	\end{itemize}
+	\item Drawbacks:
+	\begin{itemize}
+		\item token must be regenerated if lost
+		\item crashed processes can stop circulation of token
+		\item potentially have to wait for every other process to use token before it is your turn
+	\end{itemize}	
+\end{itemize}
+
+\end{multicols}
+\begin{table}[H]
+	\centering\caption{Comparison of Algorithms}
+	\begin{tabular}{l|p{5cm}p{5cm}l}
+		\textbf{Algorithm} & \textbf{Messages per entry/exit} & \textbf{Delay before entry (in message times)} & \textbf{Problems} \\\hline
+		Centralised & 3 & 2 & Coordinator crash\\
+		Distributed & $2(n-1)$ & $2(n-1)$ & Crash of any process\\
+		Token ring & $1$ to $\infty$ & $0$ to $n-1$ & Lost token, process crash	
+	\end{tabular}
+\end{table}
+\begin{multicols}{2}
+
+\subsection{Election Algorithms}
+\begin{itemize}
+	\item Many distributed algorithms require that one of the processes acts as a coordinator
+	\item An election is used to dynamically select coordinator
+	\item Election algorithms needed so that at the end of the election all processes agree on coordinator
+	\item Common election algorithms are:
+	\begin{itemize}
+		\item the Bully Algorthm
+		\item a Ring Algorithm
+	\end{itemize}
+	\item Different algorithms needed for:
+	\begin{itemize}
+		\item Wireless network environments
+		\item Large-scale distributed systems
+	\end{itemize}	
+\end{itemize}
+
+\subsubsection{The Bully Algorithm}
+\begin{itemize}
+	\item When process $P$ notices coordinator is non-responsive, it initiates an election
+	\item Election conducted as follows:
+	\begin{enumerate}
+		\item $P$ sends an ELECTION message to all processes with higher process number
+		\item If no one responds, $P$ wins the election and becomes coordinator
+		\item If one of the higher-ups answers, it takes over. $P$'s job is done
+	\end{enumerate}	
+\end{itemize}
+
+\subsubsection{A Ring Algorithm}
+\begin{itemize}
+	\item Assumes processes are logically ordered (each node knows its successor in ring)
+	\item When process $P$ notices coordinator is non-responsive, it initiates election
+	\item Election conducted as follows:
+	\begin{itemize}
+		\item $P$ sends ELECTION message (containing $P$'s process num) to successor
+		\item Recipients add own process num to message and pass to  their successor
+		\item Message gets back to $P$, who changes message type to COORDINATOR
+		\item COORDINATOR message circles ring again
+		\item Process with highest process num in COORDINATOR message becomes coordinator
+	\end{itemize}	
+\end{itemize}
+
+\subsubsection{for Wireless Environments}
+\begin{itemize}
+	\item Previously described election algorithms need:
+	\subitem reliable message passing
+	\subitem stable network topology
+	\item These aren't always present in wireless environments
+	\item The following election protocol for wireless environments attempts to overcome these problems
+	\item Node that calls election becomes \textbf{source node}
+	\item Source node sends ELECTION message to all neighbours
+	\item The first time a node receives ELECTION message it:
+	\subitem marks sender as parent
+	\subitem forwards ELECTION message to all its neighbours
+	\item Subsequent ELECTION messages (not from parent) are acknowledged only
+	\item Nodes wait a set time for acknowledgements from neighbours, before sending own acknowledgement to parent
+	\item Acknowledgements contain information on the resource capacities of the node's best neighbour (e.g. battery power)
+	\item The source node uses the acknowledgement information to select the coordinator	
+\end{itemize}
+
+\subsubsection{for Large-Scale Systems}
+\begin{itemize}
+	\item Previous algorithms select one node only
+	\item Large-scale systems may require many local coordinators (e.g. peer-to-peer networks superpeers keep index of content on neighbours to speed searches)
+	\item Superpeers should:
+	\begin{itemize}
+		\item offer regular nodes low-latency access
+		\item be evenly distributed throughout network
+		\item exist in predefined proportion to regular nodes
+		\item serve no more than a set number of regular nodes
+	\end{itemize}
+	\item Two approaches for selecting superpeers:
+	\subitem using a Distributed Hash Table (DHT) identifier
+	\subitem using repulsion forces
+	\item Distributed Hash Table identifier:
+	\begin{itemize}
+		\item fraction of DHT identifier space is reserved for superpeers
+		\item reserve the first (i.e. leftmost) $k$ bits to identify superpeers
+		\item need $N$ superpeers: use \textit{ceil(log2(N))} bits of any \textbf{key} to identify these nodes
+	\end{itemize}
+	\item Repulsion forces approach:
+	\begin{itemize}
+		\item $n$ tokens spread across peer-to-peer overlay
+		\item each node holding a token learns about other token-holders
+		\item each token is ``repulsed'' by nearby tokens (token holder sends token to another peer if too many tokens nearby)
+		\item tokens passed around network until tokens spread evenly across network
+		\item token must be held by a node for a set time period before node can become superpeer
+	\end{itemize}	
+\end{itemize}

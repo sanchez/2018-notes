@@ -1,0 +1,26 @@
+\section{CPU Control Unit}
+\subsection{Control Unit}
+\begin{itemize}
+	\item Control signals come from the \textbf{control unit}
+	\item Control unit must generate the control signals in the right order for a given instruction
+	\subitem Instruction determined by contents of the \textbf{Instruction Register (IR)}	
+\end{itemize}
+
+\subsubsection{Data Influencing Control}
+\begin{itemize}
+	\item Need to know more than what's in the instruction register
+	\item Control unit can't operate without knowing something about the data
+	\item \textbf{Status Register}
+	\subitem Determined by ALU operations
+	\subitem Stores status of last ALU operation	
+\end{itemize}
+
+\begin{note}{Status Register}
+Typically Includes:
+	\begin{description}
+		\item[Z:] zero bit -- was the last result 0?
+		\item[V:] overflow bit -- did the last addition/subtraction operation overflow (assuming it was a two's complement operation)?
+		\item[C:] carry bit -- was a carry out generated?
+		\item[N:] negative bit -- was the result negative if considered as two's complement (i.e. what's the sign bit)?
+	\end{description}	
+\end{note}
