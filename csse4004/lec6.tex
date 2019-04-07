@@ -1,0 +1,145 @@
+\section{Consistency and Replication}
+\begin{itemize}
+	\item Replication of services
+	\begin{itemize}
+		\item Increase availability
+		\item Enhance reliability (switch to another on crash)
+		\item Improve performance (load balance, data closer, support scaling in numbers and area)
+	\end{itemize}
+	\item Management of replicated data:
+	\begin{itemize}
+		\item Scalability of keeping replicas consistent	
+	\end{itemize}
+\end{itemize}
+
+\subsection{Data-centric consistency}
+\begin{description}
+	\item[Data store:] distributed collection of storages accessible to clients
+	\item[Consistency model:] contract between (distributed) data store and processes, in which data store specifies precisely what results of read and write operations are in presence of concurrency
+	\item[Strong consistency:] operations on shared data \textit{coherent}
+		\begin{itemize}
+			\item Strict consistency (related to time)
+			\item Sequential consistency (what we are used to)
+			\item Causal consistency (maintains only causal relations)	
+		\end{itemize}
+	\item[Weak consistency:] coherence only when shared data locked, unlocked
+		\begin{itemize}
+			\item Entry consistency	
+		\end{itemize}
+	\item[Strict Consistency:] Any read to a shared data item X returns the value stored by the \textbf{most recent} write operation on X
+	\item[Sequential Consistency:] Result of any execution same as if operations of all processes executed in some sequential order, and operations of each individual process appear in this sequence in order specified by its program
+	\item[Causal Consistency:] Writes that are potentially \textbf{causally} related must be seen by all processes in same order. Concurrent writes may be seen in different order on different machines
+\end{description}
+\begin{leftbar}
+	the weaker the consistency model, the easier to scale	
+\end{leftbar}
+
+\subsubsection{Grouping Operations - Weaker Consistency}
+\begin{itemize}
+	\item Most applications use transactions or enter critical sections
+	\item Consistency of whole set of operations is of interest not single read/writes
+	\begin{itemize}
+		\item During transactions or operations in critical sections (CS) concurrent access to data used in CS is not allowed
+		\item Entering and leaving CS can be modelled by shared synchronisation variables
+		\begin{itemize}
+			\item When process enters CS it should acquire synchronisation variables
+			\item When it leaves it releases these variables
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\begin{note}{Summary of Consistency Models}
+\textbf{Consistency models not using synchronisation variables}
+\begin{description}
+	\item[Strict:] Absolute time ordering of all shared accesses
+	\item[Sequential:] All processes see all shared accesses in the same order. Accesses are not ordered in time
+	\item[Causal:] All processes see causally-related shared accesses in the same order
+\end{description}
+\textbf{Models with synchronisation variables}
+\begin{description}
+	\item[Entry:] Shared data pertaining to a critical region are made consistent when a critical region is entered
+\end{description}
+\end{note}
+
+\subsubsection{Eventual Consistency}
+For very large databases
+\begin{itemize}
+	\item with tolerance for high degree of inconsistency
+	\item updates guaranteed to propagate to all replicas
+	\item if no updates for long time, all replicas gradually become consistent (identical copies)	
+\end{itemize}
+Eventual consistency works well if always the same replica is accessed
+
+\subsection{Client-centric consistency}
+\textbf{Goal:} avoid system-wide consistency. Concentrate on single client's needs.
+\begin{itemize}
+	\item Mobile clients
+	\item Clients may have a distributed store but at a time work only on a local replica
+	\subitem No simultaneous updates
+	\subitem Most operations involve reading data
+\end{itemize}
+\begin{description}
+	\item[Monotonic Reads:] If process reads value of data item $x$, any successive read operation on $x$ by that process will always return that same or more recent value
+\end{description}
+
+\subsection{Replica Management}
+\subsubsection{Replica Placement}
+\begin{description}
+	\item[Model:] consider objects (don't care if data or code)
+	\item[Distinguish different processes:] process capable of hosting replica of object or data
+	\begin{itemize}
+		\item\textbf{Permanent replicas:} process/machine always has replica
+		\item\textbf{Server-initiated replica:} Process can dynamically host replica on request of server in data store (push cache)
+		\subitem Used to improve performance
+		\item\textbf{Client-initiated replica:} Process can dynamically host replica on request of client
+		\subitem Client caches	
+	\end{itemize}
+\end{description}
+
+\subsubsection{Update Propagation}
+There are three possibilities:
+\begin{itemize}
+	\item Propagate only a notification of an update
+	\subitem invalidation protocols
+	\item Transfer data from one copy to another
+	\subitem used for high read-to-write ratio
+	\item Propagate the update operation to other copies
+	\subitem active replication	
+\end{itemize}
+
+\end{multicols}
+\begin{figure}[H]
+	\centering\caption{Pull versus Push Protocols for updates}
+	\begin{tabular}{l|l|l}
+		\textbf{Issue} & \textbf{Push-based (server-based protocols)} & \textbf{Pull-based (client-based protocols)}\\\hline
+		State at server & List of client replicas and caches & None\\
+		Messages sent & Update (and possibly fetch update later) & Poll and update\\
+		Response time at client & Immediate (or fetch-update time) & Fetch-update time	
+	\end{tabular}
+\end{figure}
+
+\begin{multicols}{2}
+
+
+\subsection{Consistency protocols}
+\begin{description}
+	\item[Primary-Based Protocols:] Fixed server to which all read and write operations forwarded
+	\item[Replicated-write protocols:]
+	\item[Quorum-based protocols:] Ensure that each operation carried out in such a way that majority vote established: distinguish \textbf{read quorum} and \textbf{write quorum} (Gifford's Scheme)
+\end{description}
+
+\begin{note}{Implications of Gifford's Scheme}
+General rule ($N_R$ read quorum, $N_W$ write quorum):
+\begin{itemize}
+	\item get $N_R$ replicas to agree before read, $N_W$ for write
+	\item meet conditions:
+	\subitem $N_R + N_W > N$ (prevents read-write conflicts)
+	\subitem $N_W > \frac{N}{2}$ (prevents write-write conflicts)	
+\end{itemize}
+\end{note}
+
+
+
+
+
+

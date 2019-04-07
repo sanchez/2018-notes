@@ -1,0 +1,104 @@
+\section{Instruction Set Architecture}
+\subsection{Instruction Set Architecture (ISA)}
+\textbf{ISA} defines the interface between hardware and software
+\begin{itemize}
+	\item ISA is a specification
+	\item \textbf{Microarchitecture} is how the control unit is built	
+\end{itemize}
+For hardware (microarchitecture) designers
+\begin{itemize}
+	\item Don't need to know about the high level software
+	\item Just build a microarchitecture that implements the ISA
+\end{itemize}
+For software writers (machine language programmers and compiler writers)
+\begin{itemize}
+	\item Don't need to know (much) about microarchitecture
+	\item Just write or generate instructions that match the ISA
+\end{itemize}
+
+\subsubsection{What makes an ISA?}
+\begin{itemize}
+	\item Memory modules
+	\begin{itemize}
+		\item Issues
+		\begin{itemize}
+			\item Addressable cell size
+			\item Alignment
+			\item Address spaces
+			\item Endianness
+		\end{itemize}
+	\end{itemize}
+	\item Registers
+	\item Instructions
+	\item Data types	
+\end{itemize}
+
+\begin{note}{Addressable Cell Size}
+	\begin{itemize}
+		\item Memory has cells, each of which has a unique address (or cell number)
+		\item Most common cell size is 8 bits (but not always!)
+		\subitem AVR Instruction memory has 16 bit cells
+		\item Bus is used to transport the content of cell, but sometimes the data bus may be wider
+	\end{itemize}
+\end{note}
+
+\subsubsection{Bus Sizes}
+For every doubling of data bus width, remove least significant bit of address bus. e.g. data bus of 32 bits, address bus of n-2 bits, four cells transferred at a time
+
+\begin{note}{Alignment}
+Many architectures require \textbf{natural alignment}	
+\end{note}
+
+\begin{note}{Address Spaces}
+Many microprocessors have a single linear memory address space (\textbf{von Neumann} architecture). However, \textbf{Harvard architecture} is separate address spaces for instructions and data	
+\end{note}
+
+\begin{note}{Endianness}
+	\begin{itemize}
+		\item Different machines may support different byte orderings
+		\item \textbf{Little endian} - little end (least significant byte) stored first (at lowest address)
+		\item \textbf{Big endian} - big end stored first	
+	\end{itemize}
+\end{note}
+
+\subsubsection{Registers}
+Two types of registers:
+\begin{itemize}
+	\item General purpose (used for temporary results)
+	\item Special purpose
+	\begin{itemize}
+		\item Program Counter (PC)
+		\item Stack Pointer (SP)
+		\item Input/Output Registers
+		\item Status Register (Tanenbaum calls this Program Status Word)
+	\end{itemize}
+\end{itemize}
+Some other registers are part of the microarchitecture NOT the ISA (e.g. Instruction Register (IR))
+
+\begin{note}{AVR I/O Registers}
+AVR ATmega324A has 224 I/O register addresses to control peripherals and get data to/from them, e.g.
+\begin{itemize}
+	\item Timers and counters
+	\item Analog to Digital Converters
+	\item Serial input/output
+	\item General purpose input/output ports
+	\item Three registers associated with each
+	\begin{description}
+		\item[DDRx] - Data direction register
+		\item[PORTx] - Values to output
+		\item[PINx] - Values on the pins
+	\end{description}	
+\end{itemize}
+\end{note}
+
+\subsubsection{Instructions}
+Instruction types include:
+\begin{description}
+	\item[Input/Output] - communicate with I/O devices
+	\item[Load/Store] - move data from/to memory
+	\item[Move] - copy data between registers
+	\item[Arithmetic] - addition, subtraction, ...
+	\item[Logical] - Boolean operations
+	\item[Branching] - for deciding which instruction to perform next
+\end{description}
+

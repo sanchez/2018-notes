@@ -1,0 +1,53 @@
+\section{Coordinate Systems}
+\subsection{Euclidean Space}
+Can be 2D or 3D and is defined as the ``normal space'', i.e. it behaves like the observable world. The space is made up of coordinates which are typically Cartesian
+
+\subsection{Points and Vectors}
+Point is a location or position, Vector has a direction and length (from two points)
+
+\section{Transformations}
+\begin{itemize}
+	\item Position/Movement: \textbf{Translation}
+	\item Orientation: \textbf{Rotation}
+	\item Size: \textbf{Scale}
+	\item Inverse	
+\end{itemize}
+
+\subsection{Translation}
+\begin{itemize}
+	\item Movement along a vector
+	\item For all points in space:
+	\subitem $P' = P + t$
+	\subitem $T(t)$ denotes translation by vector $t$	
+\end{itemize}
+
+\subsection{Rotation}
+\begin{itemize}
+	\item Rotation in angles around a vector
+	\item Rotation around $Y$ axis: $R_y(\alpha)$
+	\item Rotation around arbitrary vector: $R(v,\alpha)$	
+\end{itemize}
+
+\subsection{Scale}
+Uniform, $S(s)$:
+\begin{itemize}
+	\item Same in all axes
+	\item For all points: $P' = sP$	
+\end{itemize}
+Non-Uniform, $S(v)$:
+\begin{itemize}
+	\item Different value for $x,y,z$
+	\item For all points: $P' = vP$	
+\end{itemize}
+
+\subsection{Handedness}
+\begin{itemize}
+	\item Affects rotations
+	\item Affects back-face culling
+	\item A model is authored for LH or RH
+	\subitem Mirrored if viewed in opposite
+	\item Conversion \textit{can} be tricky	
+\end{itemize}
+
+
+\section{Spaces}
