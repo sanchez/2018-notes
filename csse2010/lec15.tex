@@ -1,0 +1,20 @@
+\begin{note}{AVR Status Bit}
+	\begin{itemize}
+		\item $N$ bit $=$ negative (1 if sign bit of result is 1)
+		\item $V$ bit $=$ two's complement overflow
+		\item $S=N\oplus V$	
+	\end{itemize}
+	If overflow happens, sign bit will be wrong so instead of checking $N$ bit, check $S$ bit
+\end{note}
+
+\section{Flow of Control}
+\subsection{Procedures}
+\begin{itemize}
+	\item Group of instructions that performs some task
+	\item May have operands (\textbf{arguments} or \textbf{parameters})
+	\item May produce result(s)
+	\item Can be \textbf{invoked} (called) from multiple places in program
+	\item After invocation, control returns to the statement after the call
+	\item Also known as a \textbf{subroutine, function, method}	
+	\item Return address is stored in a stack
+\end{itemize}

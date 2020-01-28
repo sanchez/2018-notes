@@ -61,15 +61,6 @@
 \end{description}
 \end{note}
 
-\subsubsection{Eventual Consistency}
-For very large databases
-\begin{itemize}
-	\item with tolerance for high degree of inconsistency
-	\item updates guaranteed to propagate to all replicas
-	\item if no updates for long time, all replicas gradually become consistent (identical copies)	
-\end{itemize}
-Eventual consistency works well if always the same replica is accessed
-
 \subsection{Client-centric consistency}
 \textbf{Goal:} avoid system-wide consistency. Concentrate on single client's needs.
 \begin{itemize}

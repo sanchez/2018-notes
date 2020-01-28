@@ -1,14 +1,6 @@
 % !TeX spellcheck = en_US
 % !TeX root = notes.tex
 \subsection{Adaptability and self-management in DS}
-\begin{itemize}
-	\item Role of middleware is to provide some degree of distribution transparency
-	\subitem Hiding distribution of data, processing and control
-	\item Middleware may have a particular architectural style, e.g.
-	\subitem Object-based (CORBA)
-	\subitem Event-based (most of middleware built for adaptive, context-aware applications)
-	\item Middleware should be adaptive to meet requirements of various applications	
-\end{itemize}
 \subsubsection{Using interceptors to adapt control}
 \begin{itemize}
 	\item Interceptors change flow of control and allow additional code to be executed
@@ -26,19 +18,6 @@
 	\subitem Adaptation through composition
 	\subsubitem Statically at design time
 	\subsubitem Dynamically at run time (requires support for late binding)	
-\end{itemize}
-
-\subsubsection{Self-management / autonomic computing}
-\begin{itemize}
-	\item Many distributed systems are complex and require self-management and behaviour adaptation
-	\item Autonomic computing (or \textit{self-*})
-	\begin{itemize}
-		\item Self-configuration
-		\item Self-healing
-		\item Self-management
-		\item Context-awareness, etc
-	\end{itemize}
-	\item Adaptation takes place by one or more feedback control loops	
 \end{itemize}
 
 \subsubsection{The Feedback Control Model}
@@ -64,6 +43,7 @@
 		\subitem Dispatching interrupts, traps, ...	
 	\end{itemize}
 \end{note}
+
 \subsubsection{Definitions}
 \begin{itemize}
 	\item\textbf{Process}
@@ -78,28 +58,12 @@
 \end{itemize}
 Thread has less overhead and so interruptions and switching can be faster. Threads also have shared memory
 
-
-
-\subsubsection{The use of threads in DS}
-\begin{itemize}
-	\item Starting thread to handle incoming request much cheaper than starting new process
-	\begin{itemize}
-		\item single-threaded server prevents simple scaling to multiprocessor
-		\item as with client: hide network latency by reacting to next request while previous being transmitted
-	\end{itemize}
-	\item Better structure than nonblocking I/O
-	\begin{itemize}
-		\item single thread, blocking I/O doesn't scale up
-		\item simple blocking calls simpler overall structure
-	\end{itemize}	
-\end{itemize}
-\begin{note}{Multithreaded Servers}
-	\begin{description}
-		\item[Threads:] Parallelism, blocking system calls
-		\item[Single-threaded process:] No parallelism, blocking system calls
-		\item[Finite-state machine:] Parallelism, nonblocking system calls
-	\end{description}
-\end{note}
+\subsubsection{Multithreaded Servers}
+\begin{description}
+	\item[Threads:] Parallelism, blocking system calls
+	\item[Single-threaded process:] No parallelism, blocking system calls
+	\item[Finite-state machine:] Parallelism, nonblocking system calls
+\end{description}
 
 
 \subsubsection{Virtualisation in DS}
@@ -116,16 +80,14 @@ Thread has less overhead and so interruptions and switching can be faster. Threa
 \end{enumerate}
 
 \subsubsection{Clients/Servers}
-\begin{note}{Clients}
-	\begin{itemize}
-		\item Clients are often \textbf{thin}
-		\subitem Large portion of processing required to support sophisticated user interfaces can by provided by servers	
-		\item Clients should support transparencies
-		\subitem communication hiding
-		\subitem access transparency (client stub)
-		\subitem location, migration, relocation transparencies
-	\end{itemize}
-\end{note}
+\begin{itemize}
+	\item Clients are often \textbf{thin}
+	\subitem Large portion of processing required to support sophisticated user interfaces can by provided by servers	
+	\item Clients should support transparencies
+	\subitem communication hiding
+	\subitem access transparency (client stub)
+	\subitem location, migration, relocation transparencies
+\end{itemize}
 
 \paragraph{Servers General Design Issues}
 \begin{description}

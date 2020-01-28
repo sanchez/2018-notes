@@ -1,0 +1,22 @@
+\section{Interrupts}
+CPU receiving interrupt causes it to execute software to handle the interrupt
+\begin{itemize}
+	\item Software routine is called \textbf{interrupt handler} or \textbf{interrupt service routine (ISR)}
+\end{itemize}
+
+\subsection{Finding the Interrupt Handler}
+Look in the \textbf{interrupt vector table} which contains either a table of addresses or table of jump instructions
+
+\subsubsection{Transparency}
+When ISR finishes, computer is in the same state as it was before the interrupt. Save the status register and any other registers that will be used by the interrupt.
+
+\subsubsection{Interrupt Priority}
+Priority only occurs when two priorities are triggered at relatively the same time. Highest priority is the one with the lower vector value
+
+\subsection{Traps}
+Traps are \textbf{software interrupts} caused by events in software.
+\begin{itemize}
+	\item Overflow, Divide by zero, Undefined opcode
+	\item Traps save continually checking for errors
+	\item Trap handlers (service routines) don't always return to the original program
+\end{itemize}

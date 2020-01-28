@@ -47,9 +47,6 @@ Random bit strings (name doesn't help locate access point)
 	\end{itemize}
 \end{itemize}
 
-\subsubsection{Broadcasting}
-Broadcasting (or multicasting) the ID requesting the entity to return its current address. e.g. ARP (Address Resolution Protocol)
-
 \subsubsection{Forwarding Pointers}
 \begin{itemize}
 	\item When entity moves, it leaves a pointer to its new location
@@ -117,13 +114,6 @@ Broadcasting (or multicasting) the ID requesting the entity to return its curren
 	\item Each path in a naming graph can be referred to by a sequence of edge labels separated by a special character	
 \end{itemize}
 
-\subsubsection{Name Resolution in a Name Space}
-\begin{itemize}
-	\item Need to know how and where to start $\rightarrow$ need closure mechanism
-	\item Closure mechanism deals with selecting initial node in a name space from which name resolution is to start
-	\item Closure mechanisms are often implicit	
-\end{itemize}
-
 \subsubsection{Linking and Mounting}
 \begin{itemize}
 	\item Aliases
@@ -158,20 +148,8 @@ Broadcasting (or multicasting) the ID requesting the entity to return its curren
 	\item DNS is primarily used to lookup IP addresses for hosts and mail servers
 	\item Client (e.g. browser) contacts name resolver
 	\item Name resolver uses either \textbf{iterative} or \textbf{recursive} approach
-	\item Iterative name resolution:
-	\begin{enumerate}
-		\item Name resolver contacts name servers for help
-		\item Starts at root name server
-		\item Each name server resolves as much of name as it can before referring name resolver to another name server who knows more
-		\item Process repeats until name is fully resolved, or cannot be resolved anymore
-	\end{enumerate}	
-	\item Recursive name resolution:
-	\begin{enumerate}
-		\item Name resolver sends name to root name server
-		\item Intermediate result not passed to client, rather it is sent to next name server
-		\item Process repeats until name is fully resolved, then servers pass fully resolved name back
-		\item Root name server passes fully resolved name to name resolver
-	\end{enumerate}
+	\item Iterative name resolution - contact root name server, root returns as much information as it has, contacter contacts next in result
+	\item Recursive name resolution - contact root name server, root contacts next server and so on, root then returns result to contacter
 \end{itemize}
 Comparison between Iterative and Recursive:
 \begin{itemize}

@@ -46,20 +46,6 @@ Provides common protocols that can be used by many different applications
 \paragraph{Delivery-based transient synchronous communication at message delivery.} A sends a message and waits for the acknowledge from B, B will receive the message and send an acknowledge when it starts on the job
 \paragraph{Response-based transient synchronous communication.} A sends a message and waits for the acknowledge from B, B will receive the message and send an acknowledge when it has finished the job
 
-\subsubsection{Steps of a Remote Procedure Call}
-\begin{enumerate}
-	\item Client procedure calls client stub (procedure invocation)
-	\item Client stub builds message, calls local OS
-	\item Client's OS sends message to remote OS
-	\item Remote OS gives message to server stub
-	\item Server stub unpacks parameters, calls server
-	\item Server does work, returns result to the stub
-	\item Server stub packs it in message, calls local OS
-	\item Server's OS sends message to client's OS
-	\item Client's OS gives message to client stub
-	\item Stub unpacks result, returns to client
-\end{enumerate}
-
 \begin{note}{Parameter Passing}
 	\textbf{Parameter marshalling:} There's more than just wrapping parameters into a message. Client and Server:
 	\begin{itemize}
@@ -74,24 +60,6 @@ Provides common protocols that can be used by many different applications
 	\item Parameters passed by value do not pose problems
 	\item Parameters passed by reference - some partial solutions exist (e.g. a small array can be sent to the server)
 	\item Interfaces (procedures) are often specified in Interface Definition Language (IDL) and compiled into stubs	
-\end{itemize}
-
-\subsubsection{Writing a Client and a Server}
-Three files output by the IDL compiler:
-\begin{itemize}
-	\item A header file (e.g. interface.h, in C terms)
-	\item The client stub
-	\item The server stub	
-\end{itemize}
-
-\subsection{Binding a Client to a Server}
-\begin{itemize}
-	\item Registration of a server makes it possible for a client to locate the server and bind to it
-	\item Server location is done in two steps:
-	\begin{enumerate}
-		\item Locate the server's machine
-		\item Locate the server on that machine
-	\end{enumerate}	
 \end{itemize}
 
 \subsection{Message-Oriented communication}

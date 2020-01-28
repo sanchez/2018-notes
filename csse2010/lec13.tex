@@ -1,0 +1,33 @@
+\begin{note}{Instruction Types}
+\begin{description}
+	\item[Dyadic Instructions:] combine 2 operands to produce a result
+	\item[Monadic Instructions:] one operand $\rightarrow$ one result
+	\item[Shift Instructions:] LSL, LSR, ASR
+	\item[Rotate Instructions:] ROL, ROR
+	\item[Comparison Instructions:] Same as subtraction, sets status register flags
+	\item[Branch Instructions:] Based on status register values
+\end{description}	
+\end{note}
+
+\subsubsection{Addressing Modes}
+\begin{description}
+	\item[Immediate] addressing: An operand value is in the instruction
+	\item[Register] addressing: Only register numbers in instruction
+	\item[Direct] addressing: Memory address is in instruction	
+\end{description}
+
+\subsubsection{Data Types}
+\begin{itemize}
+	\item Numeric
+	\begin{itemize}
+		\item Integers of different lengths
+		\item Floating point: 32bit (single precision) or 64bit (double precision)
+	\end{itemize}
+	\item Non-numeric
+	\begin{itemize}
+		\item Boolean
+		\item Bit-map (collection of bools)
+		\item Characters
+		\item Pointers
+	\end{itemize}	
+\end{itemize}

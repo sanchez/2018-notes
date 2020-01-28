@@ -1,0 +1,131 @@
+\section{Fault Tolerance}
+\subsection{Failure Models}
+\begin{description}
+	\item[Crash Failure:] server halts, but working correctly until it halts
+	\item[Omission failure:] server fails to respond to incoming requests
+	\item[Receive omission:] server fails to receive incoming messages
+	\item[Send omission:] server fails to send messages
+	\item[Timing failure:] server's response outside specified time interval
+	\item[Response failure:] server's response incorrect
+	\item[Value failure:] value of response wrong
+	\item[State transition failure:] server deviates from correct flow of control
+	\item[Arbitrary failure:] server may produce arbitrary responses at arbitrary times	
+\end{description}
+
+\subsection{Process Resilience}
+\subsubsection{Flat vs Hierarchical}
+Flat
+\begin{itemize}
+	\item Symmetry - No 1 point of failure
+	\item Complexity - voting	
+\end{itemize}
+Hierarchical
+\begin{itemize}
+	\item If coordinator fails, whole thing fails
+	\item If coordinator ok, decisions simple	
+\end{itemize}
+
+\subsection{Byzantine Generals}
+\begin{itemize}
+	\item Every process broadcasts it's strength, then all processes broadcast the results they received
+	\item For $k$ faulty processes need $2k+1$ correct processes
+	\item Total number needed for up to $k$ bad processes: $3k+1$	
+\end{itemize}
+
+\subsection{Client Crashes}
+\textbf{orphan:} computation with no client\\
+Solutions:
+\begin{description}
+	\item[Extermination:] record RPCs, kill on reboot
+	\item[Reincarnation:] broadcast new \textit{epoch} on reboot, all remote computations killed
+	\item[Gentle Reincarnation:] only kill if owner not found
+	\item[Expiration:] if not given new time quantum, die
+\end{description}
+
+\subsection{Scalability in Reliable Multicasting}
+Client sends an ACK when it receives a new message. Problem, $N$ receivers, 1 message $\rightarrow N$ ACKs. Only return feedback if message missed
+
+\subsubsection{Non-hierarchical Feedback Control}
+If a receivers sees a NACK being sent, suppress sending a NACK.
+
+\subsection{Message Ordering}
+Multicasts within epochs defined by view changes (group membership changes). What of ordering within an epoch?
+\begin{description}
+	\item[unordered:] no guarantee of order processes see messages
+	\item[FIFO-ordered:] messages from same process seen in same order
+	\item[Causally-ordered:] even if not from same sender causal ordering maintained
+	\item[Totally-ordered:] delivered in same order to all group members (in addition to any of the above)
+\end{description}
+
+\end{multicols}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{l|l|l}
+		\textbf{Multicast} & \textbf{Basic Message Ordering} & \textbf{Total-ordered Delivery?}\\\hline
+		Reliable multicast & None & No\\
+		FIFO multicast & FIFO-ordered delivery & No\\
+		Causal multicast & Causal-ordered delivery & No\\
+		Atomic multicast & None & Yes\\
+		FIFO atomic multicast & FIFO-ordered delivery & Yes\\
+		Causal atomic multicast & Causal-ordered delivery & Yes\\
+	\end{tabular}
+	
+\end{table}
+\begin{multicols}{2}
+
+\subsection{Distributed Commit}
+\begin{itemize}
+	\item Atomic multicasting is an example of a more general problem: \textbf{distributed commit}
+	\item Distributed commit requires that an \textbf{operation} is performed by each member of a process group or none at all
+	\item Two- and three-phase commit protocols	
+\end{itemize}
+
+\subsubsection{Two-Phase Commit}
+\begin{description}
+	\item[COMMIT:] Make transition to COMMIT
+	\item[ABORT:] Make transition to ABORT
+	\item[INIT:] Make transition to ABORT
+	\item[READY:] Contact another participant
+\end{description}
+	
+\subsubsection{Three-Phase Commit}
+The states of the coordinator and each participant satisfy the following two conditions:
+\begin{itemize}
+	\item There is no single state from which it is possible to make a transition directly to either a COMMIT or an ABORT state
+	\item There is no state in which it is \textbf{not} possible to make a final decision, and from which a transition to a COMMIT state can be made	
+\end{itemize}
+
+\subsection{Recovery}
+\begin{description}
+	\item[Backward Recovery:] back from erroneous state to previous correct state
+	\item[Forward Recovery:] construct correct state from error state
+\end{description}
+
+\subsection{Checkpointing}
+Recovery Line
+\begin{itemize}
+	\item Most recent distributed snapshot
+	\item Local states in stable storage used to recover global state	
+\end{itemize}
+Problem: domino effect from \textit{independent checkpointing}\\
+Solution: record dependences to allow consistent state to be found
+
+\subsection{Message-Logging Schemes}
+\textbf{Pessimistic Logging}
+\begin{itemize}
+	\item each nonstable message delievered to at most one process
+	\item avoids orphan processes
+	\item main work \textit{before} a crash	
+\end{itemize}
+\textbf{Optimistic Logging}
+\begin{itemize}
+	\item roll each process back to state where it does not depend on delivery of message which some process(es) do not yet have in stable storage
+	\item main work \textit{after} crash	
+\end{itemize}
+\textbf{Generally}
+\begin{itemize}
+	\item pessimistic is easier to get right, and more practical	
+\end{itemize}
+
+
+

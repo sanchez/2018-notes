@@ -1,0 +1,39 @@
+\section{Assembly}
+Statements have 4 parts:
+\begin{description}
+	\item[Labels] needed so statements can be jumped to, and so that data can be referenced
+	\item[Opcode] has symbolic abbreviation for an instruction opcode
+	\item[Operand] field specifies addresses and registers used as operands of the instruction
+	\item[Comments] field is space for programmer to put helpful explanations
+\end{description}
+A command (directive) to the assembler itself! Preceded with a ``.'', called \textbf{Pseudo-instruction} or \textbf{directive}
+
+\subsection{Memory Segments}
+\begin{itemize}
+	\item Different types of memory are known as \textbf{segments} to the assembler
+	\item Assembler directives enable code/data to be placed into different segments
+	\item AVR has
+	\begin{itemize}
+		\item Data segment (RAM)
+		\subitem Can't place values here, just reserve space (for variables)
+		\item Code segment (Flash)
+		\subitem Can place program code or constant data here
+		\item EEPROM Segment	
+		\subitem Can place constants here
+	\end{itemize}
+\end{itemize}
+
+\subsection{Pseudo-instructions}
+\begin{itemize}
+	\item \texttt{.byte}: Reserve space; only allowed in \textbf{dseg} (RAM)
+	\item Segment directives \texttt{.cseg} and \texttt{.dseg} allow the text and data segments to be built up in pieces
+	\item \texttt{.db}: Initialise constant in code or EEPROM segment
+	\item \texttt{.dw}: As above but defines a 16-bit word
+	\item \texttt{.def}: Make a definition (for registers only)
+	\item \texttt{.device}: Specify the exact processor that this program is designed for (\texttt{.device ATmega324A})
+	\item \texttt{.include}: Include a file
+	\item \texttt{.exit}: Stop processing this file
+	\item \texttt{.equ}: Equate (not changeable)
+	\item \texttt{.set}: Equate (but changeable)
+	\item \texttt{.org}: Set location counter - i.e. address (in any segment)
+\end{itemize}

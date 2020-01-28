@@ -1,0 +1,27 @@
+\section{Serial}
+\subsection{Synchronous}
+\textbf{SPI} - Serial Peripheral Interface
+
+\subsection{Asynchronous}
+\textbf{UART} - Universal Asynchronous Receiver and Transmitter\\
+\textbf{USART} - Universal Synchronous/Asynchronous Receiver and Transmitter\\
+\textbf{USB} - Universal Serial Bus
+
+\begin{note}{Sync vs Async}
+	\begin{description}
+		\item[Sync:] Clock signal is transmitted with data
+		\item[Async:] Clock signal must be recovered from data stream
+		\subitem Example: Use start and stop bits
+	\end{description}
+\end{note}
+
+\subsubsection{Baudrate}
+Symbols per second. Not the same as bit rate. 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200
+
+\begin{align*}
+	\texttt{UBRRn} &= \frac{f_{\texttt{OSC}}}{16\times \texttt{BAUD}} - 1
+	&= \frac{8\times10^6}{16\times\texttt{BAUD}} - 1	
+\end{align*}
+
+\section{Analog to Digital Conversion (ADC)}
+Input pin is compared against GND and a reference voltage (VREF)

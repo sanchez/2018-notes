@@ -1,0 +1,17 @@
+\section{Compiling and Linking}
+\subsection{Object File Structure}
+\begin{description}
+	\item[6. End of module:] Contains address at which to start execution and maybe a checksum
+	\item[5. Relocation dictionary:] Contains: List of addresses of code/data in (4) that need to be relocated
+	\item[4. Machine instructions and constants:] Contains: Assembled code and constants (code segment, data segment)
+	\item[3. External reference table:] Contains: List of all symbols that are used in the module but not defined in module
+	\item[2. Entry point table:] Contains: List of symbols other modules can reference. Values of symbols (addresses): Procedure entry points, variables, addresses are relative to beginning of this object module
+	\item[1. Identification:] Contains: Name of module, Location of the other sections in the file, Assembly date
+\end{description}
+
+\subsection{Dynamic Linking}
+Linking can happen at run-time. Link when the procedure is first called. DLLs on Windows, SO on *nix. Advantages:
+\begin{itemize}
+	\item Saves space, libraries aren't linked into binary executable
+	\item Library can be updated independently of the programs that use it, can be disadvantage also
+\end{itemize}

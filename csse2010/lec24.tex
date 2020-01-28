@@ -1,0 +1,44 @@
+\section{File Systems, Buses and Chipsets}
+\subsection{File System}
+FAT, FAT32, NTFS, exFAT, EXT2, EXT3, EXT4, APFS, HFS+, UFS, ZFS
+\begin{itemize}
+	\item Some sectors used for index information (e.g. File Allocation Table)	
+\end{itemize}
+\subsubsection{Disk Formatting}
+\begin{itemize}
+	\item\textbf{Low level format} - Reinitialises all sectors
+	\item\textbf{High level format} - Creates empty file system, only writes index/table sectors	
+\end{itemize}
+
+\begin{note}{Fragmentation}
+	The sectors on the disk become non-contiguous leaving the disk with unused sectors resulting in a slower access due to seek time.	
+\end{note}
+
+\subsection{Buses}
+Bus controller is know a \textbf{chipset}. DDR4-RAM, DDR3, PCI Express, USB, SATA, PCI. \textbf{Peripheral} bus is an external I/O device.
+
+\subsubsection{PCI Bus}
+\begin{itemize}
+	\item Peripheral Component Interconnect bus
+	\item PCI 1 - 32 bits wide, 33 MHz, 132MB/sec
+	\item PCI 2.2 - 64bit wide, 66MHz, 528MB/sec
+	\item 32bit cards have 120 pins
+	\item 64bit cards have an extra 64-bit connector	
+\end{itemize}
+
+
+
+
+\section{Floating Point Numbers}
+\begin{itemize}
+	\item Single Precision (32 bits)
+	\subitem 1 sign bit, 8 exponent (excess 127 format), 23 mantissa
+	\item Double Precision (64 bits)
+	\subitem 1 sign bit, 11 exponent (excess 1023), 52 mantissa	
+\end{itemize}
+\begin{align*}
+	-23.25 &= -(16 + 4 + 2 + 1 + 0.25)\\
+	&= -10111.01000....\\
+	&= -1.011101000\times2^4\\
+	&= [1][10000011][0111010000...00]	
+\end{align*}

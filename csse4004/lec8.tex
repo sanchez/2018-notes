@@ -1,0 +1,86 @@
+\section{Distributed File Systems}
+\subsection{Open Network Computing RPC (ONC RPC)}
+\begin{itemize}
+	\item hides OS-dependent RPC features
+	\item NFS version 4 supports \textit{compound procedures}
+	\begin{itemize}
+		\item group multiple RPCs
+		\item save latency of multiple RPCs
+		\item handled in order as if sent separately
+		\item if 1 fails, rest terminate
+	\end{itemize}	
+\end{itemize}
+
+\subsection{Semantics of File Sharing}
+\begin{description}
+	\item[UNIX semantics:] Every operation on a file is instantly visible to all processes
+	\item[Session semantics:] No changes are visible to other processes until the file is closed
+	\item[Immutable files:] No updates are possible; simplifies sharing and replication
+	\item[Transaction:] All changes occur atomically	
+\end{description}
+
+\subsection{File Locking in NFS}
+\begin{description}
+	\item[Lock:] Creates a lock for a range of bytes
+	\item[Lockt:] Test whether a conflicting lock has been granted
+	\item[Locku:] Remove a lock from a range of bytes
+	\item[Renew:] Renew the lease on a specified lock
+\end{description}
+
+\subsection{NFS Summary}
+\begin{itemize}
+	\item Transparency
+	\item No distributed naming policy built in
+	\item Performance undone original stateless design
+	\item Fault tolerance bit of an afterthought	
+\end{itemize}
+
+\subsection{Coda}
+\subsubsection{Caching and Replication}
+Client-side caching
+\begin{itemize}
+	\item important for performance
+	\item callbacks to maintain consistency
+	\begin{itemize}
+		\item \textbf{callback promise} - server knows client has file
+		\item \textbf{callback break} - after server asked to invalidate copies
+	\end{itemize}	
+\end{itemize}
+Server-side replication
+\begin{itemize}
+	\item \textbf{optimistic replication} - may be inconsistent
+	\item \textbf{versioning} used to make consistent	
+\end{itemize}
+
+\subsubsection{Server Replication}
+\begin{itemize}
+	\item The unit of replication is a \textbf{volume}
+	\item \textbf{Volume Storage Group (VSG):} the collection of servers that have a copy of a volume
+	\item \textbf{Accessible Volume Storage Group (AVSG):} group of servers in that volume's VSG that the client can contact
+	\item Uses a variant of Read-One, Write-All (ROWA) protocol:
+	\subitem Read from 1 server
+	\subitem Update to all servers in the AVSG	
+\end{itemize}
+
+\end{multicols}
+\begin{table}[h]
+	\centering
+	\caption{Summary of NFS vs Code}
+	\begin{tabular}{l|l|l}
+		\textbf{Issue} & \textbf{NFS} & \textbf{Coda}\\\hline
+		Design goals & Access transparency & High availability\\
+		Access model & Remote & Up/Download\\
+		Communication & RPC & RPC\\
+		Client process & Thin/Fat & Fat\\
+		Server groups & No & Yes\\
+		Mount granularity & Directory & File System\\
+		Name space & Per client & Global\\
+		File ID scope & File server & Global\\
+		Sharing semantics & Session & Transactional\\
+		Cache consistency & Write-back & Write-back\\
+		Replication & Minimal & ROWA\\
+		Fault tolerance & Reliable communication & Replication and caching\\
+		Recovery & Client-based & Reintegration
+	\end{tabular}
+\end{table}
+\begin{multicols}{2}

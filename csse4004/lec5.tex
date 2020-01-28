@@ -33,44 +33,41 @@
 \end{itemize}
 If $\frac{dC}{dt}>1$, fast clock. If $\frac{dC}{dt} = 1$, perfect clock. If $\frac{dC}{dt} < 1$, slow clock.
 
-\begin{note}{Network Time Protocol (NTP)}
-	\begin{itemize}
-		\item The Network Time Protocol (NTP) was developer to synchronise clocks across DS
-		\item NTP achieves accuracy of between 1 and 50 ms
-		\item NTP servers are divided into strata reflecting the accuracy of their clocks
-		\item The most accurate servers are referred to as stratum-1 (and typically have direct access to a reference clock)
-		\item NTP operates pair-wise between servers	
-	\end{itemize}
-\end{note}
+\subsection{Network Time Protocol (NTP)}
+\begin{itemize}
+	\item The Network Time Protocol (NTP) was developer to synchronise clocks across DS
+	\item NTP achieves accuracy of between 1 and 50 ms
+	\item NTP servers are divided into strata reflecting the accuracy of their clocks
+	\item The most accurate servers are referred to as stratum-1 (and typically have direct access to a reference clock)
+	\item NTP operates pair-wise between servers	
+\end{itemize}
 
-\begin{note}{The Berkeley Algorithm}
+\subsection{The Berkeley Algorithm}
+\begin{itemize}
+	\item Berkeley algorithm uses averaging approach to correct clocks (so doesn't need WWW receiver)
+	\item Time daemon's clock must be manually set (periodically)
+	\item New time is calculated as follows:
 	\begin{itemize}
-		\item Berkeley algorithm uses averaging approach to correct clocks (so doesn't need WWW receiver)
-		\item Time daemon's clock must be manually set (periodically)
-		\item New time is calculated as follows:
-		\begin{itemize}
-			\item daemon announces its time to each node on the network
-			\item nodes report how far ahead/behind their clocks are
-			\item daemon calculates new time based on average of reported values
-			\item daemon tells each node how to adjust its clock
-		\end{itemize}
+		\item daemon announces its time to each node on the network
+		\item nodes report how far ahead/behind their clocks are
+		\item daemon calculates new time based on average of reported values
+		\item daemon tells each node how to adjust its clock
 	\end{itemize}
-\end{note}
+\end{itemize}
 
-\begin{note}{Wireless Networks}
-	Clock synchronisation in wireless networks is problematic because:
-	\begin{itemize}
-		\item Nodes cannot always contact one another
-		\item Nodes are resource-constrained	
-	\end{itemize}
-	Reference Broadcast Synchronisation (RBS) designed for wireless sensor networks
-	\begin{itemize}
-		\item offers network internal synchronisation (not necessarily to UTC time)
-		\item sender broadcasts reference message with timestamp
-		\item receivers record difference between reference message timestamp and their own clock
-		\item receivers store time offset (calculated using simple linear regression algorithm) for each sender
-	\end{itemize}
-\end{note}
+\subsection{Wireless Networks}
+Clock synchronisation in wireless networks is problematic because:
+\begin{itemize}
+	\item Nodes cannot always contact one another
+	\item Nodes are resource-constrained	
+\end{itemize}
+Reference Broadcast Synchronisation (RBS) designed for wireless sensor networks
+\begin{itemize}
+	\item offers network internal synchronisation (not necessarily to UTC time)
+	\item sender broadcasts reference message with timestamp
+	\item receivers record difference between reference message timestamp and their own clock
+	\item receivers store time offset (calculated using simple linear regression algorithm) for each sender
+\end{itemize}
 
 \subsection{Logical Clocks}
 \begin{itemize}
